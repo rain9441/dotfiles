@@ -1,1 +1,1 @@
-GuiFont! Consolas\ NFM:h10.5:cANSI
+GuiFont! RobotoMono\ Nerd\ Font:h10.5:cANSI
