@@ -82,6 +82,21 @@ require('lazy').setup({
   { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
   { 'ryanoasis/vim-devicons',      event = 'VeryLazy' },
   {
+    'Bekaboo/deadcolumn.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('deadcolumn').setup({
+        scope = 'buffer',
+        modes = function(mode)
+          return mode:find('^[nictRss\x13]') ~= nil
+        end,
+        blending = {
+          threshold = 0.33
+        }
+      })
+    end
+  },
+  {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     lazy = true,
@@ -189,7 +204,7 @@ require('lazy').setup({
         debugger_path = 'c:/projects/vscode-js-debug', -- Path to vscode-js-debug installation.
         adapters = { 'pwa-node' },
       })
-      require('dap.ext.vscode').type_to_filetypes = { ['pwa-node'] = { 'javascript', 'typescript' }}
+      require('dap.ext.vscode').type_to_filetypes = { ['pwa-node'] = { 'javascript', 'typescript' } }
       require('dap.ext.vscode').json_decode = require('overseer.json').decode
     end
   },

@@ -38,6 +38,7 @@ set smartindent
 
 " Highlight the whole line
 set cursorline
+autocmd FileType * set colorcolumn=120
 
 " Unsure what this does
 set backspace=indent,eol,start
