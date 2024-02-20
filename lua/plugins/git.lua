@@ -1,7 +1,6 @@
 local M = {
   -- retired, moved to gitsigns.nvim (lua focused)
   -- { 'airblade/vim-gitgutter',  event = 'VeryLazy' },
-  --
   {
     'NeogitOrg/neogit',
     event = 'VeryLazy',

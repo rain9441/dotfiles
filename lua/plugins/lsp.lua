@@ -12,13 +12,46 @@ local M = {
     'williamboman/mason-lspconfig.nvim',
     event = 'VeryLazy',
     config = function()
-      local lspconfig = require('lspconfig')
       require('mason-lspconfig').setup({
         handlers = {
           function(server)
-            lspconfig[server].setup({})
+            require('lspconfig')[server].setup({})
+          end,
+          ['angularls'] = function()
+            require('lspconfig').angularls.setup({
+              root_dir = require('lspconfig.util').root_pattern('angular.json', 'project.json')
+            })
           end,
         },
+      })
+    end,
+  },
+  {
+    'jay-babu/mason-null-ls.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      "williamboman/mason.nvim",
+      "nvimtools/none-ls.nvim",
+    },
+    config = function()
+      require("mason-null-ls").setup({
+        ensure_installed = {
+          'angular-language-server',
+          'docker-compose-language-service',
+          'dockerfile-language-server',
+          'eslint_d',
+          'html-lsp',
+          'json-lsp',
+          'lua-language-server',
+          'marksman',
+          'nxls',
+          'omnisharp',
+          'stylua',
+          'terraform-ls',
+          'tflint',
+          'vim-language-server',
+          'yaml-language-server',
+        }
       })
     end,
   },

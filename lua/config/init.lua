@@ -4,6 +4,15 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.diagnostic.config({
+  virtual_text = false,
+  float = {
+    header = false,
+    source = 'if_many',
+    border = 'single',
+    focusable = false
+  }
+})
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({

@@ -77,6 +77,9 @@ set tabstop=4
 " Many colors
 set termguicolors
 
+" keep 8 lines above/below our cursor
+set scrolloff=8
+
 " Fix some weird error with Fugitive
 let g:fugitive_pty = 0
 
@@ -244,6 +247,9 @@ lua vim.fn.sign_define('DapStopped', {text = '👉', texthl = '', linehl = '', n
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                    IDE                                   """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Trouble
+map <silent> <leader>qe :Trouble<CR>
+
 " NvimTree
 map <silent> <F2> :NvimTreeToggle<CR>
 map <silent> <F3> :NvimTreeFindFile<CR>
@@ -418,7 +424,7 @@ nnoremap <silent> <leader>rn :lua vim.lsp.buf.rename()<CR>
 augroup Lsp
   autocmd!
   " Automatically open diagnostics window after updatetime (300)ms
-  autocmd CursorHold * lua vim.diagnostic.open_float({ scope = 'cursor' })
+  autocmd CursorHold * lua vim.diagnostic.open_float({ scope = 'cursor', focusable = false })
 augroup end
 
 " Typescript specific
