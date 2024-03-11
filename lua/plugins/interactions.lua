@@ -96,9 +96,9 @@ local M = {
             template = {
               annotation_convention = 'custom',
               custom = {
-                { nil, '/** $1 */', { no_results = true, type = { 'func', 'class' } } },
+                { nil, '/** $1 */',       { no_results = true, type = { 'func', 'class' } } },
                 { nil, '/** @type $1 */', { no_results = true, type = { 'type' } } },
-                { nil, '/** $1 */', { type = { 'class', 'func', 'type' } } },
+                { nil, '/** $1 */',       { type = { 'class', 'func', 'type' } } },
               },
             },
           },
@@ -106,9 +106,9 @@ local M = {
             template = {
               annotation_convention = 'custom',
               custom = {
-                { nil, '/** $1 */', { no_results = true, type = { 'func', 'class' } } },
+                { nil, '/** $1 */',       { no_results = true, type = { 'func', 'class' } } },
                 { nil, '/** @type $1 */', { no_results = true, type = { 'type' } } },
-                { nil, '/** $1 */', { type = { 'class', 'func', 'type' } } },
+                { nil, '/** $1 */',       { type = { 'class', 'func', 'type' } } },
               },
             },
           },
@@ -125,6 +125,12 @@ local M = {
     'fedepujol/move.nvim',
     event = 'VeryLazy',
     config = function() require('move').setup({}) end,
+  },
+  {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function() require('harpoon').setup({}) end,
   },
   -- {
   --   'uga-rosa/ccc.nvim',

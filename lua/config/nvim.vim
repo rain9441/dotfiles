@@ -363,6 +363,14 @@ vnoremap <silent> <A-Down> :MoveBlock(1)<CR>
 nnoremap <silent> <leader>= <cmd>lua require("duck").hatch()<CR>
 nnoremap <silent> <leader>- <cmd>lua require("duck").cook()<CR>
 
+" Harpoon
+nnoremap <silent> <leader>1 <cmd>lua require("harpoon"):list():select(1)<CR>
+nnoremap <silent> <leader>2 <cmd>lua require("harpoon"):list():select(2)<CR>
+nnoremap <silent> <leader>3 <cmd>lua require("harpoon"):list():select(3)<CR>
+nnoremap <silent> <leader>4 <cmd>lua require("harpoon"):list():select(4)<CR>
+nnoremap <silent> <leader>qh <cmd>lua require("harpoon").ui:toggle_quick_menu(require('harpoon'):list())<CR>
+nnoremap <silent> <leader>a <cmd>lua require("harpoon"):list():append()<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                    LSP                                   """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
