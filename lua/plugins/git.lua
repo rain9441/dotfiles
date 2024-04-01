@@ -138,6 +138,13 @@ local M = {
       })
     end,
   },
+  {
+    'FabijanZulj/blame.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('blame').setup({})
+    end,
+  },
 }
 
 return M

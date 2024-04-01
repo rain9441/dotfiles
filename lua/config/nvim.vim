@@ -111,6 +111,11 @@ augroup QuickFixToBottom
     autocmd!
     autocmd FileType qf wincmd J
 augroup END
+
+" Remove q:, q/, q?, which comes up all the time when doing :q
+nnoremap q: <nop>
+nnoremap q? <nop>
+nnoremap q/ <nop>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                               Vanilla NVIM                               """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -300,7 +305,7 @@ vnoremap <leader>hr <cmd>lua require('gitsigns').reset_hunk({ vim.fn.line('.'), 
 nnoremap <leader>hu <cmd>lua require('gitsigns').undo_stage_hunk()<CR>
 nnoremap <leader>hR <cmd>lua require('gitsigns').reset_buffer()<CR>
 nnoremap <leader>hp <cmd>lua require('gitsigns').preview_hunk()<CR>
-nnoremap <leader>hb <cmd>lua require('gitsigns').blame_line({ full = true })<CR>
+nnoremap <leader>b <cmd>ToggleBlame<CR>
 nnoremap <leader>hd <cmd>lua require('gitsigns').diffthis()<CR>
 nnoremap <leader>hD <cmd>lua require('gitsigns').diffthis('~')<CR>
 nnoremap <leader>td <cmd>lua require('gitsigns').toggle_deleted()<CR>
@@ -309,6 +314,11 @@ nnoremap [c <cmd>lua require('gitsigns').prev_hunk()<CR>
 nnoremap <leader>hl <cmd>GitLink<CR>
 vnoremap <leader>hL <cmd>GitLink blame<CR>
 nnoremap <leader>hh <cmd>Neogit<CR>
+
+nnoremap <leader>vh <cmd>DiffviewFileHistory<CR>
+nnoremap <leader>vf <cmd>DiffviewFileHistory %<CR>
+nnoremap <leader>v% <cmd>DiffviewFileHistory %<CR>
+nnoremap <leader>vv <cmd>DiffviewOpen<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                               Interactions                               """
@@ -438,11 +448,19 @@ augroup end
 " Typescript specific
 augroup TSTools
   autocmd!
-  autocmd FileType typescript,javascript nnoremap <buffer> <silent> <A-k><A-u> :TSToolsRemoveUnusedImports<CR>
-  autocmd FileType typescript,javascript nnoremap <buffer> <silent> <A-k><A-s> :TSToolsSortImports<CR>
-  autocmd FileType typescript,javascript nnoremap <buffer> <silent> <A-k><A-i> :TSToolsAddMissingImports<CR>
-  autocmd FileType typescript,javascript nnoremap <buffer> <silent> <A-k><A-r> :TSToolsRenameFile<CR>
-  autocmd FileType typescript,javascript nnoremap <buffer> <silent> <C-]> :TSToolsGoToSourceDefinition<CR>
+  autocmd FileType typescript,javascript nnoremap <buffer> <silent> <A-k><A-u> :TypescriptRemoveUnused<CR>
+  autocmd FileType typescript,javascript nnoremap <buffer> <silent> <A-k><A-s> :TypescriptOrganizeImports<CR>
+  autocmd FileType typescript,javascript nnoremap <buffer> <silent> <A-k><A-i> :TypescriptAddMissingImports<CR>
+  autocmd FileType typescript,javascript nnoremap <buffer> <silent> <A-k><A-r> :TypescriptRenameFile<CR>
+  " autocmd FileType typescript,javascript nnoremap <buffer> <silent> <C-]> :TSToolsGoToSourceDefinition<CR>
+augroup end
+
+augroup Csharp
+    autocmd FileType cs nnoremap <silent> <C-]> <CMD>lua require('omnisharp_extended').lsp_definition()<CR>
+    autocmd FileType cs nnoremap <silent> <leader><C-]> <CMD>lua require('omnisharp_extended').lsp_type_definition()<CR>
+    autocmd FileType cs nnoremap <silent> <C-]> <CMD>lua require('omnisharp_extended').lsp_definition()<CR>
+    autocmd FileType cs nnoremap <silent> <C-\> <CMD>lua require('omnisharp_extended').lsp_references()<CR>
+    autocmd FileType cs nnoremap <silent> <C-;> <CMD>lua require('omnisharp_extended').lsp_implementation()<CR>
 augroup end
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

@@ -2,6 +2,9 @@ local M = {
   {
     'mfussenegger/nvim-dap',
     event = 'VeryLazy',
+    dependencies = {
+      { 'nvim-neotest/nvim-nio' }
+    },
     config = function()
       for _, language in ipairs({ 'typescript', 'javascript' }) do
         require('dap').configurations[language] = {
