@@ -74,6 +74,10 @@ local M = {
           NeogitDiffAddHighlight = { bg = colors.dark_green, fg = colors.bright_green },
           NeogitDiffDelete = { bg = colors.darker_red, fg = colors.red },
           NeogitDiffDeleteHighlight = { bg = colors.dark_red, fg = colors.bright_red },
+
+          DiffviewDiffText = { bg = colors.darker_green, fg = colors.green },
+          DiffAdd = { bg = colors.darker_green, fg = colors.green },
+          DiffDelete = { bg = colors.darker_red, fg = colors.red },
         },
       })
     end,

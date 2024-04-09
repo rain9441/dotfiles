@@ -15,11 +15,30 @@ local M = {
             processId = require('dap.utils').pick_process,
             cwd = '${workspaceFolder}',
           },
+          {
+            type = 'pwa-node',
+            request = 'attach',
+            name = 'Auto Attach',
+            cwd = vim.fn.getcwd(),
+            protocol = 'inspector'
+          },
         }
       end
       vim.cmd('augroup Dap | autocmd FileType dap-repl set nobl | augroup END')
     end,
   },
+  -- {
+  --   'jay-babu/mason-nvim-dap.nvim' ,
+  --   dependencies = {
+  --       'williamboman/mason.nvim',
+  --   },
+  --
+  --   config = function()
+  --       require('mason-nvim-dap').setup({
+  --           ensure_installed = { 'js-debug-adapter' }
+  --       })
+  --   end
+  -- },
   {
     'mxsdev/nvim-dap-vscode-js',
     event = 'VeryLazy',
