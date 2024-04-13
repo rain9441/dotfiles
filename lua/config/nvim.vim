@@ -379,7 +379,7 @@ nnoremap <silent> <leader>2 <cmd>lua require("harpoon"):list():select(2)<CR>
 nnoremap <silent> <leader>3 <cmd>lua require("harpoon"):list():select(3)<CR>
 nnoremap <silent> <leader>4 <cmd>lua require("harpoon"):list():select(4)<CR>
 nnoremap <silent> <leader>qh <cmd>lua require("harpoon").ui:toggle_quick_menu(require('harpoon'):list())<CR>
-nnoremap <silent> <leader>a <cmd>lua require("harpoon"):list():append()<CR>
+nnoremap <silent> <leader>a <cmd>lua require("harpoon"):list():add()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                    LSP                                   """
@@ -456,11 +456,12 @@ augroup TSTools
 augroup end
 
 augroup Csharp
-    autocmd FileType cs nnoremap <silent> <C-]> <CMD>lua require('omnisharp_extended').lsp_definition()<CR>
-    autocmd FileType cs nnoremap <silent> <leader><C-]> <CMD>lua require('omnisharp_extended').lsp_type_definition()<CR>
-    autocmd FileType cs nnoremap <silent> <C-]> <CMD>lua require('omnisharp_extended').lsp_definition()<CR>
-    autocmd FileType cs nnoremap <silent> <C-\> <CMD>lua require('omnisharp_extended').lsp_references()<CR>
-    autocmd FileType cs nnoremap <silent> <C-;> <CMD>lua require('omnisharp_extended').lsp_implementation()<CR>
+    autocmd!
+    autocmd FileType cs nnoremap <buffer> <silent> <C-]> <CMD>lua require('omnisharp_extended').lsp_definition()<CR>
+    autocmd FileType cs nnoremap <buffer> <silent> <leader><C-]> <CMD>lua require('omnisharp_extended').lsp_type_definition()<CR>
+    autocmd FileType cs nnoremap <buffer> <silent> <C-]> <CMD>lua require('omnisharp_extended').lsp_definition()<CR>
+    autocmd FileType cs nnoremap <buffer> <silent> <C-\> <CMD>lua require('omnisharp_extended').lsp_references()<CR>
+    autocmd FileType cs nnoremap <buffer> <silent> <C-;> <CMD>lua require('omnisharp_extended').lsp_implementation()<CR>
 augroup end
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
