@@ -98,10 +98,10 @@ augroup END
 " Apply local tab settings for different file types
 augroup FileTypeBasedShiftWidths
     autocmd!
-    autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
-    autocmd FileType javascript,json setlocal shiftwidth=2 tabstop=2
+    autocmd FileType typescript setlocal shiftwidth=4 tabstop=4
+    autocmd FileType javascript,json setlocal shiftwidth=4 tabstop=4
     autocmd FileType lua setlocal shiftwidth=2 tabstop=2
-    autocmd FileType html setlocal shiftwidth=2 tabstop=2
+    autocmd FileType html setlocal shiftwidth=4 tabstop=4
 augroup END
 
 " QuickFix window always on bottom
