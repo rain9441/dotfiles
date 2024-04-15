@@ -377,6 +377,16 @@ local M = {
   -- 'nvim-neotest/neotest-jest',
   -- 'andythigpen/nvim-coverage',
   -- { 'neoclide/coc.nvim',       branch = 'release' },
+  {
+    'iamcco/markdown-preview.nvim',
+    event = 'VeryLazy',
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && npm install && git restore .",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
+  }
 }
 
 return M
