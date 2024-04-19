@@ -21,6 +21,10 @@ local M = {
       end
 
       cmp.setup({
+        enabled = function()
+            -- Disable completion entirely when in context of a comment
+            return not require("cmp.config.context").in_treesitter_capture("comment")
+        end,
         formatting = {
           format = lspkind.cmp_format(),
         },

@@ -3,9 +3,14 @@ local M = {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     lazy = true,
+    dependencies = {
+      -- Fix TS/JS comment indentation issues
+      { 'yioneko/nvim-yati' },
+    },
     config = function()
       require('nvim-treesitter.install').compilers = { 'clang' }
       require('nvim-treesitter.configs').setup({
+        yati = { enable = true },
         highlight = { enable = true },
         ensure_installed = {
           'html',
@@ -28,10 +33,11 @@ local M = {
           'yaml',
           'c_sharp',
         },
+        indent = { enable = false },
       })
     end,
   },
-  { 'nvim-treesitter/playground', event = 'VeryLazy' },
+  { 'nvim-treesitter/playground' },
 }
 
 return M
