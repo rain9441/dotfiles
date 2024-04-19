@@ -10,8 +10,8 @@ vim.diagnostic.config({
     header = false,
     source = 'if_many',
     border = 'single',
-    focusable = false
-  }
+    focusable = false,
+  },
 })
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -52,6 +52,7 @@ require('lazy').setup(
     require('plugins/ui'),
   }),
   {
+    defaults = { lazy = true },
     performance = {
       rtp = {
         reset = false,

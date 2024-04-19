@@ -1,6 +1,7 @@
 local M = {
   {
     'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
     dependencies = {
       'L3MON4D3/LuaSnip',
       'hrsh7th/cmp-nvim-lsp',
@@ -9,7 +10,6 @@ local M = {
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
     },
-    event = 'VeryLazy',
     config = function()
       local cmp = require('cmp')
       local luasnip = require('luasnip')
@@ -100,12 +100,12 @@ local M = {
   },
   {
     'folke/trouble.nvim',
-    event = 'VeryLazy',
+    cmd = 'Trouble',
     config = function() require('trouble').setup({}) end,
   },
   {
     'nvim-tree/nvim-tree.lua',
-    event = 'VeryLazy',
+    cmd = { 'NvimTreeToggle', 'NvimTreeFindFile' },
     config = function()
       local function on_attach(bufnr)
         local api = require('nvim-tree.api')
@@ -240,7 +240,7 @@ local M = {
   },
   {
     'Shatur/neovim-session-manager',
-    event = 'VeryLazy',
+    lazy = false,
     config = function()
       require('session_manager').setup({
         autoload_mode = require('session_manager.config').AutoloadMode.Disabled,
@@ -252,7 +252,7 @@ local M = {
   },
   {
     'stevearc/overseer.nvim',
-    event = 'VeryLazy',
+    cmd = { 'OverseerToggle', 'OverseerInfo', 'OverseerBuild', 'OverseerRun' },
     config = function()
       require('overseer').setup({
         actions = {
@@ -383,13 +383,12 @@ local M = {
   -- { 'neoclide/coc.nvim',       branch = 'release' },
   {
     'iamcco/markdown-preview.nvim',
-    event = 'VeryLazy',
+    ft = { "markdown" },
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     build = "cd app && npm install && git restore .",
     init = function()
       vim.g.mkdp_filetypes = { "markdown" }
     end,
-    ft = { "markdown" },
   }
 }
 

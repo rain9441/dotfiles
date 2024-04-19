@@ -1,9 +1,19 @@
 local M = {
   {
     'mfussenegger/nvim-dap',
-    event = 'VeryLazy',
     dependencies = {
-      { 'nvim-neotest/nvim-nio' }
+      { 'nvim-neotest/nvim-nio' },
+      {
+        'mxsdev/nvim-dap-vscode-js',
+        config = function()
+          require('dap-vscode-js').setup({
+            debugger_path = 'c:/projects/vscode-js-debug', -- Path to vscode-js-debug installation.
+            adapters = { 'pwa-node' },
+          })
+          require('dap.ext.vscode').type_to_filetypes = { ['pwa-node'] = { 'javascript', 'typescript' } }
+          require('dap.ext.vscode').json_decode = require('overseer.json').decode
+        end,
+      },
     },
     config = function()
       for _, language in ipairs({ 'typescript', 'javascript' }) do
@@ -20,40 +30,21 @@ local M = {
             request = 'attach',
             name = 'Auto Attach',
             cwd = vim.fn.getcwd(),
-            protocol = 'inspector'
+            protocol = 'inspector',
           },
         }
       end
       vim.cmd('augroup Dap | autocmd FileType dap-repl set nobl | augroup END')
     end,
   },
-  -- {
-  --   'jay-babu/mason-nvim-dap.nvim' ,
-  --   dependencies = {
-  --       'williamboman/mason.nvim',
-  --   },
-  --
-  --   config = function()
-  --       require('mason-nvim-dap').setup({
-  --           ensure_installed = { 'js-debug-adapter' }
-  --       })
-  --   end
-  -- },
-  {
-    'mxsdev/nvim-dap-vscode-js',
-    event = 'VeryLazy',
-    config = function()
-      require('dap-vscode-js').setup({
-        debugger_path = 'c:/projects/vscode-js-debug', -- Path to vscode-js-debug installation.
-        adapters = { 'pwa-node' },
-      })
-      require('dap.ext.vscode').type_to_filetypes = { ['pwa-node'] = { 'javascript', 'typescript' } }
-      require('dap.ext.vscode').json_decode = require('overseer.json').decode
-    end,
-  },
   {
     'rcarriga/nvim-dap-ui',
-    event = 'VeryLazy',
+    dependencies = {
+      {
+        'nvim-telescope/telescope-dap.nvim',
+        config = function() require('telescope').load_extension('dap') end,
+      },
+    },
     config = function()
       require('dapui').setup({
         force_buffers = true,
@@ -100,13 +91,8 @@ local M = {
     end,
   },
   {
-    'nvim-telescope/telescope-dap.nvim',
-    event = 'VeryLazy',
-    requires = { 'nvim-telescope/telescope.nvim' },
-    config = function() require('telescope').load_extension('dap') end,
-  },
-  {
     'Weissle/persistent-breakpoints.nvim',
+    event = 'BufReadPre',
     config = function() require('persistent-breakpoints').setup({ load_breakpoints_event = { 'BufReadPost' } }) end,
   },
 }

@@ -3,7 +3,7 @@ local M = {
   -- { 'airblade/vim-gitgutter',  event = 'VeryLazy' },
   {
     'NeogitOrg/neogit',
-    event = 'VeryLazy',
+    cmd = 'Neogit',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'sindrets/diffview.nvim',
@@ -110,11 +110,11 @@ local M = {
       })
     end,
   },
-  -- { 'tpope/vim-fugitive',      event = 'VeryLazy' },
-  { 'sindrets/diffview.nvim', event = 'VeryLazy' },
+  -- { 'tpope/vim-fugitive' },
+  { 'sindrets/diffview.nvim' },
   {
     'linrongbin16/gitlinker.nvim',
-    event = 'VeryLazy',
+    cmd = 'GitLink',
     config = function()
       require('gitlinker').setup({
         command = { name = 'GitLink' },
@@ -140,7 +140,7 @@ local M = {
   },
   {
     'FabijanZulj/blame.nvim',
-    event = 'VeryLazy',
+    cmd = 'BlameToggle',
     config = function()
       require('blame').setup({})
     end,

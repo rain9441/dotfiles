@@ -4,7 +4,7 @@ local M = {
   { 'ryanoasis/vim-devicons', event = 'VeryLazy' },
   {
     'Mofiqul/dracula.nvim',
-    lazy = true,
+    lazy = false,
     config = function()
       local colors = {
         bg = '#101116',
@@ -68,7 +68,7 @@ local M = {
 
           NeogitHunkHeader = { fg = colors.bg, bg = colors.selection, bold = colors.bold },
           NeogitHunkHeaderHighlight = { fg = colors.bg, bg = colors.purple, bold = colors.bold },
-          NeogitDiffContext = { fg = colors.fg,  bg = colors.bg },
+          NeogitDiffContext = { fg = colors.fg, bg = colors.bg },
           NeogitDiffContextHighlight = { fg = colors.fg, bg = colors.bg },
           NeogitDiffAdd = { bg = colors.darker_green, fg = colors.green },
           NeogitDiffAddHighlight = { bg = colors.dark_green, fg = colors.bright_green },
@@ -88,9 +88,7 @@ local M = {
     config = function()
       require('deadcolumn').setup({
         scope = 'buffer',
-        modes = function(mode)
-          return mode:find('^[nictRss\x13]') ~= nil
-        end,
+        modes = function(mode) return mode:find('^[nictRss\x13]') ~= nil end,
         blending = {
           threshold = 0.33,
         },
@@ -100,19 +98,21 @@ local M = {
   {
     'stevearc/dressing.nvim',
     event = 'VeryLazy',
-    config = function()
-      require('dressing').setup({})
-    end,
+    config = function() require('dressing').setup({}) end,
   },
-  'kevinhwang91/nvim-bqf',
+  {
+    'kevinhwang91/nvim-bqf',
+    event = 'VeryLazy',
+    cmd = 'BufWinEnter quickfix',
+  },
   {
     'petertriho/nvim-scrollbar',
-    config = function()
-      require('scrollbar').setup()
-    end,
+    event = 'VeryLazy',
+    config = function() require('scrollbar').setup() end,
   },
   {
     'gen740/SmoothCursor.nvim',
+    event = 'VeryLazy',
     config = function()
       require('smoothcursor').setup({
         fancy = {
@@ -134,21 +134,25 @@ local M = {
   },
   {
     'rcarriga/nvim-notify',
+    event = 'VeryLazy',
     init = function()
       -- vim.opt.termguicolors = true
     end,
-    config = function()
-      require('notify').setup()
-    end,
+    config = function() require('notify').setup() end,
   },
   {
     'm-demare/hlargs.nvim',
-    config = function()
-      require('hlargs').setup({ performance = { slow_parse_delay = 5 } })
-    end,
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function() require('hlargs').setup({ performance = { slow_parse_delay = 5 } }) end,
   },
-  { 'vim-airline/vim-airline' }, -- Vim powerline
-  { 'RRethy/vim-illuminate', event = 'VeryLazy' },
+  {
+    'vim-airline/vim-airline',
+    event = { 'BufReadPre', 'BufNewFile' },
+  },
+  {
+    'RRethy/vim-illuminate',
+    event = { 'BufReadPre', 'BufNewFile' },
+  },
 }
 
 return M

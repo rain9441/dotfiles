@@ -1,8 +1,11 @@
 local M = {
-  { 'jremmen/vim-ripgrep', event = 'VeryLazy' },
+  {
+    'jremmen/vim-ripgrep',
+    cmd = 'Rg',
+  },
   {
     'nvim-telescope/telescope.nvim',
-    event = 'VeryLazy',
+    cmd = 'Telescope',
     config = function()
       require('telescope').setup({
         file_ignore_patterns = { 'node_modules' },
@@ -49,9 +52,13 @@ local M = {
     event = 'VeryLazy',
     config = function() require('nvim-surround').setup({}) end,
   },
-  'gennaro-tedesco/nvim-peekup', -- Interact with registers:
+  {
+    'gennaro-tedesco/nvim-peekup',
+    event = 'VeryLazy',
+  },
   {
     'numToStr/Comment.nvim',
+    event = 'VeryLazy',
     config = function()
       require('Comment').setup({
         padding = true,
@@ -74,7 +81,7 @@ local M = {
   },
   {
     'Wansmer/treesj',
-    event = 'VeryLazy',
+    cmd = 'TSJToggle',
     config = function()
       require('treesj').setup({
         use_default_keymaps = false,
@@ -87,7 +94,6 @@ local M = {
   },
   {
     'danymat/neogen',
-    event = 'VeryLazy',
     config = function()
       require('neogen').setup({
         enabled = true,
@@ -96,9 +102,9 @@ local M = {
             template = {
               annotation_convention = 'custom',
               custom = {
-                { nil, '/** $1 */',       { no_results = true, type = { 'func', 'class' } } },
+                { nil, '/** $1 */', { no_results = true, type = { 'func', 'class' } } },
                 { nil, '/** @type $1 */', { no_results = true, type = { 'type' } } },
-                { nil, '/** $1 */',       { type = { 'class', 'func', 'type' } } },
+                { nil, '/** $1 */', { type = { 'class', 'func', 'type' } } },
               },
             },
           },
@@ -106,9 +112,9 @@ local M = {
             template = {
               annotation_convention = 'custom',
               custom = {
-                { nil, '/** $1 */',       { no_results = true, type = { 'func', 'class' } } },
+                { nil, '/** $1 */', { no_results = true, type = { 'func', 'class' } } },
                 { nil, '/** @type $1 */', { no_results = true, type = { 'type' } } },
-                { nil, '/** $1 */',       { type = { 'class', 'func', 'type' } } },
+                { nil, '/** $1 */', { type = { 'class', 'func', 'type' } } },
               },
             },
           },
@@ -118,16 +124,16 @@ local M = {
   },
   {
     'tamton-aquib/duck.nvim',
-    event = 'VeryLazy',
     config = function() require('duck').setup({ speed = 2 }) end,
   },
   {
     'fedepujol/move.nvim',
-    event = 'VeryLazy',
+    cmd = { 'MoveLine', 'MoveBlock' },
     config = function() require('move').setup({}) end,
   },
   {
     'ThePrimeagen/harpoon',
+    event = 'VeryLazy',
     branch = 'harpoon2',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function() require('harpoon').setup({}) end,

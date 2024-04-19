@@ -1,7 +1,7 @@
 local M = {
   {
     'williamboman/mason.nvim',
-    event = 'VeryLazy',
+    cmd = 'Mason',
     config = function()
       require('mason').setup({
         PATH = 'prepend',
@@ -83,7 +83,7 @@ local M = {
   },
   {
     'jose-elias-alvarez/typescript.nvim',
-    event = 'VeryLazy',
+    ft = { 'javascript', 'typescript', 'js', 'ts' },
     dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
     config = function()
       local format = {

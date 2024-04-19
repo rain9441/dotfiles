@@ -1,8 +1,8 @@
 local M = {
   {
     'nvim-treesitter/nvim-treesitter',
+    event = { 'BufReadPre', 'BufNewFile' },
     build = ':TSUpdate',
-    lazy = true,
     dependencies = {
       -- Fix TS/JS comment indentation issues
       { 'yioneko/nvim-yati' },

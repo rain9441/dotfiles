@@ -124,8 +124,9 @@ nnoremap q/ <nop>
 let s:fontsize = 10.5
 function! SetFontSize(amount)
   let s:fontsize = a:amount
+  let s:font = 'RobotoMono\ Nerd\ Font'
   echo 'Font Size: ' . string(s:fontsize)
-  :execute 'GuiFont! Consolas\ NFM:h' . string(s:fontsize) . ':cDEFAULT'
+  :execute 'GuiFont! ' . s:font . ':h' . string(s:fontsize) . ':cDEFAULT'
 endfunction
 function! AdjustFontSize(amount)
   call SetFontSize(s:fontsize + a:amount)
@@ -225,6 +226,11 @@ nnoremap <silent> <C-4> <cmd>tabn 4<CR>
 nnoremap <silent> <C-w><C-w> <cmd>tabc<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""                                   Lazy                                   """
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <silent> <leader>ll <cmd>Lazy<CR>
+nmap <silent> <leader>lp <cmd>Lazy profile<CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                 Debugger                                 """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Debugger
@@ -305,7 +311,7 @@ vnoremap <leader>hr <cmd>lua require('gitsigns').reset_hunk({ vim.fn.line('.'), 
 nnoremap <leader>hu <cmd>lua require('gitsigns').undo_stage_hunk()<CR>
 nnoremap <leader>hR <cmd>lua require('gitsigns').reset_buffer()<CR>
 nnoremap <leader>hp <cmd>lua require('gitsigns').preview_hunk()<CR>
-nnoremap <leader>b <cmd>ToggleBlame<CR>
+nnoremap <leader>b <cmd>BlameToggle<CR>
 nnoremap <leader>hd <cmd>lua require('gitsigns').diffthis()<CR>
 nnoremap <leader>hD <cmd>lua require('gitsigns').diffthis('~')<CR>
 nnoremap <leader>td <cmd>lua require('gitsigns').toggle_deleted()<CR>
