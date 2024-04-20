@@ -182,6 +182,11 @@ local M = {
     'RRethy/vim-illuminate',
     event = { 'BufReadPre', 'BufNewFile' },
   },
+  {
+    'willothy/nvim-cokeline',
+    event = 'VeryLazy',
+    config = function() require('cokeline').setup() end,
+  },
 }
 
 return M
