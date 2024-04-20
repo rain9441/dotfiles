@@ -53,6 +53,9 @@ local M = {
           NvimTreeGitDirty = { fg = colors.orange },
           NvimTreeGitNew = { fg = colors.green },
 
+          NeoTreeNormal = { bg = colors.bg },
+          NeoTreeNormalNC = { bg = colors.bg },
+
           TelescopeSelection = { bg = colors.cursorline },
           TelescopeMultiSelection = { bg = colors.cursorline },
 
@@ -146,8 +149,34 @@ local M = {
     config = function() require('hlargs').setup({ performance = { slow_parse_delay = 5 } }) end,
   },
   {
-    'vim-airline/vim-airline',
+    'sontungexpt/sttusline',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = { 'BufReadPre', 'BufNewFile' },
+    config = function(_, opts)
+      require('sttusline').setup({
+        statusline_color = 'StatusLine',
+        laststatus = 3,
+        components = {
+          'mode',
+          'filename',
+          'git-branch',
+          'git-diff',
+          '%=',
+          'diagnostics',
+          'lsps-formatters',
+          'copilot',
+          'indent',
+          'encoding',
+          'pos-cursor',
+          'pos-cursor-progress',
+        },
+      })
+    end,
+  },
+  {
+    'stevearc/oil.nvim',
+    event = 'VeryLazy',
+    config = function() require('oil').setup() end,
   },
   {
     'RRethy/vim-illuminate',

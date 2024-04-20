@@ -4,10 +4,6 @@ filetype off
 " Comma leader lets go
 let mapleader = ","
 
-" Preconfigure airline so when it is loaded it works better
-" 'vim-airline/vim-airline'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
 set sessionoptions=blank,buffers,curdir,folds,help,localoptions,tabpages,winsize,winpos,terminal
 
 " this setting controls how long to wait (in ms) before fetching type / symbol information / saving files.
@@ -99,11 +95,11 @@ augroup END
 
 " Apply local tab settings for different file types
 augroup FileTypeBasedShiftWidths
-  autocmd!
-  autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
-  autocmd FileType javascript,json setlocal shiftwidth=2 tabstop=2
-  autocmd FileType lua setlocal shiftwidth=2 tabstop=2
-  autocmd FileType html setlocal shiftwidth=2 tabstop=2
+    autocmd!
+    autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
+    autocmd FileType javascript,json setlocal shiftwidth=2 tabstop=2
+    autocmd FileType lua setlocal shiftwidth=2 tabstop=2
+    autocmd FileType html setlocal shiftwidth=2 tabstop=2
 augroup END
 
 " QuickFix window always on bottom
@@ -112,10 +108,27 @@ augroup QuickFixToBottom
     autocmd FileType qf wincmd J
 augroup END
 
-" Remove q:, q/, q?, which comes up all the time when doing :q
-nnoremap q: <nop>
-nnoremap q? <nop>
-nnoremap q/ <nop>
+" Fix the q: q/ q? bindings
+nnoremap <silent> q :<C-u>call <SID>SmartQ()<CR>
+function! s:SmartQ()
+  if exists("g:recording_macro")
+    let r = g:recording_macro
+    unlet g:recording_macro
+    normal! q
+    execute 'let @'.r.' = @'.r.'[:-2]'
+  else
+    let c = nr2char(getchar())
+    if c == ':'
+    " do nothing
+    else
+      if c =~ '\v[0-9a-zA-Z"]'
+        let g:recording_macro = c
+      endif
+      execute 'normal! q'.c
+    endif
+  endif
+endfunction
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                               Vanilla NVIM                               """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -123,14 +136,15 @@ nnoremap q/ <nop>
 " Font size controls
 let s:fontsize = 10.5
 function! SetFontSize(amount)
-  let s:fontsize = a:amount
-  let s:font = 'RobotoMono\ Nerd\ Font'
-  echo 'Font Size: ' . string(s:fontsize)
-  :execute 'GuiFont! ' . s:font . ':h' . string(s:fontsize) . ':cDEFAULT'
+    let s:fontsize = a:amount
+    let s:font = 'RobotoMono\ Nerd\ Font'
+    echo 'Font Size: ' . string(s:fontsize)
+    :execute 'GuiFont! ' . s:font . ':h' . string(s:fontsize) . ':cDEFAULT'
 endfunction
 function! AdjustFontSize(amount)
-  call SetFontSize(s:fontsize + a:amount)
+    call SetFontSize(s:fontsize + a:amount)
 endfunction
+
 " In normal mode, pressing numpad's+ increases the font
 noremap <kPlus> :call AdjustFontSize(+0.25)<CR>
 noremap <S-kPlus> :call AdjustFontSize(+1.00)<CR>
@@ -262,8 +276,15 @@ lua vim.fn.sign_define('DapStopped', {text = '👉', texthl = '', linehl = '', n
 map <silent> <leader>qe :Trouble<CR>
 
 " NvimTree
-map <silent> <F2> :NvimTreeToggle<CR>
-map <silent> <F3> :NvimTreeFindFile<CR>
+"map <silent> <F2> :NvimTreeToggle<CR>
+"map <silent> <F3> :NvimTreeFindFile<CR>
+
+" Neotree
+map <silent> <F2> :Neotree toggle last<CR>
+map <silent> <F3> :Neotree reveal<CR>
+map <silent> <leader><F1> :Neotree focus filesystem<CR>
+map <silent> <leader><F2> :Neotree focus buffers<CR>
+map <silent> <leader><F3> :Neotree focus git_status<CR>
 
 " Overseer
 nmap <silent> <leader>ol <cmd>OverseerToggle<CR>
@@ -283,8 +304,8 @@ EOF
 augroup SessionHooks
     autocmd!
     autocmd User SessionLoadPre lua for _, task in ipairs(require('overseer').list_tasks({})) do task:dispose(true) end
-    autocmd User SessionLoadPost lua require('nvim-tree.api').tree.change_root(vim.fn.getcwd())
-    autocmd User SessionLoadPost lua require('nvim-tree.api').tree.toggle({ focus = false })
+    "autocmd User SessionLoadPost lua require('nvim-tree.api').tree.change_root(vim.fn.getcwd())
+    "autocmd User SessionLoadPost lua require('nvim-tree.api').tree.toggle({ focus = false })
     autocmd User SessionLoadPost lua require('overseer').load_task_bundle(get_cwd_as_name(), { ignore_missing = true, autostart = false })
     autocmd User SessionSavePre lua require('overseer').save_task_bundle(get_cwd_as_name(), nil, { on_conflict = 'overwrite' })
 augroup END

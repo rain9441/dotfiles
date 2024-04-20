@@ -48,6 +48,7 @@ require('lazy').setup(
     require('plugins/ide'),
     require('plugins/interactions'),
     require('plugins/lsp'),
+    require('plugins/neo-tree'),
     require('plugins/tree-sitter'),
     require('plugins/ui'),
   }),
