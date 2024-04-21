@@ -302,6 +302,11 @@ map <leader>cl1 :CBllline<CR>
 map <leader>cl2 :CBccline<CR>
 map <leader>cbd :CBd<CR>
 
+" Aerial
+nmap <silent> <leader>a :AerialToggle! left<CR>
+nmap [a :AerialPrev<CR>
+nmap ]a :AerialNext<CR>
+
 " Sessions
 lua << EOF
     function get_cwd_as_name()
@@ -333,22 +338,22 @@ nnoremap <silent> <leader>n <cmd>lua require('neogen').generate()<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                   Git                                    """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>hs <cmd>lua require('gitsigns').stage_hunk()<CR>
-nnoremap <leader>hr <cmd>lua require('gitsigns').reset_hunk()<CR>
-vnoremap <leader>hs <cmd>lua require('gitsigns').stage_hunk({ vim.fn.line('.'), vim.fn.line('v')})<CR>
-vnoremap <leader>hr <cmd>lua require('gitsigns').reset_hunk({ vim.fn.line('.'), vim.fn.line('v')})<CR>
-nnoremap <leader>hu <cmd>lua require('gitsigns').undo_stage_hunk()<CR>
-nnoremap <leader>hR <cmd>lua require('gitsigns').reset_buffer()<CR>
-nnoremap <leader>hp <cmd>lua require('gitsigns').preview_hunk()<CR>
+nnoremap <leader>gs <cmd>lua require('gitsigns').stage_hunk()<CR>
+nnoremap <leader>gr <cmd>lua require('gitsigns').reset_hunk()<CR>
+vnoremap <leader>gs <cmd>lua require('gitsigns').stage_hunk({ vim.fn.line('.'), vim.fn.line('v')})<CR>
+vnoremap <leader>gr <cmd>lua require('gitsigns').reset_hunk({ vim.fn.line('.'), vim.fn.line('v')})<CR>
+nnoremap <leader>gu <cmd>lua require('gitsigns').undo_stage_hunk()<CR>
+nnoremap <leader>gR <cmd>lua require('gitsigns').reset_buffer()<CR>
+nnoremap <leader>gp <cmd>lua require('gitsigns').preview_hunk()<CR>
 nnoremap <leader>b <cmd>BlameToggle<CR>
-nnoremap <leader>hd <cmd>lua require('gitsigns').diffthis()<CR>
-nnoremap <leader>hD <cmd>lua require('gitsigns').diffthis('~')<CR>
-nnoremap <leader>td <cmd>lua require('gitsigns').toggle_deleted()<CR>
+nnoremap <leader>gd <cmd>lua require('gitsigns').diffthis()<CR>
+nnoremap <leader>gD <cmd>lua require('gitsigns').diffthis('~')<CR>
+nnoremap <leader>gtd <cmd>lua require('gitsigns').toggle_deleted()<CR>
 nnoremap ]c <cmd>lua require('gitsigns').next_hunk()<CR>
 nnoremap [c <cmd>lua require('gitsigns').prev_hunk()<CR>
-nnoremap <leader>hl <cmd>GitLink<CR>
-vnoremap <leader>hL <cmd>GitLink blame<CR>
-nnoremap <leader>hh <cmd>Neogit<CR>
+nnoremap <leader>gl <cmd>GitLink<CR>
+vnoremap <leader>gL <cmd>GitLink blame<CR>
+nnoremap <leader>gg <cmd>Neogit<CR>
 
 nnoremap <leader>vh <cmd>DiffviewFileHistory<CR>
 nnoremap <leader>vf <cmd>DiffviewFileHistory %<CR>
@@ -383,6 +388,7 @@ nnoremap <silent> <leader>fh <cmd>Telescope help_tarequire('gitsigns')<cr>
 nnoremap <silent> <leader>ftt <cmd>Telescope git_commits<cr>
 nnoremap <silent> <leader>ftb <cmd>Telescope git_bcommits<cr>
 nnoremap <silent> <leader>fts <cmd>Telescope git_status<cr>
+nnoremap <silent> <leader>fa <cmd>Telescope aerial<cr>
 nnoremap <silent> <leader>fl <cmd>Telescope builtin<cr>
 nnoremap <silent> <leader>sl <cmd>SessionManager load_session<cr>
 nnoremap <silent> <leader>ss <cmd>SessionManager save_current_session<cr>
@@ -414,7 +420,7 @@ nnoremap <silent> <leader>2 <cmd>lua require("harpoon"):list():select(2)<CR>
 nnoremap <silent> <leader>3 <cmd>lua require("harpoon"):list():select(3)<CR>
 nnoremap <silent> <leader>4 <cmd>lua require("harpoon"):list():select(4)<CR>
 nnoremap <silent> <leader>qh <cmd>lua require("harpoon").ui:toggle_quick_menu(require('harpoon'):list())<CR>
-nnoremap <silent> <leader>a <cmd>lua require("harpoon"):list():add()<CR>
+nnoremap <silent> <leader>ha <cmd>lua require("harpoon"):list():add()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                    LSP                                   """

@@ -289,6 +289,18 @@ local M = {
       })
     end,
   },
+  {
+    'stevearc/aerial.nvim',
+    cmd = 'AerialToggle',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function() 
+      require('aerial').setup({}) 
+      require("telescope").extensions.aerial.aerial()
+    end,
+  },
 }
 
 return M
