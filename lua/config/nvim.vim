@@ -215,7 +215,6 @@ command! -nargs=1 Gfc noautocmd lvimgrep /<args>\C/gj `git ls-files` | lw
 " Quick goto for config
 nmap <silent> <leader>cc :e $CONFIGPATH/config/coc.vim<CR>
 nmap <silent> <leader>ci :e $CONFIGPATH/config/init.lua<CR>
-nmap <silent> <leader>cl :e $CONFIGPATH/config/lsp.vim<CR>
 nmap <silent> <leader>cm :e $CONFIGPATH/config/mruclose.vim<CR>
 nmap <silent> <leader>cw :e $CONFIGPATH/config/mswin.vim<CR>
 nmap <silent> <leader>cn :e $CONFIGPATH/config/nvim.vim<CR>
@@ -293,6 +292,15 @@ nmap <silent> <leader>oi <cmd>OverseerInfo<CR>
 nmap <silent> <leader>ob <cmd>OverseerBuild<CR>
 nmap <silent> <leader>or <cmd>OverseerRun<CR>
 nmap <silent> <leader>tr <cmd>lua require('neotest').overseer.run({})<CR>
+
+" Comment Box
+map <leader>cb1 :CBlabox<CR>
+map <leader>cb2 :CBcabox<CR>
+map <leader>cb3 :CBllbox<CR>
+map <leader>cb4 :CBccbox<CR>
+map <leader>cl1 :CBllline<CR>
+map <leader>cl2 :CBccline<CR>
+map <leader>cbd :CBd<CR>
 
 " Sessions
 lua << EOF

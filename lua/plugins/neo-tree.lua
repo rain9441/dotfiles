@@ -121,6 +121,10 @@ local M = {
           },
         },
         nesting_rules = {
+          ['Dockerfile'] = { 
+            pattern = '^Dockerfile$',
+            files = { '.dockerignore' },
+          },
           ['project.json'] = {
             pattern = 'project.json$',
             files = {
@@ -128,7 +132,6 @@ local M = {
               '*package*.json',
               'jest.*.ts',
               'jest.*.js',
-              '.gitignore',
               '.prettier*',
               '.eslint*',
               'webpack.config.js',
@@ -142,7 +145,6 @@ local M = {
               '*package*.json',
               'jest.*.ts',
               'jest.*.js',
-              '.gitignore',
               '.prettier*',
               '.eslint*',
               'webpack.config.js',

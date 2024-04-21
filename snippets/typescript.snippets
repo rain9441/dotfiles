@@ -1,0 +1,7 @@
+# comment
+snippet export_class "Export Class"
+	export class $1 extends $0 {
+		private readonly logger = new Logger($1.name)
+		constructor() {
+		}
+	}

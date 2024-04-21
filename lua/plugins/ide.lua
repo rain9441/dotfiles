@@ -1,5 +1,17 @@
 local M = {
   {
+    'L3MON4D3/LuaSnip',
+    config = function()
+      require('luasnip').setup({
+        update_events = { 'TextChanged', 'TextChangedI' },
+        enable_autosnippets = true,
+      })
+
+      require('luasnip.loaders.from_vscode').load()
+      require('luasnip.loaders.from_snipmate').load()
+    end,
+  },
+  {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
@@ -9,6 +21,7 @@ local M = {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
+      'saadparwaiz1/cmp_luasnip',
     },
     config = function()
       local cmp = require('cmp')
@@ -22,8 +35,8 @@ local M = {
 
       cmp.setup({
         enabled = function()
-            -- Disable completion entirely when in context of a comment
-            return not require("cmp.config.context").in_treesitter_capture("comment")
+          -- Disable completion entirely when in context of a comment
+          return not require('cmp.config.context').in_treesitter_capture('comment')
         end,
         formatting = {
           format = lspkind.cmp_format(),
@@ -248,13 +261,34 @@ local M = {
   -- { 'neoclide/coc.nvim',       branch = 'release' },
   {
     'iamcco/markdown-preview.nvim',
-    ft = { "markdown" },
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    build = "cd app && npm install && git restore .",
-    init = function()
-      vim.g.mkdp_filetypes = { "markdown" }
+    ft = { 'markdown' },
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    build = 'cd app && npm install && git restore .',
+    init = function() vim.g.mkdp_filetypes = { 'markdown' } end,
+  },
+  {
+    'chrisgrieser/nvim-puppeteer',
+    ft = { 'javascript', 'typescript', 'js', 'ts' },
+    init = function() vim.g.puppeteer_js_quotation_mark = "'" end,
+  },
+  {
+    'folke/todo-comments.nvim',
+    cmd = { 'TodoQuickFix', 'TodoTelescope', 'TodoTrouble', 'TodoLocList' },
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function() require('todo-comments').setup() end,
+  },
+  {
+    'LudoPinelli/comment-box.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('comment-box').setup({
+        comment_style = 'line',
+        doc_width = 120, -- width of the document
+        box_width = 100, -- width of the boxes
+        line_width = 96, -- width of the lines
+      })
     end,
-  }
+  },
 }
 
 return M
