@@ -226,6 +226,10 @@ nmap <silent> <C-j> :wincmd j<CR>
 nmap <silent> <C-h> :wincmd h<CR>
 nmap <silent> <C-l> :wincmd l<CR>
 
+" Use gj to navigate in wrapped lines more elegantly
+noremap <expr> j v:count ? 'j' : 'gj'
+noremap <expr> k v:count ? 'k' : 'gk'
+
 " Filetypes
 nmap <silent> <leader><leader>json <cmd>set filetype=json<CR>
 nmap <silent> <leader><leader>ts <cmd>set filetype=typescript<CR>
