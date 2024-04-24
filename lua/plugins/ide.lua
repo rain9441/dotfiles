@@ -22,11 +22,11 @@ local M = {
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
       'saadparwaiz1/cmp_luasnip',
+      'onsails/lspkind.nvim',
     },
     config = function()
       local cmp = require('cmp')
       local luasnip = require('luasnip')
-      local lspkind = require('lspkind')
       local has_words_before = function()
         unpack = unpack or table.unpack
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -39,7 +39,7 @@ local M = {
           return not require('cmp.config.context').in_treesitter_capture('comment')
         end,
         formatting = {
-          format = lspkind.cmp_format(),
+          format = require('lspkind').cmp_format(),
         },
         snippet = {
           expand = function(args) require('luasnip').lsp_expand(args.body) end,

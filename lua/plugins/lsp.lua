@@ -10,7 +10,10 @@ local M = {
   },
   {
     'williamboman/mason-lspconfig.nvim',
-    event = 'VeryLazy',
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      'williamboman/mason.nvim'
+    },
     config = function()
       require('mason-lspconfig').setup({
         handlers = {
@@ -26,7 +29,7 @@ local M = {
   },
   {
     'jay-babu/mason-null-ls.nvim',
-    event = 'VeryLazy',
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       'williamboman/mason.nvim',
       'nvimtools/none-ls.nvim',
@@ -55,15 +58,12 @@ local M = {
   },
   {
     'nvimtools/none-ls.nvim',
-    event = 'VeryLazy',
+    ft = { 'lua', 'typescript' },
     config = function()
       require('null-ls').setup({
         sources = {
-          -- require('null-ls').builtins.code_actions.eslint_d,
           require('null-ls').builtins.formatting.stylua,
-          -- require('null-ls').builtins.diagnostics.eslint_d,
-          -- require('null-ls').builtins.completion.spell,
-          require('typescript.extensions.null-ls.code-actions'),
+          -- require('typescript.extensions.null-ls.code-actions'),
         },
       })
     end,
@@ -71,15 +71,14 @@ local M = {
   },
   {
     'neovim/nvim-lspconfig',
-    event = 'VeryLazy',
+    dependencies = {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+    },
     config = function()
       -- Setup language servers.
       -- local lspconfig = require('lspconfig')
     end,
-  },
-  {
-    'onsails/lspkind.nvim',
-    event = 'VeryLazy',
   },
   {
     'jose-elias-alvarez/typescript.nvim',
@@ -149,6 +148,7 @@ local M = {
           },
         },
       })
+      require('null-ls').register(require('typescript.extensions.null-ls.code-actions'));
     end,
   },
   {
