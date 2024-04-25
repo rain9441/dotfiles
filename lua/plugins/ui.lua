@@ -1,7 +1,7 @@
 local M = {
   -- Basics
   { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
-  { 'ryanoasis/vim-devicons', event = 'VeryLazy' },
+  { 'ryanoasis/vim-devicons',      event = 'VeryLazy' },
   {
     'Mofiqul/dracula.nvim',
     lazy = false,
@@ -175,7 +175,6 @@ local M = {
   },
   {
     'stevearc/oil.nvim',
-    event = 'VeryLazy',
     config = function() require('oil').setup() end,
   },
   {

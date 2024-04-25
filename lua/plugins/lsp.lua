@@ -10,9 +10,9 @@ local M = {
   },
   {
     'williamboman/mason-lspconfig.nvim',
-    event = { "BufReadPre", "BufNewFile" },
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
-      'williamboman/mason.nvim'
+      'williamboman/mason.nvim',
     },
     config = function()
       require('mason-lspconfig').setup({
@@ -29,7 +29,7 @@ local M = {
   },
   {
     'jay-babu/mason-null-ls.nvim',
-    event = { "BufReadPre", "BufNewFile" },
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'williamboman/mason.nvim',
       'nvimtools/none-ls.nvim',
@@ -75,10 +75,6 @@ local M = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
     },
-    config = function()
-      -- Setup language servers.
-      -- local lspconfig = require('lspconfig')
-    end,
   },
   {
     'jose-elias-alvarez/typescript.nvim',
@@ -148,7 +144,7 @@ local M = {
           },
         },
       })
-      require('null-ls').register(require('typescript.extensions.null-ls.code-actions'));
+      require('null-ls').register(require('typescript.extensions.null-ls.code-actions'))
     end,
   },
   {

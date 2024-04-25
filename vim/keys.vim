@@ -304,19 +304,13 @@ nmap [a <cmd>AerialPrev<cr>
 nmap ]a <cmd>AerialNext<cr>
 
 " Sessions
-lua << EOF
-    function get_cwd_as_name()
-      local dir = vim.fn.getcwd(0)
-      return dir:gsub('[^A-Za-z0-9]', '_')
-    end
-EOF
 augroup SessionHooks
     autocmd!
-    autocmd User SessionLoadPre lua for _, task in ipairs(require('overseer').list_tasks({})) do task:dispose(true) end
+    autocmd User SessionLoadPre lua require('./custom/overseer-session').reset_tasks() 
+    autocmd User SessionLoadPost lua require('./custom/overseer-session').load_session()
+    autocmd User SessionSavePre lua require('./custom/overseer-session').save_session()
     "autocmd User SessionLoadPost lua require('nvim-tree.api').tree.change_root(vim.fn.getcwd())
     "autocmd User SessionLoadPost lua require('nvim-tree.api').tree.toggle({ focus = false })
-    autocmd User SessionLoadPost lua require('overseer').load_task_bundle(get_cwd_as_name(), { ignore_missing = true, autostart = false })
-    autocmd User SessionSavePre lua require('overseer').save_task_bundle(get_cwd_as_name(), nil, { on_conflict = 'overwrite' })
 augroup END
 
 " Rest Client
@@ -421,54 +415,13 @@ nnoremap <leader>ha <cmd>lua require("harpoon"):list():add()<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                    LSP                                   """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-lua << EOF
-  function code_action_apply_first()
-    local diagnostics = vim.lsp.diagnostic.get_line_diagnostics()
-    if not next(diagnostics) then
-      diagnostics = vim.diagnostic.get(0)
-    end
-
-    if not next(diagnostics) then
-      print('No code actions available')
-      return
-    end
-
-    local range
-    if diagnostics[1].range then
-      range = {
-        start = { diagnostics[1].range.start.line + 1, diagnostics[1].range.start.character+ 1 },
-        ['end'] = { diagnostics[1].range['end'].line + 1, diagnostics[1].range['end'].character+ 1 }
-      }
-    else
-      range = { 
-        start = { diagnostics[1].lnum + 1, diagnostics[1].col + 1},
-        ['end'] = { diagnostics[1].lnum + 1 , diagnostics[1].end_col+ 1 }
-      }
-    end
-
-    isFirst = { first = true }
-    vim.lsp.buf.code_action({
-      context = {
-        diagnostics = { diagnostics[1] }
-      },
-      range = range,
-      filter = function(ix) 
-        local wasFirst = isFirst.first
-        isFirst.first = false
-        return wasFirst
-      end,
-      apply = true
-    })
-  end
-EOF
-
 nnoremap [g <cmd>lua vim.diagnostic.goto_prev()<cr>
 nnoremap ]g <cmd>lua vim.diagnostic.goto_next()<cr>
 nnoremap [e <cmd>lua vim.diagnostic.goto_prev()<cr>
 nnoremap ]e <cmd>lua vim.diagnostic.goto_next()<cr>
 nnoremap K <cmd>lua vim.lsp.buf.hover()<cr>
 nnoremap <A-k><A-c> <cmd>lua vim.lsp.buf.code_action()<cr>
-nnoremap <C-.> <cmd>lua code_action_apply_first()<cr>
+nnoremap <C-.> <cmd>lua require ('./custom/actions').code_action_apply_first()<cr>
 nnoremap <A-k><A-d> <cmd>lua vim.lsp.buf.format()<cr>
 nnoremap <C-'> <cmd>lua vim.lsp.buf.declaration()<cr>
 nnoremap <C-]> <cmd>lua vim.lsp.buf.definition()<cr>

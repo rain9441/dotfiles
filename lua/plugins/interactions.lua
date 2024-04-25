@@ -102,9 +102,9 @@ local M = {
             template = {
               annotation_convention = 'custom',
               custom = {
-                { nil, '/** $1 */', { no_results = true, type = { 'func', 'class' } } },
+                { nil, '/** $1 */',       { no_results = true, type = { 'func', 'class' } } },
                 { nil, '/** @type $1 */', { no_results = true, type = { 'type' } } },
-                { nil, '/** $1 */', { type = { 'class', 'func', 'type' } } },
+                { nil, '/** $1 */',       { type = { 'class', 'func', 'type' } } },
               },
             },
           },
@@ -112,9 +112,9 @@ local M = {
             template = {
               annotation_convention = 'custom',
               custom = {
-                { nil, '/** $1 */', { no_results = true, type = { 'func', 'class' } } },
+                { nil, '/** $1 */',       { no_results = true, type = { 'func', 'class' } } },
                 { nil, '/** @type $1 */', { no_results = true, type = { 'type' } } },
-                { nil, '/** $1 */', { type = { 'class', 'func', 'type' } } },
+                { nil, '/** $1 */',       { type = { 'class', 'func', 'type' } } },
               },
             },
           },

@@ -121,7 +121,7 @@ local M = {
           },
         },
         nesting_rules = {
-          ['Dockerfile'] = { 
+          ['Dockerfile'] = {
             pattern = '^Dockerfile$',
             files = { '.dockerignore' },
           },
