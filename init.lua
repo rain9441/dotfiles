@@ -3,6 +3,8 @@ if vim.fn.has('win') then
   configPath = '~/AppData/Local/nvim'
 end
 
+vim.g.configpath = configPath
+
 require('config/init')
 
 vim.api.nvim_exec('source ' .. configPath .. '/lua/config/mruclose.vim', {})

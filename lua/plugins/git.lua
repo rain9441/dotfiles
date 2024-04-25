@@ -111,7 +111,10 @@ local M = {
     end,
   },
   -- { 'tpope/vim-fugitive' },
-  { 'sindrets/diffview.nvim' },
+  {
+    'sindrets/diffview.nvim',
+    cmd = { 'DiffviewFileHistory', 'DiffviewOpen' },
+  },
   {
     'linrongbin16/gitlinker.nvim',
     cmd = 'GitLink',
