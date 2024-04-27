@@ -226,6 +226,7 @@ noremap <expr> k v:count ? 'k' : 'gk'
 nmap <leader><leader>json <cmd>set filetype=json<cr>
 nmap <leader><leader>ts <cmd>set filetype=typescript<cr>
 nmap <leader><leader>js <cmd>set filetype=javascript<cr>
+nmap <leader><leader>sql <cmd>set filetype=sql<cr>
 
 " Tabs
 nnoremap <C-1> <cmd>tabn 1<cr>
@@ -258,7 +259,7 @@ nmap <leader>dl <cmd>lua require('dap').list_breakpoints()<cr><cmd>copen<cr>
 nmap <leader>de <cmd>lua require('dap').set_exception_breakpoints()<cr>
 nmap <leader>ds <cmd>lua print(require('dap').status())<cr>
 nmap <leader>du <cmd>lua require('dapui').toggle()<cr>
-nmap <leader>db <cmd>lua require('dap').set_exception_breakpoints({ 'all' })<cr>
+" nmap <leader>db <cmd>lua require('dap').set_exception_breakpoints({ 'all' })<cr>
 lua vim.fn.sign_define('DapBreakpointCondition', {text = '🤔', texthl = '', linehl = '', numhl = ''})
 lua vim.fn.sign_define('DapBreakpoint', {text = '🟦', texthl = '', linehl = '', numhl = ''})
 lua vim.fn.sign_define('DapBreakpointRejected', {text = '🟥', texthl = '', linehl = '', numhl = ''})
@@ -324,6 +325,16 @@ augroup END
 
 " Neotest
 nnoremap <leader>n <cmd>lua require('neogen').generate()<cr>
+
+" DBUI
+nmap <leader>db <cmd>DBUIToggle<cr>
+nmap <leader>di <cmd>DBUILastQueryInfo<cr>
+augroup DBUI
+  autocmd!
+  autocmd FileType sql,plsql,mysql map <C-Enter> <Plug>(DBUI_ExecuteQuery)
+  autocmd FileType sql,plsql,mysql imap <C-Enter> <C-o><Plug>(DBUI_ExecuteQuery)
+  autocmd FileType sql,plsql,mysql nmap <F3> <cmd>DBUIFindBuffer<cr>
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                   Git                                    """
