@@ -1,7 +1,7 @@
 local M = {
   -- Basics
   { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
-  { 'ryanoasis/vim-devicons',      event = 'VeryLazy' },
+  { 'ryanoasis/vim-devicons', event = 'VeryLazy' },
   {
     'Mofiqul/dracula.nvim',
     lazy = false,
@@ -45,6 +45,10 @@ local M = {
 
           ['@variable.builtin'] = { fg = colors.orange },
           ['@property'] = { fg = colors.fgdark },
+
+          TabLine = { fg = colors.fg, bg = colors.bg },
+          TabLineSel = { fg = colors.bg, bg = colors.cyan, bold = true },
+          TabLineFill = { fg = colors.fg, bg = colors.nontext },
 
           NvimTreeRootFolder = { fg = colors.bg, bg = colors.yellow, bold = true },
           NvimTreeCursorLine = { bg = colors.cursorline },
@@ -182,9 +186,10 @@ local M = {
     event = { 'BufReadPre', 'BufNewFile' },
   },
   {
-    'willothy/nvim-cokeline',
-    event = 'VeryLazy',
-    config = function() require('cokeline').setup() end,
+    'crispgm/nvim-tabline',
+    lazy = false,
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function() require('tabline').setup({}) end,
   },
 }
 

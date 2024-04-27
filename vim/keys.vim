@@ -76,6 +76,9 @@ set termguicolors
 " keep 8 lines above/below our cursor
 set scrolloff=8
 
+" Always show the tabline
+set showtabline=2
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                             Fixes / Overrides                            """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

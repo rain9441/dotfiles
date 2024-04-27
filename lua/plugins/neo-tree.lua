@@ -12,7 +12,7 @@ local M = {
       require('neo-tree').setup({
         source_selector = {
           winbar = true,
-          statusline = true,
+          statusline = false,
           padding = 0, -- can be int or table
           -- padding = { left = 2, right = 0 },
         },
