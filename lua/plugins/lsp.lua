@@ -103,7 +103,7 @@ local M = {
       }
       local preferences = {
         quotePreference = 'single',
-        importModuleSpecifierEnding = 'project-relative',
+        importModuleSpecifierPreference = "project-relative",
         jsxAttributeCompletionStyle = 'auto',
         allowTextChangesInNewFiles = true,
         providePrefixAndSuffixTextForRename = true,
