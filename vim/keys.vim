@@ -443,6 +443,12 @@ nnoremap <C-;> <cmd>lua vim.lsp.buf.implementation()<cr>
 nnoremap <C-\> <cmd>lua vim.lsp.buf.references()<cr>
 nnoremap <leader>rn <cmd>lua vim.lsp.buf.rename()<cr>
 
+" Bind standard LSP keys to NOP until they are bound to their LSP specific command
+nnoremap <A-k><A-u> <nop>
+nnoremap <A-k><A-s> <nop>
+nnoremap <A-k><A-i> <nop>
+nnoremap <A-k><A-r> <nop>
+
 augroup Lsp
   autocmd!
   " Automatically open diagnostics window after updatetime (300)ms

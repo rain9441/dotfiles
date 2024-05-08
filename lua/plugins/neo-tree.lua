@@ -48,12 +48,12 @@ local M = {
           mappings = {
             ['O'] = 'oil',
             ['<space>'] = { 'toggle_node' },
-            ['<2-LeftMouse>'] = 'open',
-            ['<cr>'] = { 'open', config = { expand_nested_files = true } }, -- expand nested file takes precedence
+            ['<2-LeftMouse>'] = 'open_with_window_picker',
+            ['<cr>'] = { 'open_with_window_picker', config = { expand_nested_files = true } }, -- expand nested file takes precedence
             -- ["<esc>"] = "cancel", -- close preview or floating neo-tree window
             ['P'] = { 'toggle_preview', config = { use_float = true, use_image_nvim = false } },
-            ['S'] = 'open_split',
-            ['s'] = 'open_vsplit',
+            ['S'] = 'split_with_window_picker',
+            ['s'] = 'vsplit_with_window_picker',
             ['t'] = 'open_tabnew',
             ['Z'] = 'close_all_nodes',
             -- ['z'] = 'expand_all_nodes',
@@ -161,6 +161,19 @@ local M = {
       })
     end,
   },
+  {
+    's1n7ax/nvim-window-picker',
+    version = '2.*',
+    config = function()
+      require('window-picker').setup({
+        filter_rules = {
+          bo = {
+            buftype = { 'terminal', 'nofile', 'quickfix', 'prompt', 'help' },
+          }
+        },
+      });
+    end,
+  }
 }
 
 return M

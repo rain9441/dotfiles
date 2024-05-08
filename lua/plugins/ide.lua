@@ -37,6 +37,7 @@ local M = {
         enabled = function()
           -- Disable completion entirely when in context of a comment
           return not require('cmp.config.context').in_treesitter_capture('comment')
+              and vim.bo.filetype ~= 'neo-tree-popup'
         end,
         formatting = {
           format = require('lspkind').cmp_format(),

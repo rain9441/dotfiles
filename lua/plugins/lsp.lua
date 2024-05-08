@@ -20,7 +20,19 @@ local M = {
           function(server) require('lspconfig')[server].setup({}) end,
           ['angularls'] = function()
             require('lspconfig').angularls.setup({
-              root_dir = require('lspconfig.util').root_pattern('angular.json', 'project.json'),
+              root_dir = require('lspconfig.util').root_pattern('angular.json', 'project.json', 'nx.json', '.git'),
+            })
+          end,
+          ['html'] = function()
+            require('lspconfig').html.setup({
+              settings = {
+                html = {
+                  format = {
+                    wrapLineLength = 180,
+                    wrapAttributes = 'auto',
+                  }
+                },
+              },
             })
           end,
         },
