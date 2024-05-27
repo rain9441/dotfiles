@@ -2,6 +2,7 @@ local M = {
   {
     'nvim-treesitter/nvim-treesitter',
     event = { 'BufReadPre', 'BufNewFile' },
+    cmd = { 'TSUpdate' },
     build = ':TSUpdate',
     dependencies = {
       -- Fix TS/JS comment indentation issues

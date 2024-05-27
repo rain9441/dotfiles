@@ -10,17 +10,6 @@ local M = {
     config = function()
       require('neogit').setup({
         use_default_keymaps = false,
-        -- signs = {
-        --   -- { CLOSED, OPENED }
-        --   hunk = { "", "" },
-        --   item = { ">", "v" },
-        --   section = { ">", "v" },
-        -- },
-        -- Each Integration is auto-detected through plugin presence, however, it can be disabled by setting to `false`
-        integrations = {
-          telescope = nil,
-          diffview = nil,
-        },
         mappings = {
           commit_editor = {
             ['q'] = 'Close',
@@ -29,6 +18,10 @@ local M = {
             ['<m-p>'] = 'PrevMessage',
             ['<m-n>'] = 'NextMessage',
             ['<m-r>'] = 'ResetMessage',
+          },
+          commit_editor_I = {
+            ['<c-c><c-c>'] = 'Submit',
+            ['<c-c><c-k>'] = 'Abort',
           },
           rebase_editor = {
             ['p'] = 'Pick',
@@ -43,6 +36,12 @@ local M = {
             ['<cr>'] = 'OpenCommit',
             ['gk'] = 'MoveUp',
             ['gj'] = 'MoveDown',
+            ['<c-c><c-c>'] = 'Submit',
+            ['<c-c><c-k>'] = 'Abort',
+            ['[c'] = 'OpenOrScrollUp',
+            [']c'] = 'OpenOrScrollDown',
+          },
+          rebase_editor_I = {
             ['<c-c><c-c>'] = 'Submit',
             ['<c-c><c-k>'] = 'Abort',
           },
@@ -69,7 +68,6 @@ local M = {
             ['i'] = 'IgnorePopup',
             ['t'] = 'TagPopup',
             ['b'] = 'BranchPopup',
-            ['w'] = 'WorktreePopup',
             ['c'] = 'CommitPopup',
             ['f'] = 'FetchPopup',
             ['l'] = 'LogPopup',
@@ -77,23 +75,26 @@ local M = {
             ['p'] = 'PullPopup',
             ['r'] = 'RebasePopup',
             ['v'] = 'RevertPopup',
+            ['w'] = 'WorktreePopup',
           },
           status = {
             ['q'] = 'Close',
             ['I'] = 'InitRepo',
-            -- ["1"] = "Depth1",
-            -- ["2"] = "Depth2",
-            -- ["3"] = "Depth3",
-            -- ["4"] = "Depth4",
+            -- Neogit blows up if you unbind, so bind to completely arbitrary random keys
+            ["<c-f8>1"] = "Depth1",
+            ["<c-f8>2"] = "Depth2",
+            ["<c-f8>3"] = "Depth3",
+            ["<c-f8>4"] = "Depth4",
+            ["<c-f8>5"] = "ShowRefs",
             ['<tab>'] = 'Toggle',
             ['x'] = 'Discard',
             ['s'] = 'Stage',
             ['S'] = 'StageUnstaged',
             ['<c-s>'] = 'StageAll',
+            ['K'] = 'Untrack',
             ['u'] = 'Unstage',
             ['U'] = 'UnstageStaged',
             ['$'] = 'CommandHistory',
-            ['#'] = 'Console',
             ['Y'] = 'YankSelected',
             ['<c-r>'] = 'RefreshBuffer',
             ['<enter>'] = 'GoToFile',
@@ -102,6 +103,8 @@ local M = {
             ['<c-t>'] = 'TabOpen',
             ['{'] = 'GoToPreviousHunkHeader',
             ['}'] = 'GoToNextHunkHeader',
+            ['[c'] = 'OpenOrScrollUp',
+            [']c'] = 'OpenOrScrollDown',
           },
         },
       })

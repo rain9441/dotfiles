@@ -1,6 +1,6 @@
 " MSWIN
 " set 'selection', 'selectmode', 'mousemodel' and 'keymodel' for MS-Windows
-behave mswin
+" behave mswin
 
 " backspace and cursor keys wrap to previous/next line
 set backspace=indent,eol,start

@@ -6,15 +6,18 @@ Download & install & setup
 
 * Install neovim
   * `winget install neovim.neovim`
+* Download and install Neovim-QT (Neovim >= 1.0)
+  * `https://github.com/equalsraf/neovim-qt`
+  * Install into `C:\Program Files\Neovim-qt\`
 * Clone dotfiles
   * `mkdir "%HOME%/AppData/Local/nvim"`
   * `pushd "%HOME%/AppData/Local/nvim"`
   * `git clone https://github.com/rain9441/dotfiles`
   * `popd`
 * Run windows registry file for right click "Open with NVIM" support
-  * `nvim.reg`
+  * `nvim.regs
 * Ripgrep
-* `winget install BurnSushi.ripgrep.MSVC`
+  * `winget install BurnSushi.ripgrep.MSVC`
 * Treesitter Support (And other plugin support)
   * Download and install VS Build Tools - C++ Development Environment
     * [https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=buildtools](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=buildtools)
