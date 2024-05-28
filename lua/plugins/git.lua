@@ -10,6 +10,14 @@ local M = {
     config = function()
       require('neogit').setup({
         use_default_keymaps = false,
+        filewatcher = {
+          interval = 1000,
+          enabled = true
+        },
+        graph_style = "unicode",
+        commit_editor = {
+          kind = "vsplit",
+        },
         mappings = {
           commit_editor = {
             ['q'] = 'Close',
@@ -101,8 +109,8 @@ local M = {
             ['<c-v>'] = 'VSplitOpen',
             ['<c-x>'] = 'SplitOpen',
             ['<c-t>'] = 'TabOpen',
-            ['{'] = 'GoToPreviousHunkHeader',
-            ['}'] = 'GoToNextHunkHeader',
+            ['[f'] = 'GoToPreviousHunkHeader',
+            [']f'] = 'GoToNextHunkHeader',
             ['[c'] = 'OpenOrScrollUp',
             [']c'] = 'OpenOrScrollDown',
           },
