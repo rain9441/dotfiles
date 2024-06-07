@@ -458,10 +458,15 @@ augroup end
 " Typescript specific
 augroup Typescript
   autocmd!
-  autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-u> <cmd>TypescriptRemoveUnused<cr>
-  autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-s> <cmd>TypescriptOrganizeImports<cr>
-  autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-i> <cmd>TypescriptAddMissingImports<cr>
-  autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-r> <cmd>TypescriptRenameFile<cr>
+  autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-u> <cmd>VtsExec remove_unused_imports<cr>
+  autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-s> <cmd>VtsExec sort_imports<cr>
+  autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-i> <cmd>VtsExec add_missing_imports<cr>
+  autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-r> <cmd>VtsExec rename_file<cr>
+
+  " autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-u> <cmd>TypescriptRemoveUnused<cr>
+  " autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-s> <cmd>TypescriptOrganizeImports<cr>
+  " autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-i> <cmd>TypescriptAddMissingImports<cr>
+  " autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-r> <cmd>TypescriptRenameFile<cr>
   " autocmd FileType typescript,javascript nnoremap <buffer> <C-]> <cmd>TSToolsGoToSourceDefinition<cr>
 augroup end
 

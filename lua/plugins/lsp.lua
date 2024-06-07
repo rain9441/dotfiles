@@ -23,6 +23,67 @@ local M = {
               root_dir = require('lspconfig.util').root_pattern('angular.json', 'project.json', 'nx.json', '.git'),
             })
           end,
+          ['vtsls'] = function()
+            local format = {
+              indentSwitchCase = true,
+              insertSpaceAfterCommaDelimiter = true,
+              insertSpaceAfterConstructor = false,
+              insertSpaceAfterSemicolonInForStatements = true,
+              insertSpaceBeforeAndAfterBinaryOperators = true,
+              insertSpaceAfterKeywordsInControlFlowStatements = true,
+              insertSpaceAfterFunctionKeywordForAnonymousFunctions = true,
+              insertSpaceBeforeFunctionParenthesis = false,
+              insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis = false,
+              insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets = false,
+              insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = true,
+              insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = true,
+              insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces = false,
+              insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces = false,
+              insertSpaceAfterTypeAssertion = false,
+              placeOpenBraceOnNewLineForFunctions = false,
+              placeOpenBraceOnNewLineForControlBlocks = false,
+              semicolons = 'insert',
+            }
+            local preferences = {
+              quoteStyle = 'single',
+              importModuleSpecifier = 'project-relative',
+              jsxAttributeCompletionStyle = 'auto',
+              allowTextChangesInNewFiles = true,
+              providePrefixAndSuffixTextForRename = true,
+              allowRenameOfImportPath = true,
+              includeAutomaticOptionalChainCompletions = true,
+              provideRefactorNotApplicableReason = true,
+              generateReturnInDocTemplate = true,
+              includeCompletionsForImportStatements = true,
+              includeCompletionsWithSnippetText = true,
+              includeCompletionsWithClassMemberSnippets = true,
+              includeCompletionsWithObjectLiteralMethodSnippets = true,
+              useLabelDetailsInCompletionEntries = true,
+              allowIncompleteCompletions = true,
+              displayPartsForJSDoc = true,
+              disableLineTextInReferences = true,
+              includeInlayParameterNameHints = 'none',
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = false,
+              includeInlayVariableTypeHints = false,
+              includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+              includeInlayPropertyDeclarationTypeHints = false,
+              includeInlayFunctionLikeReturnTypeHints = false,
+              includeInlayEnumMemberValueHints = false,
+            }
+
+            require('lspconfig').vtsls.setup({
+              root_dir = require('lspconfig.util').root_pattern('angular.json', 'project.json', 'nx.json', '.git'),
+              settings = {
+                completions = { completeFunctionCalls = true },
+                javascript = { format = format },
+                typescript = { format = format },
+              },
+              init_options = {
+                preferences = preferences,
+              },
+            })
+          end,
           ['html'] = function()
             require('lspconfig').html.setup({
               settings = {
@@ -30,7 +91,7 @@ local M = {
                   format = {
                     wrapLineLength = 180,
                     wrapAttributes = 'auto',
-                  }
+                  },
                 },
               },
             })
@@ -89,76 +150,85 @@ local M = {
     },
   },
   {
-    'jose-elias-alvarez/typescript.nvim',
+    'yioneko/nvim-vtsls',
     ft = { 'javascript', 'typescript', 'js', 'ts' },
     dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
     config = function()
-      local format = {
-        indentSwitchCase = true,
-        insertSpaceAfterCommaDelimiter = true,
-        insertSpaceAfterConstructor = false,
-        insertSpaceAfterSemicolonInForStatements = true,
-        insertSpaceBeforeAndAfterBinaryOperators = true,
-        insertSpaceAfterKeywordsInControlFlowStatements = true,
-        insertSpaceAfterFunctionKeywordForAnonymousFunctions = true,
-        insertSpaceBeforeFunctionParenthesis = false,
-        insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis = false,
-        insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets = false,
-        insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = true,
-        insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = true,
-        insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces = false,
-        insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces = false,
-        insertSpaceAfterTypeAssertion = false,
-        placeOpenBraceOnNewLineForFunctions = false,
-        placeOpenBraceOnNewLineForControlBlocks = false,
-        semicolons = 'insert',
-      }
-      local preferences = {
-        quotePreference = 'single',
-        importModuleSpecifierPreference = "project-relative",
-        jsxAttributeCompletionStyle = 'auto',
-        allowTextChangesInNewFiles = true,
-        providePrefixAndSuffixTextForRename = true,
-        allowRenameOfImportPath = true,
-        includeAutomaticOptionalChainCompletions = true,
-        provideRefactorNotApplicableReason = true,
-        generateReturnInDocTemplate = true,
-        includeCompletionsForImportStatements = true,
-        includeCompletionsWithSnippetText = true,
-        includeCompletionsWithClassMemberSnippets = true,
-        includeCompletionsWithObjectLiteralMethodSnippets = true,
-        useLabelDetailsInCompletionEntries = true,
-        allowIncompleteCompletions = true,
-        displayPartsForJSDoc = true,
-        disableLineTextInReferences = true,
-        includeInlayParameterNameHints = 'none',
-        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-        includeInlayFunctionParameterTypeHints = false,
-        includeInlayVariableTypeHints = false,
-        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-        includeInlayPropertyDeclarationTypeHints = false,
-        includeInlayFunctionLikeReturnTypeHints = false,
-        includeInlayEnumMemberValueHints = false,
-      }
-      require('typescript').setup({
-        disable_commands = false,
-        go_to_source_definition = {
-          fallback = true,
-        },
-        server = {
-          settings = {
-            completions = { completeFunctionCalls = true },
-            javascript = { format = format },
-            typescript = { format = format },
-          },
-          init_options = {
-            preferences = preferences,
-          },
-        },
-      })
-      require('null-ls').register(require('typescript.extensions.null-ls.code-actions'))
+      require('lspconfig.configs').vtsls = require('vtsls').lspconfig
     end,
   },
+
+  -- {
+  --   'jose-elias-alvarez/typescript.nvim',
+  --   ft = { 'javascript', 'typescript', 'js', 'ts' },
+  --   dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
+  --   config = function()
+  --     local format = {
+  --       indentSwitchCase = true,
+  --       insertSpaceAfterCommaDelimiter = true,
+  --       insertSpaceAfterConstructor = false,
+  --       insertSpaceAfterSemicolonInForStatements = true,
+  --       insertSpaceBeforeAndAfterBinaryOperators = true,
+  --       insertSpaceAfterKeywordsInControlFlowStatements = true,
+  --       insertSpaceAfterFunctionKeywordForAnonymousFunctions = true,
+  --       insertSpaceBeforeFunctionParenthesis = false,
+  --       insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis = false,
+  --       insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets = false,
+  --       insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = true,
+  --       insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = true,
+  --       insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces = false,
+  --       insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces = false,
+  --       insertSpaceAfterTypeAssertion = false,
+  --       placeOpenBraceOnNewLineForFunctions = false,
+  --       placeOpenBraceOnNewLineForControlBlocks = false,
+  --       semicolons = 'insert',
+  --     }
+  --     local preferences = {
+  --       quotePreference = 'single',
+  --       importModuleSpecifierPreference = "project-relative",
+  --       jsxAttributeCompletionStyle = 'auto',
+  --       allowTextChangesInNewFiles = true,
+  --       providePrefixAndSuffixTextForRename = true,
+  --       allowRenameOfImportPath = true,
+  --       includeAutomaticOptionalChainCompletions = true,
+  --       provideRefactorNotApplicableReason = true,
+  --       generateReturnInDocTemplate = true,
+  --       includeCompletionsForImportStatements = true,
+  --       includeCompletionsWithSnippetText = true,
+  --       includeCompletionsWithClassMemberSnippets = true,
+  --       includeCompletionsWithObjectLiteralMethodSnippets = true,
+  --       useLabelDetailsInCompletionEntries = true,
+  --       allowIncompleteCompletions = true,
+  --       displayPartsForJSDoc = true,
+  --       disableLineTextInReferences = true,
+  --       includeInlayParameterNameHints = 'none',
+  --       includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+  --       includeInlayFunctionParameterTypeHints = false,
+  --       includeInlayVariableTypeHints = false,
+  --       includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+  --       includeInlayPropertyDeclarationTypeHints = false,
+  --       includeInlayFunctionLikeReturnTypeHints = false,
+  --       includeInlayEnumMemberValueHints = false,
+  --     }
+  --     require('typescript').setup({
+  --       disable_commands = false,
+  --       go_to_source_definition = {
+  --         fallback = true,
+  --       },
+  --       server = {
+  --         settings = {
+  --           completions = { completeFunctionCalls = true },
+  --           javascript = { format = format },
+  --           typescript = { format = format },
+  --         },
+  --         init_options = {
+  --           preferences = preferences,
+  --         },
+  --       },
+  --     })
+  --     require('null-ls').register(require('typescript.extensions.null-ls.code-actions'))
+  --   end,
+  -- },
   {
     'Hoffs/omnisharp-extended-lsp.nvim',
   },
