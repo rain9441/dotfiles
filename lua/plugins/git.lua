@@ -2,7 +2,6 @@ local M = {
   {
     'NeogitOrg/neogit',
     cmd = 'Neogit',
-    tag = 'v0.0.1',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'sindrets/diffview.nvim',
