@@ -29,6 +29,8 @@ set nowritebackup
 " Indent
 set autoindent
 set smartindent
+set breakindent
+set breakindentopt+=shift:4
 
 " Highlight the whole line
 set cursorline
