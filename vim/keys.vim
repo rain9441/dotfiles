@@ -286,7 +286,7 @@ map <leader>cl2 <cmd>CBccline<cr>
 map <leader>cbd <cmd>CBd<cr>
 
 " Aerial
-nmap <leader>a <cmd>AerialToggle! left<cr>
+nmap <leader>a <cmd>call GotoMainWindow()<cr><cmd>AerialToggle! left<cr>
 nmap [a <cmd>AerialPrev<cr>
 nmap ]a <cmd>AerialNext<cr>
 
@@ -332,7 +332,7 @@ vnoremap <leader>gr <cmd>lua require('gitsigns').reset_hunk({ vim.fn.line('.'), 
 nnoremap <leader>gu <cmd>lua require('gitsigns').undo_stage_hunk()<cr>
 nnoremap <leader>gR <cmd>lua require('gitsigns').reset_buffer()<cr>
 nnoremap <leader>gp <cmd>lua require('gitsigns').preview_hunk()<cr>
-nnoremap <leader>b <cmd>BlameToggle<cr>
+nnoremap <leader>b <cmd>call GotoMainWindow()<cr><cmd>BlameToggle<cr>
 nnoremap <leader>gd <cmd>lua require('gitsigns').diffthis()<cr>
 nnoremap <leader>gD <cmd>lua require('gitsigns').diffthis('~')<cr>
 nnoremap <leader>gtd <cmd>lua require('gitsigns').toggle_deleted()<cr>
