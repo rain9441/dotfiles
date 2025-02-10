@@ -71,6 +71,7 @@ local M = {
           },
         },
         filesystem = {
+          use_libuv_file_watcher = true,
           window = {
             mappings = {
               ['H'] = 'toggle_hidden',

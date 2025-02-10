@@ -11,107 +11,107 @@ local M = {
       require('luasnip.loaders.from_snipmate').load()
     end,
   },
-  {
-    'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
-    dependencies = {
-      'L3MON4D3/LuaSnip',
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-nvim-lua',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
-      'saadparwaiz1/cmp_luasnip',
-      'onsails/lspkind.nvim',
-    },
-    config = function()
-      local cmp = require('cmp')
-      local luasnip = require('luasnip')
-      local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
-      end
-
-      cmp.setup({
-        enabled = function()
-          -- Disable completion entirely when in context of a comment
-          return not require('cmp.config.context').in_treesitter_capture('comment')
-              and vim.bo.filetype ~= 'neo-tree-popup'
-        end,
-        formatting = {
-          format = require('lspkind').cmp_format(),
-        },
-        snippet = {
-          expand = function(args) require('luasnip').lsp_expand(args.body) end,
-        },
-        window = {
-          -- completion = cmp.config.window.bordered(),
-          -- documentation = cmp.config.window.bordered()
-        },
-        mapping = cmp.mapping.preset.insert({
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              if #cmp.get_entries() == 1 then
-                cmp.confirm({ select = true })
-              else
-                cmp.select_next_item()
-              end
-            elseif luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
-            elseif has_words_before() then
-              cmp.complete()
-              if #cmp.get_entries() == 1 then
-                cmp.confirm({ select = true })
-              end
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-        }),
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'nvim_lua' },
-          { name = 'buffer' },
-          { name = 'path' },
-        }, {
-          { name = 'buffer' },
-        }),
-      })
-
-      cmp.setup.filetype('gitcommit', {
-        sources = cmp.config.sources({
-          { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
-        }, {
-          { name = 'buffer' },
-        }),
-      })
-
-      cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'path' },
-        }, {
-          { name = 'cmdline' },
-        }),
-      })
-    end,
-  },
+  -- {
+  --   'hrsh7th/nvim-cmp',
+  --   event = 'InsertEnter',
+  --   dependencies = {
+  --     'L3MON4D3/LuaSnip',
+  --     'hrsh7th/cmp-nvim-lsp',
+  --     'hrsh7th/cmp-nvim-lua',
+  --     'hrsh7th/cmp-buffer',
+  --     'hrsh7th/cmp-path',
+  --     'hrsh7th/cmp-cmdline',
+  --     'saadparwaiz1/cmp_luasnip',
+  --     'onsails/lspkind.nvim',
+  --   },
+  --   config = function()
+  --     local cmp = require('cmp')
+  --     local luasnip = require('luasnip')
+  --     local has_words_before = function()
+  --       unpack = unpack or table.unpack
+  --       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  --       return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+  --     end
+  --
+  --     cmp.setup({
+  --       enabled = function()
+  --         -- Disable completion entirely when in context of a comment
+  --         return not require('cmp.config.context').in_treesitter_capture('comment')
+  --           and vim.bo.filetype ~= 'neo-tree-popup'
+  --       end,
+  --       formatting = {
+  --         format = require('lspkind').cmp_format(),
+  --       },
+  --       snippet = {
+  --         expand = function(args) require('luasnip').lsp_expand(args.body) end,
+  --       },
+  --       window = {
+  --         -- completion = cmp.config.window.bordered(),
+  --         -- documentation = cmp.config.window.bordered()
+  --       },
+  --       mapping = cmp.mapping.preset.insert({
+  --         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+  --         ['<C-f>'] = cmp.mapping.scroll_docs(4),
+  --         ['<C-Space>'] = cmp.mapping.complete(),
+  --         ['<C-e>'] = cmp.mapping.abort(),
+  --         ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  --         ['<Tab>'] = cmp.mapping(function(fallback)
+  --           if cmp.visible() then
+  --             if #cmp.get_entries() == 1 then
+  --               cmp.confirm({ select = true })
+  --             else
+  --               cmp.select_next_item()
+  --             end
+  --           elseif luasnip.expand_or_jumpable() then
+  --             luasnip.expand_or_jump()
+  --           elseif has_words_before() then
+  --             cmp.complete()
+  --             if #cmp.get_entries() == 1 then
+  --               cmp.confirm({ select = true })
+  --             end
+  --           else
+  --             fallback()
+  --           end
+  --         end, { 'i', 's' }),
+  --         ['<S-Tab>'] = cmp.mapping(function(fallback)
+  --           if cmp.visible() then
+  --             cmp.select_prev_item()
+  --           elseif luasnip.jumpable(-1) then
+  --             luasnip.jump(-1)
+  --           else
+  --             fallback()
+  --           end
+  --         end, { 'i', 's' }),
+  --       }),
+  --       sources = cmp.config.sources({
+  --         { name = 'nvim_lsp' },
+  --         { name = 'luasnip' },
+  --         { name = 'nvim_lua' },
+  --         { name = 'buffer' },
+  --         { name = 'path' },
+  --       }, {
+  --         { name = 'buffer' },
+  --       }),
+  --     })
+  --
+  --     cmp.setup.filetype('gitcommit', {
+  --       sources = cmp.config.sources({
+  --         { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+  --       }, {
+  --         { name = 'buffer' },
+  --       }),
+  --     })
+  --
+  --     cmp.setup.cmdline(':', {
+  --       mapping = cmp.mapping.preset.cmdline(),
+  --       sources = cmp.config.sources({
+  --         { name = 'path' },
+  --       }, {
+  --         { name = 'cmdline' },
+  --       }),
+  --     })
+  --   end,
+  -- },
   {
     'folke/trouble.nvim',
     cmd = 'Trouble',
@@ -325,6 +325,101 @@ local M = {
       )
       vim.cmd('augroup DBUI | autocmd FileType dbui set nobl | augroup END')
     end,
+  },
+  {
+    'jake-stewart/multicursor.nvim',
+    branch = '1.0',
+    event = { 'VeryLazy' },
+    config = function() require('multicursor-nvim').setup() end,
+  },
+  {
+    'Eandrju/cellular-automaton.nvim',
+    event = { 'VeryLazy' },
+    cmd = { 'CellularAutomaton' },
+  },
+  {
+    'saghen/blink.cmp',
+    lazy = false,
+    dependencies = 'rafamadriz/friendly-snippets',
+    version = '*',
+    opts = {
+      keymap = {
+        preset = 'super-tab',
+        ['<CR>'] = { 'accept', 'fallback' },
+        ['<Tab>'] = {
+          function(cmp)
+            if cmp.snippet_active() then
+              return cmp.accept()
+            else
+              return cmp.select_next()
+            end
+          end,
+          'snippet_forward',
+          'fallback',
+        },
+        ['<S-Tab>'] = {
+          function(cmp)
+            if cmp.snippet_active() then
+              return cmp.snippet_backward()
+            else
+              return cmp.select_prev()
+            end
+          end,
+          'snippet_backward',
+          'fallback',
+        },
+        ['<Esc>'] = {
+          function(cmp)
+            cmp.cancel()
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
+          end,
+          'fallback',
+        },
+      },
+
+      appearance = {
+        use_nvim_cmp_as_default = true,
+        nerd_font_variant = 'mono',
+      },
+
+      sources = {
+        default = function(ctx)
+          -- Disable in treesitter capture 'Comment' -- pulled from nvim-cmp source
+          local buf = vim.api.nvim_get_current_buf()
+          local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+          row = row - 1
+          if vim.api.nvim_get_mode().mode == 'i' then
+            col = col - 1
+          end
+
+          local captures_at_cursor = vim.tbl_map(
+            function(x) return x.capture end,
+            require('vim.treesitter').get_captures_at_pos(buf, row, col)
+          )
+
+          if vim.tbl_contains(captures_at_cursor, 'comment') then
+            return {}
+          end
+
+          return { 'lsp', 'path', 'snippets', 'buffer' }
+        end,
+      },
+      completion = {
+        list = {
+          selection = {
+            preselect = false,
+          },
+        },
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 0,
+          window = {
+            border = 'padded',
+          },
+        },
+      },
+    },
+    opts_extend = { 'sources.default' },
   },
 }
 

@@ -147,15 +147,14 @@ local M = {
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
+      'saghen/blink.cmp',
     },
   },
   {
     'yioneko/nvim-vtsls',
     ft = { 'javascript', 'typescript', 'js', 'ts' },
     dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
-    config = function()
-      require('lspconfig.configs').vtsls = require('vtsls').lspconfig
-    end,
+    config = function() require('lspconfig.configs').vtsls = require('vtsls').lspconfig end,
   },
 
   -- {

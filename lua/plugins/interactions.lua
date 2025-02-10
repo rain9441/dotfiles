@@ -53,10 +53,6 @@ local M = {
     config = function() require('nvim-surround').setup({}) end,
   },
   {
-    'gennaro-tedesco/nvim-peekup',
-    event = 'VeryLazy',
-  },
-  {
     'numToStr/Comment.nvim',
     event = 'VeryLazy',
     config = function()
@@ -123,34 +119,10 @@ local M = {
     end,
   },
   {
-    'tamton-aquib/duck.nvim',
-    config = function() require('duck').setup({ speed = 2 }) end,
-  },
-  {
     'fedepujol/move.nvim',
     cmd = { 'MoveLine', 'MoveBlock' },
     config = function() require('move').setup({}) end,
   },
-  {
-    'ThePrimeagen/harpoon',
-    event = 'VeryLazy',
-    branch = 'harpoon2',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function() require('harpoon').setup({}) end,
-  },
-  -- {
-  --   'uga-rosa/ccc.nvim',
-  --   config = function()
-  --     require('ccc').setup({
-  --       -- Your preferred settings
-  --       -- Example: enable highlighter
-  --       highlighter = {
-  --         auto_enable = true,
-  --         lsp = true,
-  --       },
-  --     })
-  --   end
-  -- },
 }
 
 return M

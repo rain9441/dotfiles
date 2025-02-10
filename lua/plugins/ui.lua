@@ -63,15 +63,19 @@ local M = {
           TelescopeSelection = { bg = colors.cursorline },
           TelescopeMultiSelection = { bg = colors.cursorline },
 
-          IlluminatedWordRead = { bg = '#505176' },
-          IlluminatedWordWrite = { bg = '#505176' },
-          IlluminatedWordText = { bg = '#505176' },
+          LspReferenceRead = { bg = '#505176' },
+          LspReferenceText = { bg = '#505176' },
+          LspReferenceWrite = { bg = '#505176' },
 
           -- CmpItemAbbr = { bg = '#505176' },
           CmpItemAbbrDeprecated = { fg = colors.white, bg = '' },
           CmpItemAbbrMatch = { fg = colors.cyan, bg = '' },
           CmpItemAbbr = { fg = colors.white, bg = '' },
           CmpItemKind = { fg = colors.white, bg = '' },
+          BlinkCmpLabelMatch = { bg = 'none' },
+          BlinkCmpKind = { bg = 'none' },
+          BlinkCmpLabel = { bg = 'none' },
+          BlinkCmpLabelDeprecated = { bg = 'none' },
 
           NeogitHunkHeader = { fg = colors.bg, bg = colors.selection, bold = colors.bold },
           NeogitHunkHeaderHighlight = { fg = colors.bg, bg = colors.purple, bold = colors.bold },
@@ -101,11 +105,6 @@ local M = {
         },
       })
     end,
-  },
-  {
-    'stevearc/dressing.nvim',
-    event = 'VeryLazy',
-    config = function() require('dressing').setup({}) end,
   },
   {
     'kevinhwang91/nvim-bqf',
@@ -140,14 +139,6 @@ local M = {
     end,
   },
   {
-    'rcarriga/nvim-notify',
-    event = 'VeryLazy',
-    init = function()
-      -- vim.opt.termguicolors = true
-    end,
-    config = function() require('notify').setup() end,
-  },
-  {
     'm-demare/hlargs.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     config = function() require('hlargs').setup({ performance = { slow_parse_delay = 5 } }) end,
@@ -180,10 +171,6 @@ local M = {
   {
     'stevearc/oil.nvim',
     config = function() require('oil').setup() end,
-  },
-  {
-    'RRethy/vim-illuminate',
-    event = { 'BufReadPre', 'BufNewFile' },
   },
   {
     'crispgm/nvim-tabline',

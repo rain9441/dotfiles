@@ -174,28 +174,9 @@ function! GotoMainWindow()
         endfor
     endif
 endfunction
-function! CustomTab()
-    let info = getbufinfo('%')[0]
-    let buftype = getbufvar(bufnr(), '&buftype')
-    if info.listed && empty(buftype)
-        lua require('telescope.builtin').buffers()
-    else
-        let wininfo = getwininfo()
-        for win in wininfo
-            if win.bufnr > 0 && getbufinfo(win.bufnr)[0].listed == 1
-                " echo "found" .. getbufinfo(win.bufnr)[0]
-                exec win.winnr .. "wincmd w"
-                lua require('telescope.builtin').buffers()
-                break
-            endif
-        endfor
-    endif
-endfunction
-nnoremap <C-Tab> <cmd>call GotoMainWindow()<cr><cmd>call CustomTab()<cr>
-nnoremap <C-S-Tab> <cmd>call GotoMainWindow()<cr><cmd>call CustomTab()<cr>
-nnoremap <A-w><A-w> <cmd>call GotoMainWindow()<cr><cmd>BufferCloseAndGoToMRU<cr>
-nnoremap <A-w><A-a> <cmd>call GotoMainWindow()<cr><cmd>BufferCloseOthers<cr>
-nnoremap <A-w><A-q> <cmd>call GotoMainWindow()<cr><cmd>BufferCloseAll<cr>
+
+nnoremap <C-Tab> <cmd>call GotoMainWindow()<cr><cmd>lua Snacks.picker.recent()<cr>
+nnoremap <C-S-Tab> <cmd>call GotoMainWindow()<cr><cmd>lua Snacks.picker.recent()<cr>
 
 " Quick Fix
 nnoremap <expr> <leader>qq "<cmd>".(get(getqflist({"winid": 1}), "winid") != 0? "cclose" : "bot copen")."<cr>"
@@ -379,23 +360,38 @@ nnoremap <C-T> <Plug>(comment_toggle_blockwise_current)
 vnoremap t <Plug>(comment_toggle_linewise_visual)
 vnoremap <C-T> <Plug>(comment_toggle_blockwise_visual)
 
+" Snacks
+nnoremap <A-w><A-w> <cmd>call GotoMainWindow()<cr><cmd>lua require('snacks').bufdelete()<cr>
+nnoremap <A-w><A-a> <cmd>call GotoMainWindow()<cr><cmd>lua require('snacks').bufdelete.all()<cr>
+nnoremap <A-w><A-q> <cmd>call GotoMainWindow()<cr><cmd>lua require('snacks').bufdelete.other()<cr>
+nnoremap & <cmd>lua require('snacks').words.jump(1,1)<cr>
+nnoremap <C-7> <cmd>lua require('snacks').words.jump(-1,1)<cr>
+
+nnoremap <C-p> <cmd>lua Snacks.picker.files()<cr>
+nnoremap <leader>fp <cmd>lua Snacks.picker()<cr>
+nnoremap <leader>fg <cmd>lua Snacks.picker.grep()<cr>
+nnoremap <leader>fo <cmd>lua Snacks.picker.grep()<cr>
+nnoremap <leader>fb <cmd>lua Snacks.picker.git_branches()<cr>
+nnoremap <leader>fd <cmd>lua Snacks.picker.diagnostics()<cr>
 
 " Telescope
-nnoremap <C-p> <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fo <cmd>lua require('telescope.builtin').live_grep({ grep_open_files = true })<cr>
-nnoremap <leader>ff <cmd>Telescope current_buffer_fuzzy_find<cr>
-nnoremap <leader>fs <cmd>Telescope grep_string<cr>
-nnoremap <leader>fq <cmd>Telescope quickfix<cr>
-nnoremap <leader>fQ <cmd>Telescope quickfixhistory<cr>
-nnoremap <leader>fr <cmd>Telescope registers<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tarequire('gitsigns')<cr>
-nnoremap <leader>ftt <cmd>Telescope git_commits<cr>
-nnoremap <leader>ftb <cmd>Telescope git_bcommits<cr>
-nnoremap <leader>fts <cmd>Telescope git_status<cr>
-nnoremap <leader>fa <cmd>Telescope aerial<cr>
-nnoremap <leader>fl <cmd>Telescope builtin<cr>
+" nnoremap <C-p> <cmd>Telescope find_files<cr>
+" nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+" nnoremap <leader>fo <cmd>lua require('telescope.builtin').live_grep({ grep_open_files = true })<cr>
+" nnoremap <leader>ff <cmd>Telescope current_buffer_fuzzy_find<cr>
+" nnoremap <leader>fs <cmd>Telescope grep_string<cr>
+" nnoremap <leader>fq <cmd>Telescope quickfix<cr>
+" nnoremap <leader>fQ <cmd>Telescope quickfixhistory<cr>
+" nnoremap <leader>fr <cmd>Telescope registers<cr>
+" nnoremap <leader>fb <cmd>Telescope buffers<cr>
+" nnoremap <leader>fh <cmd>Telescope help_tarequire('gitsigns')<cr>
+" nnoremap <leader>ftt <cmd>Telescope git_commits<cr>
+" nnoremap <leader>ftb <cmd>Telescope git_bcommits<cr>
+" nnoremap <leader>fts <cmd>Telescope git_status<cr>
+" nnoremap <leader>fa <cmd>Telescope aerial<cr>
+" nnoremap <leader>fl <cmd>Telescope builtin<cr>
+
+" Session Manager
 nnoremap <leader>sl <cmd>SessionManager load_session<cr>
 nnoremap <leader>ss <cmd>SessionManager save_current_session<cr>
 nnoremap <leader>sd <cmd>SessionManager delete_session<cr>
@@ -416,18 +412,42 @@ nnoremap <A-Down> <cmd>MoveLine(1)<cr>
 vnoremap <A-Up> <cmd>MoveBlock(-1)<cr>
 vnoremap <A-Down> <cmd>MoveBlock(1)<cr>
 
-" Quack
-nnoremap <leader>= <cmd>lua require("duck").hatch()<cr>
-nnoremap <leader>- <cmd>lua require("duck").cook()<cr>
+" Multicursor.nvim
+noremap <up> <cmd>lua require('multicursor-nvim').lineAddCursor(-1)<cr>
+noremap <down> <cmd>lua require('multicursor-nvim').lineAddCursor(1)<cr>
+noremap <left> <cmd>lua require('multicursor-nvim').prevCursor()<cr>
+noremap <right> <cmd>lua require('multicursor-nvim').nextCursor()<cr>
 
-" Harpoon
-nnoremap <leader>1 <cmd>lua require("harpoon"):list():select(1)<cr>
-nnoremap <leader>2 <cmd>lua require("harpoon"):list():select(2)<cr>
-nnoremap <leader>3 <cmd>lua require("harpoon"):list():select(3)<cr>
-nnoremap <leader>4 <cmd>lua require("harpoon"):list():select(4)<cr>
-nnoremap <leader>qh <cmd>lua require("harpoon").ui:toggle_quick_menu(require('harpoon'):list())<cr>
-nnoremap <leader>ha <cmd>lua require("harpoon"):list():add()<cr>
+noremap [; <cmd>lua require('multicursor-nvim').prevCursor()<cr>
+noremap ]; <cmd>lua require('multicursor-nvim').nextCursor()<cr>
 
+noremap <leader>n <cmd>lua require('multicursor-nvim').lineAddCursor(1)<cr>
+noremap <leader>N <cmd>lua require('multicursor-nvim').lineAddCursor(-1)<cr>
+noremap <leader>k <cmd>lua require('multicursor-nvim').lineSkipCursor(1)<cr>
+noremap <leader>K <cmd>lua require('multicursor-nvim').lineSkipCursor(-1)<cr>
+
+noremap <leader>ca <cmd>lua require('multicursor-nvim').matchAllAddCursors()<cr>
+noremap <leader>cx <cmd>lua require('multicursor-nvim').deleteCursor()<cr>
+nnoremap <leader>cr <cmd>lua require('multicursor-nvim').restoreCursors()<cr>
+nnoremap <leader>ca <cmd>lua require('multicursor-nvim').alignCursors()<cr>
+vnoremap <leader>ct <cmd>lua require('multicursor-nvim').transposeCursors(1)<cr>
+vnoremap <leader>cT <cmd>lua require('multicursor-nvim').transposeCursors(-1)<cr>
+
+noremap <c-q> <cmd>lua require('multicursor-nvim').toggleCursor()<cr>
+noremap ; <cmd>lua require('multicursor-nvim').toggleCursor()<cr>
+noremap <leader><c-q> <cmd>lua require('multicursor-nvim').duplicateCursors()<cr>
+nnoremap <esc> <cmd>lua if not require('multicursor-nvim').cursorsEnabled() then require('multicursor-nvim').enableCursors() elseif require('multicursor-nvim').hasCursors() then mc.clearCursors() else end<cr>
+
+vnoremap S <cmd>lua require('multicursor-nvim').splitCursors()<cr>
+vnoremap I <cmd>lua require('multicursor-nvim').insertVisual()<cr>
+vnoremap A <cmd>lua require('multicursor-nvim').appendVisual()<cr>
+vnoremap M <cmd>lua require('multicursor-nvim').matchCursors()<cr>
+vnoremap T <cmd>lua require('multicursor-nvim').transposeCursors(1)<cr>
+vnoremap <C-T> <cmd>lua require('multicursor-nvim').transposeCursors(-1)<cr>
+
+" Cellular
+nnoremap <leader><leader>1 <cmd>CellularAutomaton make_it_rain<cr>
+nnoremap <leader><leader>2 <cmd>CellularAutomaton scramble<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                    LSP                                   """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
