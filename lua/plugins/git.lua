@@ -145,7 +145,7 @@ local M = {
           changedelete = { text = 'x' },
           untracked = { text = '?' },
         },
-        _signs_staged_enable = true,
+        signs_staged_enable = true,
       })
     end,
   },

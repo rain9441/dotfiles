@@ -42,6 +42,7 @@ end
 
 require('lazy').setup(
   flatten({
+    require('plugins/ai'),
     require('plugins/core'),
     require('plugins/debugger'),
     require('plugins/git'),

@@ -286,7 +286,7 @@ map <leader>cl2 <cmd>CBccline<cr>
 map <leader>cbd <cmd>CBd<cr>
 
 " Aerial
-nmap <leader>a <cmd>call GotoMainWindow()<cr><cmd>AerialToggle! left<cr>
+nmap <leader>ae <cmd>call GotoMainWindow()<cr><cmd>AerialToggle! left<cr>
 nmap [a <cmd>AerialPrev<cr>
 nmap ]a <cmd>AerialNext<cr>
 
@@ -373,6 +373,12 @@ nnoremap <leader>fg <cmd>lua Snacks.picker.grep()<cr>
 nnoremap <leader>fo <cmd>lua Snacks.picker.grep()<cr>
 nnoremap <leader>fb <cmd>lua Snacks.picker.git_branches()<cr>
 nnoremap <leader>fd <cmd>lua Snacks.picker.diagnostics()<cr>
+
+
+" AI
+noremap <leader>fa <cmd>CodeCompanionActions<cr>
+noremap <leader>at <cmd>CodeCompanionChat Toggle<cr>
+vnoremap <leader>aa <cmd>CodeCompanionChat Add<cr>
 
 " Telescope
 " nnoremap <C-p> <cmd>Telescope find_files<cr>
