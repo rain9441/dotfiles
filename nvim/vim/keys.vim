@@ -103,10 +103,10 @@ augroup END
 " Apply local tab settings for different file types
 augroup FileTypeBasedShiftWidths
     autocmd!
-    autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
-    autocmd FileType javascript,json setlocal shiftwidth=2 tabstop=2
+    autocmd FileType typescript setlocal shiftwidth=4 tabstop=4
+    autocmd FileType javascript,json setlocal shiftwidth=4 tabstop=4
     autocmd FileType lua setlocal shiftwidth=2 tabstop=2
-    autocmd FileType html setlocal shiftwidth=2 tabstop=2
+    autocmd FileType html setlocal shiftwidth=4 tabstop=4
 augroup END
 
 " QuickFix window always on bottom
@@ -434,6 +434,37 @@ nnoremap <A-Up> <cmd>MoveLine(-1)<cr>
 nnoremap <A-Down> <cmd>MoveLine(1)<cr>
 vnoremap <A-Up> <cmd>MoveBlock(-1)<cr>
 vnoremap <A-Down> <cmd>MoveBlock(1)<cr>
+
+" Salesforce
+nnoremap <leader>es <cmd>lua require('sf').set_target_org()<cr>
+nnoremap <leader>eS <cmd>lua require('sf').set_global_target_org()<cr>
+nnoremap <leader>ef <cmd>lua require('sf').fetch_org_list()<cr>
+nnoremap <leader>eml <cmd>lua require('sf').list_md_to_retrieve()<cr>
+nnoremap <leader>emtl <cmd>lua require('sf').list_md_type_to_retrieve()<cr>
+nnoremap <leader><leader>e <cmd>lua require('sf').toggle_term()<cr>
+nnoremap <C-c> <cmd>lua require('sf').cancel()<cr>
+nnoremap <leader>e- <cmd>lua require('sf').go_to_sf_root()<cr>
+nnoremap <leader>ect <cmd>lua require('sf').create_ctags()<cr>
+nnoremap <leader>eft <cmd>lua require('sf').create_and_list_ctags()<cr>
+nnoremap <leader>eo <cmd>lua require('sf').org_open()<cr>
+nnoremap <leader>eO <cmd>lua require('sf').org_open_current_file()<cr>
+nnoremap <leader>ed <cmd>lua require('sf').diff_in_target_org()<cr>
+nnoremap <leader>eD <cmd>lua require('sf').diff_in_org()<cr>
+nnoremap <leader>ma <cmd>lua require('sf').retrieve_apex_under_cursor()<cr>
+nnoremap <leader>ep <cmd>lua require('sf').save_and_push()<cr>
+nnoremap <leader>er <cmd>lua require('sf').retrieve()<cr>
+xnoremap <leader>eq <cmd>lua require('sf').run_highlighted_soql()<cr>
+nnoremap <leader>eta <cmd>lua require('sf').run_all_tests_in_this_file()<cr>
+nnoremap <leader>etA <cmd>lua require('sf').run_all_tests_in_this_file_with_coverage()<cr>
+nnoremap <leader>ett <cmd>lua require('sf').run_current_test()<cr>
+nnoremap <leader>etT <cmd>lua require('sf').run_current_test_with_coverage()<cr>
+nnoremap <leader>eto <cmd>lua require('sf').open_test_select()<cr>
+nnoremap \\s <cmd>lua require('sf').toggle_sign()<cr>
+nnoremap <leader>etr <cmd>lua require('sf').repeat_last_tests()<cr>
+nnoremap <leader>ecc <cmd>lua require('sf').copy_apex_name()<cr>
+nnoremap <leader>ecc <cmd>lua require('sf').copy_apex_name()<cr>
+nnoremap [v <cmd>lua require('sf').uncovered_jump_backward()<cr>
+nnoremap ]v <cmd>lua require('sf').uncovered_jump_forward()<cr>
 
 " Cellular
 nnoremap <leader><leader>1 <cmd>CellularAutomaton make_it_rain<cr>
