@@ -13,21 +13,32 @@ local M = {
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'mason-org/mason.nvim',
+      'neovim/nvim-lspconfig',
     },
     config = function()
+      -- Enable apex_ls manually at this time until Mason config is setup to handle APEX
+      vim.lsp.config('apex_ls', {
+        cmd = {
+          vim.env.JAVA_HOME and (vim.env.JAVA_HOME .. '/bin/java') or 'java',
+          '-cp',
+          vim.fn.expand "$MASON/share/apex-language-server/apex-jorje-lsp.jar",
+          '-Ddebug.internal.errors=true',
+          '-Ddebug.semantic.errors=false',
+          '-Ddebug.completion.statistics=false',
+          '-Dlwc.typegeneration.disabled=true',
+          'apex.jorje.lsp.ApexLanguageServerLauncher',
+        },
+        root_markers = { 'sfdx-project.json' },
+        filetypes = { 'apexcode', 'apex' },
+      })
+      vim.lsp.enable('apex_ls')
+
       require('mason-lspconfig').setup({
         handlers = {
           function(server) require('lspconfig')[server].setup({}) end,
           ['angularls'] = function()
             require('lspconfig').angularls.setup({
               root_dir = require('lspconfig.util').root_pattern('angular.json', 'project.json', 'nx.json', '.git'),
-            })
-          end,
-          ['apex_ls'] = function()
-            require('lspconfig').apex_ls.setup({
-              filetypes = { 'apexcode', 'apex' },
-              apex_enable_semantic_errors = false, -- Whether to allow Apex Language Server to surface semantic errors
-              apex_enable_completion_statistics = false, -- Whether to allow Apex Language Server to collect telemetry on code completion usage
             })
           end,
           ['vtsls'] = function()
@@ -152,11 +163,7 @@ local M = {
   },
   {
     'neovim/nvim-lspconfig',
-    dependencies = {
-      'mason-org/mason.nvim',
-      'mason-org/mason-lspconfig.nvim',
-      'saghen/blink.cmp',
-    },
+    dependencies = { 'saghen/blink.cmp' },
   },
   {
     'yioneko/nvim-vtsls',
