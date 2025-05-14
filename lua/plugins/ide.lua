@@ -278,6 +278,15 @@ local M = {
     'MeanderingProgrammer/render-markdown.nvim',
     ft = { 'markdown', 'codecompanion' },
   },
+  {
+    'xixiaofinland/sf.nvim',
+    lazy = false,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'ibhagwan/fzf-lua',
+    },
+    config = function() require('sf').setup() end,
+  },
 }
 
 return M
