@@ -1,6 +1,7 @@
 local M = {
   {
     'NeogitOrg/neogit',
+    commit = '9bb1e73c534f767607e0a888f3de4c942825c501',
     cmd = 'Neogit',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -134,6 +135,7 @@ local M = {
   },
   {
     'lewis6991/gitsigns.nvim',
+    commit = 'ce5e1b5ae3455316364ac1c96c2787d7925a2914',
     event = 'VeryLazy',
     config = function()
       require('gitsigns').setup({

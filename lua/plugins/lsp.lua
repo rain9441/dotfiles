@@ -1,6 +1,6 @@
 local M = {
   {
-    'williamboman/mason.nvim',
+    'mason-org/mason.nvim',
     cmd = 'Mason',
     config = function()
       require('mason').setup({
@@ -9,10 +9,10 @@ local M = {
     end,
   },
   {
-    'williamboman/mason-lspconfig.nvim',
+    'mason-org/mason-lspconfig.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
-      'williamboman/mason.nvim',
+      'mason-org/mason.nvim',
     },
     config = function()
       require('mason-lspconfig').setup({
@@ -21,6 +21,13 @@ local M = {
           ['angularls'] = function()
             require('lspconfig').angularls.setup({
               root_dir = require('lspconfig.util').root_pattern('angular.json', 'project.json', 'nx.json', '.git'),
+            })
+          end,
+          ['apex_ls'] = function()
+            require('lspconfig').apex_ls.setup({
+              filetypes = { 'apexcode', 'apex' },
+              apex_enable_semantic_errors = false, -- Whether to allow Apex Language Server to surface semantic errors
+              apex_enable_completion_statistics = false, -- Whether to allow Apex Language Server to collect telemetry on code completion usage
             })
           end,
           ['vtsls'] = function()
@@ -104,13 +111,14 @@ local M = {
     'jay-babu/mason-null-ls.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
-      'williamboman/mason.nvim',
+      'mason-org/mason.nvim',
       'nvimtools/none-ls.nvim',
     },
     config = function()
       require('mason-null-ls').setup({
         ensure_installed = {
-          'angular-language-server',
+          -- 'angular-language-server',
+          'css-lsp',
           'docker-compose-language-service',
           'dockerfile-language-server',
           'eslint_d',
@@ -145,22 +153,21 @@ local M = {
   {
     'neovim/nvim-lspconfig',
     dependencies = {
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
+      'mason-org/mason.nvim',
+      'mason-org/mason-lspconfig.nvim',
       'saghen/blink.cmp',
     },
   },
   {
     'yioneko/nvim-vtsls',
     ft = { 'javascript', 'typescript', 'js', 'ts' },
-    dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
+    dependencies = { 'neovim/nvim-lspconfig', 'mason-org/mason-lspconfig.nvim' },
     config = function() require('lspconfig.configs').vtsls = require('vtsls').lspconfig end,
   },
-
   -- {
   --   'jose-elias-alvarez/typescript.nvim',
   --   ft = { 'javascript', 'typescript', 'js', 'ts' },
-  --   dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason-lspconfig.nvim' },
+  --   dependencies = { 'neovim/nvim-lspconfig', 'mason-org/mason-lspconfig.nvim' },
   --   config = function()
   --     local format = {
   --       indentSwitchCase = true,

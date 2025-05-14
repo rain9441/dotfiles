@@ -44,7 +44,6 @@ set numberwidth=4
 
 " default to utf-8 encoding everywhere
 set encoding=utf-8
-set termencoding=utf-8
 
 set incsearch
 set nohlsearch
@@ -175,8 +174,8 @@ function! GotoMainWindow()
     endif
 endfunction
 
-nnoremap <C-Tab> <cmd>call GotoMainWindow()<cr><cmd>lua Snacks.picker.recent()<cr>
-nnoremap <C-S-Tab> <cmd>call GotoMainWindow()<cr><cmd>lua Snacks.picker.recent()<cr>
+nnoremap <C-Tab> <cmd>call GotoMainWindow()<cr><cmd>lua Snacks.picker.buffers()<cr>
+nnoremap <C-S-Tab> <cmd>call GotoMainWindow()<cr><cmd>lua Snacks.picker.recent({filter = {cwd = true}})<cr>
 
 " Quick Fix
 nnoremap <expr> <leader>qq "<cmd>".(get(getqflist({"winid": 1}), "winid") != 0? "cclose" : "bot copen")."<cr>"
@@ -372,6 +371,8 @@ nnoremap <leader>fp <cmd>lua Snacks.picker()<cr>
 nnoremap <leader>fg <cmd>lua Snacks.picker.grep()<cr>
 nnoremap <leader>fo <cmd>lua Snacks.picker.grep()<cr>
 nnoremap <leader>fb <cmd>lua Snacks.picker.git_branches()<cr>
+nnoremap <leader>fl <cmd>lua Snacks.picker.git_log()<cr>
+nnoremap <leader>fs <cmd>lua Snacks.picker.git_status()<cr>
 nnoremap <leader>fd <cmd>lua Snacks.picker.diagnostics()<cr>
 
 
@@ -417,39 +418,6 @@ nnoremap <A-Up> <cmd>MoveLine(-1)<cr>
 nnoremap <A-Down> <cmd>MoveLine(1)<cr>
 vnoremap <A-Up> <cmd>MoveBlock(-1)<cr>
 vnoremap <A-Down> <cmd>MoveBlock(1)<cr>
-
-" Multicursor.nvim
-noremap <up> <cmd>lua require('multicursor-nvim').lineAddCursor(-1)<cr>
-noremap <down> <cmd>lua require('multicursor-nvim').lineAddCursor(1)<cr>
-noremap <left> <cmd>lua require('multicursor-nvim').prevCursor()<cr>
-noremap <right> <cmd>lua require('multicursor-nvim').nextCursor()<cr>
-
-noremap [; <cmd>lua require('multicursor-nvim').prevCursor()<cr>
-noremap ]; <cmd>lua require('multicursor-nvim').nextCursor()<cr>
-
-noremap <leader>n <cmd>lua require('multicursor-nvim').lineAddCursor(1)<cr>
-noremap <leader>N <cmd>lua require('multicursor-nvim').lineAddCursor(-1)<cr>
-noremap <leader>k <cmd>lua require('multicursor-nvim').lineSkipCursor(1)<cr>
-noremap <leader>K <cmd>lua require('multicursor-nvim').lineSkipCursor(-1)<cr>
-
-noremap <leader>ca <cmd>lua require('multicursor-nvim').matchAllAddCursors()<cr>
-noremap <leader>cx <cmd>lua require('multicursor-nvim').deleteCursor()<cr>
-nnoremap <leader>cr <cmd>lua require('multicursor-nvim').restoreCursors()<cr>
-nnoremap <leader>ca <cmd>lua require('multicursor-nvim').alignCursors()<cr>
-vnoremap <leader>ct <cmd>lua require('multicursor-nvim').transposeCursors(1)<cr>
-vnoremap <leader>cT <cmd>lua require('multicursor-nvim').transposeCursors(-1)<cr>
-
-noremap <c-q> <cmd>lua require('multicursor-nvim').toggleCursor()<cr>
-noremap ; <cmd>lua require('multicursor-nvim').toggleCursor()<cr>
-noremap <leader><c-q> <cmd>lua require('multicursor-nvim').duplicateCursors()<cr>
-nnoremap <esc> <cmd>lua if not require('multicursor-nvim').cursorsEnabled() then require('multicursor-nvim').enableCursors() elseif require('multicursor-nvim').hasCursors() then mc.clearCursors() else end<cr>
-
-vnoremap S <cmd>lua require('multicursor-nvim').splitCursors()<cr>
-vnoremap I <cmd>lua require('multicursor-nvim').insertVisual()<cr>
-vnoremap A <cmd>lua require('multicursor-nvim').appendVisual()<cr>
-vnoremap M <cmd>lua require('multicursor-nvim').matchCursors()<cr>
-vnoremap T <cmd>lua require('multicursor-nvim').transposeCursors(1)<cr>
-vnoremap <C-T> <cmd>lua require('multicursor-nvim').transposeCursors(-1)<cr>
 
 " Cellular
 nnoremap <leader><leader>1 <cmd>CellularAutomaton make_it_rain<cr>

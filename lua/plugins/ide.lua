@@ -181,12 +181,6 @@ local M = {
     end,
   },
   {
-    'jake-stewart/multicursor.nvim',
-    branch = '1.0',
-    event = { 'VeryLazy' },
-    config = function() require('multicursor-nvim').setup() end,
-  },
-  {
     'Eandrju/cellular-automaton.nvim',
     event = { 'VeryLazy' },
     cmd = { 'CellularAutomaton' },
@@ -223,10 +217,8 @@ local M = {
           'fallback',
         },
         ['<Esc>'] = {
-          function(cmp)
-            cmp.cancel()
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
-          end,
+          -- Instead of 'cancel', use cancel and also fallback (because cancel doesn't fallback normally)
+          function(cmp) cmp.cancel() end,
           'fallback',
         },
       },
@@ -257,7 +249,6 @@ local M = {
           return {
             'lsp',
             'path',
-            'snippets',
             'buffer',
           }
         end,
@@ -266,6 +257,7 @@ local M = {
         },
       },
       completion = {
+        accept = { auto_brackets = { enabled = false } },
         list = {
           selection = {
             preselect = false,
