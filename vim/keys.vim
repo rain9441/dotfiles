@@ -20,6 +20,7 @@ set hidden
 set belloff=all
 set expandtab
 set ignorecase
+set smartcase
 
 " don't leave files everywhere
 set nobackup
