@@ -92,10 +92,16 @@ local M = {
           files = {
             formatters = { file = { truncate = 160 } },
             layout = { preset = 'bottom', preview = false },
+            on_show = function()
+              vim.api.nvim_command('cclose')
+            end,
           },
           grep = {
             formatters = { file = { truncate = 160 } },
             layout = { preset = 'bottom', preview = false },
+            on_show = function()
+              vim.api.nvim_command('cclose')
+            end,
           },
           git_branches = {
             format = function(item, picker)

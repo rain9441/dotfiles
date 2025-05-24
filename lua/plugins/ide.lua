@@ -218,7 +218,7 @@ local M = {
         },
         ['<Esc>'] = {
           -- Instead of 'cancel', use cancel and also fallback (because cancel doesn't fallback normally)
-          function(cmp) cmp.cancel() end,
+          function(cmp) cmp.cancel({ callback = function () vim.cmd('stopinsert') end }) end,
           'fallback',
         },
       },
