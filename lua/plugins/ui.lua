@@ -96,87 +96,87 @@ local M = {
   {
     'Bekaboo/deadcolumn.nvim',
     event = 'VeryLazy',
-    config = function()
-      require('deadcolumn').setup({
-        scope = 'buffer',
-        modes = function(mode) return mode:find('^[nictRss\x13]') ~= nil end,
-        blending = {
-          threshold = 0.33,
-        },
-      })
-    end,
+    opts = {
+      scope = 'buffer',
+      modes = function(mode) return mode:find('^[nictRss\x13]') ~= nil end,
+      blending = {
+        threshold = 0.33,
+      },
+    },
   },
   {
     'kevinhwang91/nvim-bqf',
     event = 'VeryLazy',
     cmd = 'BufWinEnter quickfix',
+    opts = {},
   },
   {
     'petertriho/nvim-scrollbar',
     event = 'VeryLazy',
     config = function() require('scrollbar').setup() end,
+    opts = {
+      excluded_filetypes = {
+        'snacks_picker_list',
+      },
+    },
   },
   {
     'gen740/SmoothCursor.nvim',
     event = 'VeryLazy',
-    config = function()
-      require('smoothcursor').setup({
-        fancy = {
-          enable = true,
-          head = { cursor = '▷', texthl = 'SmoothCursorGreen', linehl = nil },
-          body = {
-            { cursor = '', texthl = 'SmoothCursorGreen' },
-            { cursor = '●', texthl = 'SmoothCursorAqua' },
-            { cursor = '•', texthl = 'SmoothCursorAqua' },
-            { cursor = '.', texthl = 'SmoothCursorBlue' },
-          },
+    opts = {
+      fancy = {
+        enable = true,
+        head = { cursor = '▷', texthl = 'SmoothCursorGreen', linehl = nil },
+        body = {
+          { cursor = '', texthl = 'SmoothCursorGreen' },
+          { cursor = '●', texthl = 'SmoothCursorAqua' },
+          { cursor = '•', texthl = 'SmoothCursorAqua' },
+          { cursor = '.', texthl = 'SmoothCursorBlue' },
         },
-        speed = 20,
-        intervals = 8,
-        disable_float_win = true,
-        disabled_filetypes = { 'OverseerList', 'OverseerForm', 'dapui_*' },
-      })
-    end,
+      },
+      speed = 20,
+      intervals = 8,
+      disable_float_win = true,
+      disabled_filetypes = { 'OverseerList', 'OverseerForm', 'dapui_*', 'snacks*' },
+    },
   },
   {
     'm-demare/hlargs.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
-    config = function() require('hlargs').setup({ performance = { slow_parse_delay = 5 } }) end,
+    opts = { performance = { slow_parse_delay = 5 } },
   },
   {
     'sontungexpt/sttusline',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = { 'BufReadPre', 'BufNewFile' },
-    config = function(_, opts)
-      require('sttusline').setup({
-        statusline_color = 'StatusLine',
-        laststatus = 3,
-        components = {
-          'mode',
-          'filename',
-          'git-branch',
-          'git-diff',
-          '%=',
-          'diagnostics',
-          'lsps-formatters',
-          'copilot',
-          'indent',
-          'encoding',
-          'pos-cursor',
-          'pos-cursor-progress',
-        },
-      })
-    end,
+    opts = {
+      statusline_color = 'StatusLine',
+      laststatus = 3,
+      components = {
+        'mode',
+        'filename',
+        'git-branch',
+        'git-diff',
+        '%=',
+        'diagnostics',
+        'lsps-formatters',
+        'copilot',
+        'indent',
+        'encoding',
+        'pos-cursor',
+        'pos-cursor-progress',
+      },
+    },
   },
   {
     'stevearc/oil.nvim',
-    config = function() require('oil').setup() end,
+    opts = {},
   },
   {
     'crispgm/nvim-tabline',
     lazy = false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function() require('tabline').setup({}) end,
+    opts = {},
   },
 }
 

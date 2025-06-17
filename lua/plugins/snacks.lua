@@ -8,9 +8,8 @@ local M = {
       animate = { enabled = false },
       bigfile = { enabled = true },
       dashboard = { enabled = false },
-      explorer = { enabled = false },
       indent = {
-        enabled = true,
+        enabled = false,
         only_scope = true,
         only_current = true,
         animate = {
@@ -68,8 +67,17 @@ local M = {
 
         },
         win = {
+          list = {
+            keys = {
+              -- ["/"] = false,
+              ["<Esc>"] = false,
+              ["0G"] = "list_bottom",
+              ["1G"] = "list_top",
+            },
+          },
           input = {
             keys = {
+              -- ["/"] = false,
               ['<Tab>'] = { 'list_down', mode = { 'i', 'n' } },
               ['<C-Tab>'] = { 'list_down', mode = { 'i', 'n' } },
               ['<S-Tab>'] = { 'list_up', mode = { 'i', 'n' } },
@@ -78,6 +86,20 @@ local M = {
           },
         },
         sources = {
+          explorer = {
+            layout = { 
+              preset = "sidebar",
+              layout = {
+                position = "right",
+                preview = false,
+                width = 50,
+                min_width = 50,
+              },
+              cycle = false,
+            },
+            follow_file = false,
+            watch = false,
+          },
           buffers = {
             formatters = { file = { filename_only = true } },
             layout = 'vscode',
@@ -90,6 +112,7 @@ local M = {
             show_empty = true,
           },
           files = {
+            cmd = 'rg',
             formatters = { file = { truncate = 160 } },
             layout = { preset = 'bottom', preview = false },
             on_show = function()

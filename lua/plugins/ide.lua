@@ -14,7 +14,7 @@ local M = {
   {
     'folke/trouble.nvim',
     cmd = 'Trouble',
-    config = function() require('trouble').setup({}) end,
+    opts = {},
   },
   {
     'Shatur/neovim-session-manager',
@@ -131,19 +131,17 @@ local M = {
     'folke/todo-comments.nvim',
     cmd = { 'TodoQuickFix', 'TodoTelescope', 'TodoTrouble', 'TodoLocList' },
     dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function() require('todo-comments').setup() end,
+    opts = {},
   },
   {
     'LudoPinelli/comment-box.nvim',
     event = 'VeryLazy',
-    config = function()
-      require('comment-box').setup({
-        comment_style = 'line',
-        doc_width = 120, -- width of the document
-        box_width = 100, -- width of the boxes
-        line_width = 96, -- width of the lines
-      })
-    end,
+    opts = {
+      comment_style = 'line',
+      doc_width = 120, -- width of the document
+      box_width = 100, -- width of the boxes
+      line_width = 96, -- width of the lines
+    },
   },
   {
     'stevearc/aerial.nvim',
@@ -160,6 +158,7 @@ local M = {
   {
     'tpope/vim-dadbod',
     cmd = { 'DB' },
+    opts = {},
   },
   {
     'kristijanhusak/vim-dadbod-ui',
@@ -188,11 +187,17 @@ local M = {
   {
     'saghen/blink.cmp',
     lazy = false,
-    dependencies = { 'rafamadriz/friendly-snippets' },
+    dependencies = { 'rafamadriz/friendly-snippets', 'milanglacier/minuet-ai.nvim' },
     version = '*',
     opts = {
       keymap = {
         preset = 'super-tab',
+        ['<A-a>'] = {
+          function(cmp)
+            require('minuet')
+            cmp.show({ providers = { 'minuet' } })
+          end,
+        },
         ['<CR>'] = { 'accept', 'fallback' },
         ['<Tab>'] = {
           function(cmp)
@@ -218,7 +223,9 @@ local M = {
         },
         ['<Esc>'] = {
           -- Instead of 'cancel', use cancel and also fallback (because cancel doesn't fallback normally)
-          function(cmp) cmp.cancel({ callback = function () vim.cmd('stopinsert') end }) end,
+          function(cmp)
+            cmp.cancel({ callback = function() vim.cmd('stopinsert') end })
+          end,
           'fallback',
         },
       },
@@ -250,13 +257,26 @@ local M = {
             'lsp',
             'path',
             'buffer',
+            -- 'minuet',
           }
         end,
         per_filetype = {
           codecompanion = { 'codecompanion' },
         },
+        providers = {
+          minuet = {
+            name = 'minuet',
+            module = 'minuet.blink',
+            async = true,
+            -- Should match minuet.config.request_timeout * 1000,
+            -- since minuet.config.request_timeout is in seconds
+            timeout_ms = 3000,
+            score_offset = 50, -- Gives minuet higher priority among suggestions
+          },
+        },
       },
       completion = {
+        trigger = { prefetch_on_insert = false },
         accept = { auto_brackets = { enabled = false } },
         list = {
           selection = {
@@ -277,6 +297,32 @@ local M = {
   {
     'MeanderingProgrammer/render-markdown.nvim',
     ft = { 'markdown', 'codecompanion' },
+    opts = {},
+  },
+  {
+    'xixiaofinland/sf.nvim',
+    lazy = false,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'ibhagwan/fzf-lua',
+    },
+    opts = {},
+  },
+  {
+    'esmuellert/nvim-eslint',
+    lazy = false,
+    opts = {},
+  },
+  {
+    'axkirillov/hbac.nvim',
+    lazy = false,
+    opts = { threshold = 8 },
+  },
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    lazy = false,
+    main = 'ibl',
+    opts = {},
   },
 }
 

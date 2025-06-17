@@ -76,11 +76,17 @@ set tabstop=4
 set termguicolors
 
 " keep 8 lines above/below our cursor
-set scrolloff=8
+set scrolloff=4
 
 " Always show the tabline
 set showtabline=2
 
+" Reduce the history from 10000 to 50, 10000 is a bit unreasonable and crashes
+" shada file writing.  Limit shada due to lots of shada file issues.
+set history=50
+set shada=!,'0,<3,@20,s1,f0,h
+
+set sessionoptions=blank,buffers,curdir,folds,localoptions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                             Fixes / Overrides                            """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -175,9 +181,6 @@ function! GotoMainWindow()
     endif
 endfunction
 
-nnoremap <C-Tab> <cmd>call GotoMainWindow()<cr><cmd>lua Snacks.picker.buffers()<cr>
-nnoremap <C-S-Tab> <cmd>call GotoMainWindow()<cr><cmd>lua Snacks.picker.recent({filter = {cwd = true}})<cr>
-
 " Quick Fix
 nnoremap <expr> <leader>qq "<cmd>".(get(getqflist({"winid": 1}), "winid") != 0? "cclose" : "bot copen")."<cr>"
 nmap <leader>qo <cmd>bot copen<cr>
@@ -262,11 +265,11 @@ map <leader>qe <cmd>Trouble<cr>
 "map <F3> <cmd>NvimTreeFindFile<cr>
 
 " Neotree
-map <F2> <cmd>Neotree toggle last<cr>
-map <F3> <cmd>Neotree reveal<cr>
-map <leader><F1> <cmd>Neotree focus filesystem<cr>
-map <leader><F2> <cmd>Neotree focus buffers<cr>
-map <leader><F3> <cmd>Neotree focus git_status<cr>
+" map <F2> <cmd>Neotree toggle last<cr>
+" map <F3> <cmd>Neotree reveal<cr>
+" map <leader><F1> <cmd>Neotree focus filesystem<cr>
+" map <leader><F2> <cmd>Neotree focus buffers<cr>
+" map <leader><F3> <cmd>Neotree focus git_status<cr>
 
 " Overseer
 nmap <leader>ol <cmd>OverseerToggle<cr>
@@ -277,7 +280,7 @@ nmap <leader>or <cmd>OverseerRun<cr>
 nmap <leader>tr <cmd>lua require('neotest').overseer.run({})<cr>
 
 " Comment Box
-map <leader>cb1 <cmd>CBlabox<cr>
+map <leader>cb1 <cmd>CBlabox<cr
 map <leader>cb2 <cmd>CBcabox<cr>
 map <leader>cb3 <cmd>CBllbox<cr>
 map <leader>cb4 <cmd>CBccbox<cr>
@@ -286,7 +289,7 @@ map <leader>cl2 <cmd>CBccline<cr>
 map <leader>cbd <cmd>CBd<cr>
 
 " Aerial
-nmap <leader>ae <cmd>call GotoMainWindow()<cr><cmd>AerialToggle! left<cr>
+nmap <leader>ee <cmd>call GotoMainWindow()<cr><cmd>AerialToggle! left<cr>
 nmap [a <cmd>AerialPrev<cr>
 nmap ]a <cmd>AerialNext<cr>
 
@@ -361,12 +364,20 @@ vnoremap t <Plug>(comment_toggle_linewise_visual)
 vnoremap <C-T> <Plug>(comment_toggle_blockwise_visual)
 
 " Snacks
+nnoremap <C-Tab> <cmd>call GotoMainWindow()<cr><cmd>lua Snacks.picker.buffers()<cr>
+nnoremap <C-S-Tab> <cmd>call GotoMainWindow()<cr><cmd>lua Snacks.picker.recent({filter = {cwd = true}})<cr>
+
 nnoremap <A-w><A-w> <cmd>call GotoMainWindow()<cr><cmd>lua require('snacks').bufdelete()<cr>
 nnoremap <A-w><A-a> <cmd>call GotoMainWindow()<cr><cmd>lua require('snacks').bufdelete.all()<cr>
 nnoremap <A-w><A-q> <cmd>call GotoMainWindow()<cr><cmd>lua require('snacks').bufdelete.other()<cr>
 nnoremap & <cmd>lua require('snacks').words.jump(1,1)<cr>
 nnoremap <C-7> <cmd>lua require('snacks').words.jump(-1,1)<cr>
 
+" map <F2> <cmd>Neotree toggle last<cr>
+" map <F3> <cmd>Neotree reveal<cr>
+nnoremap <F2> <cmd>lua require ('./custom/actions').focus_explorer()<cr>
+nnoremap <F3> <cmd>lua require ('./custom/actions').reveal_explorer()<cr>
+" nnoremap <F3> <cmd>lua Snacks.explorer.reveal()<cr>lua Snacks.explorer.open()<cr>
 nnoremap <C-p> <cmd>lua Snacks.picker.files()<cr>
 nnoremap <leader>fp <cmd>lua Snacks.picker()<cr>
 nnoremap <leader>fg <cmd>lua Snacks.picker.grep()<cr>
@@ -375,12 +386,17 @@ nnoremap <leader>fb <cmd>lua Snacks.picker.git_branches()<cr>
 nnoremap <leader>fl <cmd>lua Snacks.picker.git_log()<cr>
 nnoremap <leader>fs <cmd>lua Snacks.picker.git_status()<cr>
 nnoremap <leader>fd <cmd>lua Snacks.picker.diagnostics()<cr>
+nnoremap <leader>err <cmd>lua Snacks.notifier.show_history()<cr>
 
 
 " AI
 noremap <leader>fa <cmd>CodeCompanionActions<cr>
 noremap <leader>at <cmd>CodeCompanionChat Toggle<cr>
+noremap <leader>ac <cmd>CodeCompanionActions<cr>
+noremap <leader>ae <cmd>CodeCompanion /explain<cr>
 vnoremap <leader>aa <cmd>CodeCompanionChat Add<cr>
+vnoremap <leader>al <cmd>CodeCompanion /lsp<cr>
+noremap <leader>amcp <cmd>MCPHub<cr>
 
 " Telescope
 " nnoremap <C-p> <cmd>Telescope find_files<cr>
@@ -423,6 +439,47 @@ vnoremap <A-Down> <cmd>MoveBlock(1)<cr>
 " Cellular
 nnoremap <leader><leader>1 <cmd>CellularAutomaton make_it_rain<cr>
 nnoremap <leader><leader>2 <cmd>CellularAutomaton scramble<cr>
+
+"JSON to Interface
+nnoremap <leader>cu <cmd>ConvertJSONtoLang typescript<cr>
+nnoremap <leader>ct <cmd>ConvertJSONtoLangBuffer typescript<cr>
+
+"CSVview
+nnoremap <leader>csv <cmd>CsvViewToggle<cr>   
+
+"Chainsaw
+noremap <leader>lo <cmd>Chainsaw objectLog<cr>
+noremap <leader>lv <cmd>Chainsaw variableLog<cr>
+noremap <leader>lt <cmd>Chainsaw typeLog<cr>
+noremap <leader>ll <cmd>Chainsaw messageLog<cr>
+noremap <leader>li <cmd>Chainsaw timeLog<cr>
+noremap <leader>ld <cmd>Chainsaw debugLog<cr>
+noremap <leader>ls <cmd>Chainsaw stacktraceLog<cr>
+
+" Substitute
+nnoremap s <cmd>lua require('substitute').operator()<cr>
+nnoremap ss <cmd>lua require('substitute').line()<cr>
+nnoremap S <cmd>lua require('substitute').eol()<cr>
+vnoremap s <cmd>lua require('substitute').visual()<cr>
+
+" Swap Siblings
+noremap <leader>> <cmd>lua require('sibling-swap').swap_with_right()<cr>
+noremap <leader>< <cmd>lua require('sibling-swap').swap_with_left()<cr>
+
+" Grapple
+noremap <leader>1 <cmd>call GotoMainWindow()<cr><cmd>Grapple select index=1<cr>
+noremap <leader>2 <cmd>call GotoMainWindow()<cr><cmd>Grapple select index=2<cr>
+noremap <leader>3 <cmd>call GotoMainWindow()<cr><cmd>Grapple select index=3<cr>
+noremap <leader>4 <cmd>call GotoMainWindow()<cr><cmd>Grapple select index=4<cr>
+noremap <leader>5 <cmd>call GotoMainWindow()<cr><cmd>Grapple select index=5<cr>
+nnoremap <leader>`` <cmd>Grapple tag<cr>
+nnoremap <leader>`1 <cmd>Grapple open_tags<cr>
+nnoremap <leader>`p <cmd>Grapple prune<cr>
+nnoremap <leader>`q <cmd>Grapple quickfix<cr>
+nnoremap <leader>`2 <cmd>Grapple reset<cr>
+nnoremap <leader>`a <cmd>Grapple tag<cr>
+nnoremap <leader>`d <cmd>Grapple untag<cr>
+nnoremap <leader>`r <cmd>Grapple untag<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                    LSP                                   """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -459,12 +516,6 @@ augroup Typescript
   autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-s> <cmd>VtsExec sort_imports<cr>
   autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-i> <cmd>VtsExec add_missing_imports<cr>
   autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-r> <cmd>VtsExec rename_file<cr>
-
-  " autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-u> <cmd>TypescriptRemoveUnused<cr>
-  " autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-s> <cmd>TypescriptOrganizeImports<cr>
-  " autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-i> <cmd>TypescriptAddMissingImports<cr>
-  " autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-r> <cmd>TypescriptRenameFile<cr>
-  " autocmd FileType typescript,javascript nnoremap <buffer> <C-]> <cmd>TSToolsGoToSourceDefinition<cr>
 augroup end
 
 augroup Csharp

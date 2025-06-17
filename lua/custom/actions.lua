@@ -1,4 +1,32 @@
 local M = {
+  reveal_explorer = function()
+    local explorer_pickers = Snacks.picker.get({ source = 'explorer' })
+    for _, v in pairs(explorer_pickers) do
+      if v:is_focused() then
+        v:close()
+      else
+        Snacks.explorer.reveal()
+        v:focus()
+      end
+    end
+    if #explorer_pickers == 0 then
+      -- Snacks.picker.explorer()
+      Snacks.explorer.reveal()
+    end
+  end,
+  focus_explorer = function()
+    local explorer_pickers = Snacks.picker.get({ source = 'explorer' })
+    for _, v in pairs(explorer_pickers) do
+      if v:is_focused() then
+        v:close()
+      else
+        v:focus()
+      end
+    end
+    if #explorer_pickers == 0 then
+      Snacks.picker.explorer()
+    end
+  end,
   code_action_apply_first = function()
     local diagnostics = vim.lsp.diagnostic.get_line_diagnostics()
     if not next(diagnostics) then
