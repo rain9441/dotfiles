@@ -4,7 +4,7 @@ filetype off
 " Comma leader lets go
 let mapleader = ","
 
-set sessionoptions=blank,buffers,curdir,folds,help,localoptions,tabpages,winsize,winpos,terminal
+set sessionoptions=blank,buffers,curdir,folds,localoptions
 
 " this setting controls how long to wait (in ms) before fetching type / symbol information / saving files.
 set updatetime=300
@@ -86,7 +86,6 @@ set showtabline=2
 set history=50
 set shada=!,'0,<3,@20,s1,f0,h
 
-set sessionoptions=blank,buffers,curdir,folds,localoptions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                             Fixes / Overrides                            """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
