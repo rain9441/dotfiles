@@ -1,20 +1,19 @@
----@diagnostic disable: undefined-global
---
--- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 vim.diagnostic.config({
   virtual_text = false,
   float = {
-    header = false,
+    header = "",
     source = 'if_many',
     border = 'single',
     focusable = false,
   },
 })
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+
+---@diagnostic disable-next-line: undefined-field
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     'git',
     'clone',
@@ -49,15 +48,20 @@ require('lazy').setup(
   flatten({
     local_lazy,
     require('plugins/ai'),
+    require('plugins/cmp'),
     require('plugins/core'),
+    require('plugins/dadbod'),
     require('plugins/debugger'),
     require('plugins/git'),
     require('plugins/hydra'),
     require('plugins/ide'),
     require('plugins/interactions'),
     require('plugins/lsp'),
+    require('plugins/misc'),
     -- require('plugins/neo-tree'),
+    require('plugins/overseer'),
     require('plugins/snacks'),
+    require('plugins/telescope'),
     require('plugins/tree-sitter'),
     require('plugins/ui'),
   }),

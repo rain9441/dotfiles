@@ -31,6 +31,8 @@ local M = {
       vim.lsp.enable('apex_ls')
 
       require('mason-lspconfig').setup({
+        ensure_installed = {},
+        automatic_enable = true,
         handlers = {
           function(server) require('lspconfig')[server].setup({}) end,
           ['angularls'] = function()
@@ -41,7 +43,7 @@ local M = {
           ['apex_ls'] = function()
             require('lspconfig').apex_ls.setup({
               filetypes = { 'apexcode', 'apex' },
-              apex_enable_semantic_errors = false, -- Whether to allow Apex Language Server to surface semantic errors
+              apex_enable_semantic_errors = false,       -- Whether to allow Apex Language Server to surface semantic errors
               apex_enable_completion_statistics = false, -- Whether to allow Apex Language Server to collect telemetry on code completion usage
             })
           end,
@@ -165,6 +167,7 @@ local M = {
   },
   {
     'neovim/nvim-lspconfig',
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'mason-org/mason.nvim',
       'mason-org/mason-lspconfig.nvim',
@@ -179,6 +182,11 @@ local M = {
   },
   {
     'Hoffs/omnisharp-extended-lsp.nvim',
+    opts = {},
+  },
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
     opts = {},
   },
 }

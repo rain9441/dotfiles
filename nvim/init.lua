@@ -17,13 +17,13 @@ end
 -- core lua initialization
 require('init')
 
-vim.api.nvim_exec('source ' .. configPath .. '/vim/mruclose.vim', {})
-vim.api.nvim_exec('source ' .. configPath .. '/vim/keys.vim', {})
-vim.api.nvim_exec('source ' .. configPath .. '/vim/mswin.vim', {})
+vim.api.nvim_exec2('source ' .. configPath .. '/vim/mruclose.vim', {})
+vim.api.nvim_exec2('source ' .. configPath .. '/vim/keys.vim', {})
+vim.api.nvim_exec2('source ' .. configPath .. '/vim/mswin.vim', {})
 
 -- If there are local vim files, source those
 local localVim = vim.fn.expand(configPath .. '/local.vim')
 if vim.fn.filereadable(localVim) > 0 then
-  vim.api.nvim_exec('source ' .. localVim, {})
+  vim.api.nvim_exec2('source ' .. localVim, {})
 end
 

@@ -105,12 +105,6 @@ local M = {
     },
   },
   {
-    'kevinhwang91/nvim-bqf',
-    event = 'VeryLazy',
-    cmd = 'BufWinEnter quickfix',
-    opts = {},
-  },
-  {
     'petertriho/nvim-scrollbar',
     event = 'VeryLazy',
     config = function() require('scrollbar').setup() end,
@@ -167,10 +161,6 @@ local M = {
         'pos-cursor-progress',
       },
     },
-  },
-  {
-    'stevearc/oil.nvim',
-    opts = {},
   },
   {
     'crispgm/nvim-tabline',

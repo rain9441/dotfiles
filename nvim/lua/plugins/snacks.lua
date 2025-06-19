@@ -3,7 +3,6 @@ local M = {
     'folke/snacks.nvim',
     priority = 1000,
     lazy = false,
-    ---@type snacks.Config
     opts = {
       animate = { enabled = false },
       bigfile = { enabled = true },
@@ -87,7 +86,7 @@ local M = {
         },
         sources = {
           explorer = {
-            layout = { 
+            layout = {
               preset = "sidebar",
               layout = {
                 position = "right",
@@ -129,7 +128,7 @@ local M = {
           git_branches = {
             format = function(item, picker)
               local a = Snacks.picker.util.align
-              local ret = {} ---@type snacks.picker.Highlight[]
+              local ret = {}
               if item.current then
                 ret[#ret + 1] = { a('', 2), 'SnacksPickerGitBranchCurrent' }
               else

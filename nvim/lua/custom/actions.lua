@@ -1,21 +1,22 @@
 local M = {
+
   reveal_explorer = function()
-    local explorer_pickers = Snacks.picker.get({ source = 'explorer' })
+    local explorer_pickers = require('snacks').picker.get({ source = 'explorer' })
     for _, v in pairs(explorer_pickers) do
       if v:is_focused() then
         v:close()
       else
-        Snacks.explorer.reveal()
+        require('snacks').explorer.reveal()
         v:focus()
       end
     end
     if #explorer_pickers == 0 then
-      -- Snacks.picker.explorer()
-      Snacks.explorer.reveal()
+      require('snacks').explorer.reveal()
     end
   end,
+
   focus_explorer = function()
-    local explorer_pickers = Snacks.picker.get({ source = 'explorer' })
+    local explorer_pickers = require('snacks').picker.get({ source = 'explorer' })
     for _, v in pairs(explorer_pickers) do
       if v:is_focused() then
         v:close()
@@ -24,13 +25,14 @@ local M = {
       end
     end
     if #explorer_pickers == 0 then
-      Snacks.picker.explorer()
+      require('snacks').picker.explorer()
     end
   end,
+
   code_action_apply_first = function()
     local diagnostics = vim.lsp.diagnostic.get_line_diagnostics()
     if not next(diagnostics) then
-      diagnostics = vim.diagnostic.get(0)
+      diagnostics = vim.lsp.diagnostic.get(0)
     end
 
     if not next(diagnostics) then
@@ -51,13 +53,13 @@ local M = {
       }
     end
 
-    isFirst = { first = true }
+    local isFirst = { first = true }
     vim.lsp.buf.code_action({
       context = {
         diagnostics = { diagnostics[1] },
       },
       range = range,
-      filter = function(ix)
+      filter = function()
         local wasFirst = isFirst.first
         isFirst.first = false
         return wasFirst

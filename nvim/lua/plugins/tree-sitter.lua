@@ -11,6 +11,10 @@ local M = {
     config = function()
       require('nvim-treesitter.install').compilers = { 'clang' }
       require('nvim-treesitter.configs').setup({
+        ignore_install = {},
+        auto_install = true,
+        sync_install = false,
+        modules = {},
         yati = { enable = true },
         highlight = { enable = true },
         ensure_installed = {

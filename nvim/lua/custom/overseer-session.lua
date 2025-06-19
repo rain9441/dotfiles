@@ -9,7 +9,11 @@ local M = {
       task:dispose(true)
     end
   end,
-  save_session = function() require('overseer').save_task_bundle(get_cwd_as_name(), nil, { on_conflict = 'overwrite' }) end,
+
+  save_session = function()
+    require('overseer').save_task_bundle(get_cwd_as_name(), nil, { on_conflict = 'overwrite' })
+  end,
+
   load_session = function()
     require('overseer').load_task_bundle(get_cwd_as_name(), { ignore_missing = true, autostart = false })
   end,
