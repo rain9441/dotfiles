@@ -5,6 +5,15 @@ end
 
 vim.g.configpath = configPath
 
+-- If there are local lua files (gitignored), require those
+local localLua = vim.fn.expand(configPath .. '/local.lua')
+if vim.fn.filereadable(localLua) > 0 then
+  local m = dofile(localLua)
+  if m ~= nil and m.lazy ~= nil then
+    _G.local_lazy = m.lazy
+  end
+end
+
 -- core lua initialization
 require('init')
 
@@ -18,8 +27,3 @@ if vim.fn.filereadable(localVim) > 0 then
   vim.api.nvim_exec('source ' .. localVim, {})
 end
 
--- If there are local lua files (gitignored), require those
-local localLua = vim.fn.expand(configPath .. '/local.lua')
-if vim.fn.filereadable(localLua) > 0 then
-  dofile(localLua)
-end

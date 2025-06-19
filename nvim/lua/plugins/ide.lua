@@ -300,15 +300,6 @@ local M = {
     opts = {},
   },
   {
-    'xixiaofinland/sf.nvim',
-    lazy = false,
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-      'ibhagwan/fzf-lua',
-    },
-    opts = {},
-  },
-  {
     'esmuellert/nvim-eslint',
     lazy = false,
     opts = {},

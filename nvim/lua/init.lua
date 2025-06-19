@@ -40,8 +40,14 @@ local function flatten(t1)
   return res
 end
 
+local local_lazy = _G.local_lazy;
+if local_lazy == nil then
+  local_lazy = {}
+end
+
 require('lazy').setup(
   flatten({
+    local_lazy,
     require('plugins/ai'),
     require('plugins/core'),
     require('plugins/debugger'),
