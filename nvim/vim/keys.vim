@@ -164,22 +164,6 @@ noremap <C-kEnter> <cmd>call SetFontSize(16)<cr>
 inoremap <C-kPlus> <C-o><cmd>call AdjustFontSize(+0.25)<cr>
 inoremap <C-kMinus> <C-o><cmd>call AdjustFontSize(-0.25)<cr>
 
-" Custom C-Tab type behavior (main window feel)
-function! GotoMainWindow()
-    let info = getbufinfo('%')[0]
-    let buftype = getbufvar(bufnr(), '&buftype')
-    if !info.listed || !empty(buftype)
-        let wininfo = getwininfo()
-        for win in wininfo
-            if win.bufnr > 0 && getbufinfo(win.bufnr)[0].listed == 1
-                " echo "found" .. getbufinfo(win.bufnr)[0]
-                exec win.winnr .. "wincmd w"
-                break
-            endif
-        endfor
-    endif
-endfunction
-
 " Quick Fix
 nnoremap <expr> <leader>qq "<cmd>".(get(getqflist({"winid": 1}), "winid") != 0? "cclose" : "bot copen")."<cr>"
 nmap <leader>qo <cmd>bot copen<cr>
@@ -288,7 +272,7 @@ map <leader>cl2 <cmd>CBccline<cr>
 map <leader>cbd <cmd>CBd<cr>
 
 " Aerial
-nmap <leader>ee <cmd>call GotoMainWindow()<cr><cmd>AerialToggle! left<cr>
+nmap <leader>ee <cmd>lua require('custom/main-window').activate()<cr><cmd>AerialToggle! left<cr>
 nmap [a <cmd>AerialPrev<cr>
 nmap ]a <cmd>AerialNext<cr>
 
@@ -334,7 +318,7 @@ vnoremap <leader>gr <cmd>lua require('gitsigns').reset_hunk({ vim.fn.line('.'), 
 nnoremap <leader>gu <cmd>lua require('gitsigns').undo_stage_hunk()<cr>
 nnoremap <leader>gR <cmd>lua require('gitsigns').reset_buffer()<cr>
 nnoremap <leader>gp <cmd>lua require('gitsigns').preview_hunk()<cr>
-nnoremap <leader>b <cmd>call GotoMainWindow()<cr><cmd>BlameToggle<cr>
+nnoremap <leader>b <cmd>lua require('custom/main-window').activate()<cr><cmd>BlameToggle<cr>
 nnoremap <leader>gd <cmd>lua require('gitsigns').diffthis()<cr>
 nnoremap <leader>gD <cmd>lua require('gitsigns').diffthis('~')<cr>
 nnoremap <leader>gtd <cmd>lua require('gitsigns').toggle_deleted()<cr>
@@ -363,12 +347,12 @@ vnoremap t <Plug>(comment_toggle_linewise_visual)
 vnoremap <C-T> <Plug>(comment_toggle_blockwise_visual)
 
 " Snacks
-nnoremap <C-Tab> <cmd>call GotoMainWindow()<cr><cmd>lua Snacks.picker.buffers()<cr>
-nnoremap <C-S-Tab> <cmd>call GotoMainWindow()<cr><cmd>lua Snacks.picker.recent({filter = {cwd = true}})<cr>
+nnoremap <C-Tab> <cmd>lua require('custom/main-window').activate()<cr><cmd>lua Snacks.picker.buffers()<cr>
+nnoremap <C-S-Tab> <cmd>lua require('custom/main-window').activate()<cr><cmd>lua Snacks.picker.recent({filter = {cwd = true}})<cr>
 
-nnoremap <A-w><A-w> <cmd>call GotoMainWindow()<cr><cmd>lua require('snacks').bufdelete()<cr>
-nnoremap <A-w><A-a> <cmd>call GotoMainWindow()<cr><cmd>lua require('snacks').bufdelete.all()<cr>
-nnoremap <A-w><A-q> <cmd>call GotoMainWindow()<cr><cmd>lua require('snacks').bufdelete.other()<cr>
+nnoremap <A-w><A-w> <cmd>lua require('custom/main-window').activate()<cr><cmd>lua require('snacks').bufdelete()<cr>
+nnoremap <A-w><A-a> <cmd>lua require('custom/main-window').activate()<cr><cmd>lua require('snacks').bufdelete.all()<cr>
+nnoremap <A-w><A-q> <cmd>lua require('custom/main-window').activate()<cr><cmd>lua require('snacks').bufdelete.other()<cr>
 nnoremap & <cmd>lua require('snacks').words.jump(1,1)<cr>
 nnoremap <C-7> <cmd>lua require('snacks').words.jump(-1,1)<cr>
 
@@ -387,6 +371,8 @@ nnoremap <leader>fs <cmd>lua Snacks.picker.git_status()<cr>
 nnoremap <leader>fd <cmd>lua Snacks.picker.diagnostics()<cr>
 nnoremap <leader>err <cmd>lua Snacks.notifier.show_history()<cr>
 
+nnoremap <leader>tt <cmd>lua require('custom/actions').testrun()<cr>
+nnoremap <leader>ty <cmd>lua require('custom/actions').activate_main_window()<cr>
 
 " AI
 noremap <leader>fa <cmd>CodeCompanionActions<cr>
@@ -466,11 +452,11 @@ noremap <leader>> <cmd>lua require('sibling-swap').swap_with_right()<cr>
 noremap <leader>< <cmd>lua require('sibling-swap').swap_with_left()<cr>
 
 " Grapple
-noremap <leader>1 <cmd>call GotoMainWindow()<cr><cmd>Grapple select index=1<cr>
-noremap <leader>2 <cmd>call GotoMainWindow()<cr><cmd>Grapple select index=2<cr>
-noremap <leader>3 <cmd>call GotoMainWindow()<cr><cmd>Grapple select index=3<cr>
-noremap <leader>4 <cmd>call GotoMainWindow()<cr><cmd>Grapple select index=4<cr>
-noremap <leader>5 <cmd>call GotoMainWindow()<cr><cmd>Grapple select index=5<cr>
+noremap <leader>1 <cmd>lua require('custom/main-window').activate()<cr><cmd>Grapple select index=1<cr>
+noremap <leader>2 <cmd>lua require('custom/main-window').activate()<cr><cmd>Grapple select index=2<cr>
+noremap <leader>3 <cmd>lua require('custom/main-window').activate()<cr><cmd>Grapple select index=3<cr>
+noremap <leader>4 <cmd>lua require('custom/main-window').activate()<cr><cmd>Grapple select index=4<cr>
+noremap <leader>5 <cmd>lua require('custom/main-window').activate()<cr><cmd>Grapple select index=5<cr>
 nnoremap <leader>`` <cmd>Grapple tag<cr>
 nnoremap <leader>`1 <cmd>Grapple open_tags<cr>
 nnoremap <leader>`p <cmd>Grapple prune<cr>

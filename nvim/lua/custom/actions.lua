@@ -1,5 +1,10 @@
 local M = {
 
+  -- testrun = function()
+  --   package.loaded['custom/actions'] = nil
+  --   require('custom/actions')
+  -- end,
+
   reveal_explorer = function()
     local explorer_pickers = require('snacks').picker.get({ source = 'explorer' })
     for _, v in pairs(explorer_pickers) do
