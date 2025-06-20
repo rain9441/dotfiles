@@ -350,7 +350,7 @@ vnoremap <C-T> <Plug>(comment_toggle_blockwise_visual)
 nnoremap <C-Tab> <cmd>lua require('custom/main-window').activate()<cr><cmd>lua Snacks.picker.buffers()<cr>
 nnoremap <C-S-Tab> <cmd>lua require('custom/main-window').activate()<cr><cmd>lua Snacks.picker.recent({filter = {cwd = true}})<cr>
 
-nnoremap <A-w><A-w> <cmd>lua require('custom/main-window').activate()<cr><cmd>lua require('snacks').bufdelete()<cr>
+nnoremap <A-w><A-w> <cmd>lua require('custom/main-window').activate()<cr><cmd>lua require('snacks').bufdelete()<cr><cmd>lua require('custom/main-window').goto_mru_buf()<cr>
 nnoremap <A-w><A-a> <cmd>lua require('custom/main-window').activate()<cr><cmd>lua require('snacks').bufdelete.all()<cr>
 nnoremap <A-w><A-q> <cmd>lua require('custom/main-window').activate()<cr><cmd>lua require('snacks').bufdelete.other()<cr>
 nnoremap & <cmd>lua require('snacks').words.jump(1,1)<cr>
@@ -371,8 +371,8 @@ nnoremap <leader>fs <cmd>lua Snacks.picker.git_status()<cr>
 nnoremap <leader>fd <cmd>lua Snacks.picker.diagnostics()<cr>
 nnoremap <leader>err <cmd>lua Snacks.notifier.show_history()<cr>
 
-nnoremap <leader>tt <cmd>lua require('custom/actions').testrun()<cr>
-nnoremap <leader>ty <cmd>lua require('custom/actions').activate_main_window()<cr>
+nnoremap <leader>tt <cmd>lua package.loaded['custom/main-window'] = nil and require('custom/main-window')<cr>
+nnoremap <leader>ty <cmd>lua require('custom/main-window').goto_mru_buf()<cr>
 
 " AI
 noremap <leader>fa <cmd>CodeCompanionActions<cr>
