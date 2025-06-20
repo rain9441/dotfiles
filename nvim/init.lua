@@ -19,7 +19,6 @@ require('init')
 
 vim.api.nvim_exec2('source ' .. configPath .. '/vim/mruclose.vim', {})
 vim.api.nvim_exec2('source ' .. configPath .. '/vim/keys.vim', {})
-vim.api.nvim_exec2('source ' .. configPath .. '/vim/mswin.vim', {})
 
 -- If there are local vim files, source those
 local localVim = vim.fn.expand(configPath .. '/local.vim')

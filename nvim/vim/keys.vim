@@ -5,6 +5,7 @@ filetype off
 let mapleader = ","
 
 set sessionoptions=blank,buffers,curdir,folds,localoptions
+set backspace=indent,eol,start
 
 " this setting controls how long to wait (in ms) before fetching type / symbol information / saving files.
 set updatetime=300
@@ -425,6 +426,9 @@ vnoremap <A-Down> <cmd>MoveBlock(1)<cr>
 " Cellular
 nnoremap <leader><leader>1 <cmd>CellularAutomaton make_it_rain<cr>
 nnoremap <leader><leader>2 <cmd>CellularAutomaton scramble<cr>
+
+"VimBeBetter
+nnoremap <leader>vbb <cmd>VimBeBetter<cr>
 
 "JSON to Interface
 nnoremap <leader>cu <cmd>ConvertJSONtoLang typescript<cr>

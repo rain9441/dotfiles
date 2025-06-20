@@ -4,6 +4,10 @@ local M = {
     event = { 'VeryLazy' },
     cmd = { 'CellularAutomaton' },
   },
+  { 
+    'szymonwilczek/vim-be-better',
+    lazy = false,
+  },
 }
 
 return M
