@@ -32,9 +32,3 @@ Windows Registry Editor Version 5.00
 
 [HKEY_CLASSES_ROOT\Directory\Background\shell\nvimadmin\command]
 @="cmd /c start /min \"\" powershell -Command \"Start-Process 'C:\\Program Files\\Neovim-qt\\bin\\nvim-qt.exe' '%V' -Verb runAs\""
-
-; ╭───────────────────────────────────────────────────────────────────────────────────────────────────╮
-; │ Add "(Edit|Open) with NVIM[ as Admin]"                                                            │
-; ╰───────────────────────────────────────────────────────────────────────────────────────────────────╯
-[HKEY_CURRENT_USER\Software\Microsoft\Command Processor]
-"AutoRun"="\"C:\\Program Files (x86)\\clink\\clink.bat\" inject --autorun && doskey.exe /macrofile=%USERPROFILE%\\aliases"

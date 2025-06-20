@@ -1,0 +1,7 @@
+Windows Registry Editor Version 5.00
+
+; ╭───────────────────────────────────────────────────────────────────────────────────────────────────╮
+; │ Clink aliases from macrofile                                                                      │
+; ╰───────────────────────────────────────────────────────────────────────────────────────────────────╯
+[HKEY_CURRENT_USER\Software\Microsoft\Command Processor]
+"AutoRun"="\"C:\\Program Files (x86)\\clink\\clink.bat\" inject --autorun && doskey.exe /macrofile=%USERPROFILE%\\aliases"

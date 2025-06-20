@@ -1,0 +1,35 @@
+Windows Registry Editor Version 5.00
+
+; ╭───────────────────────────────────────────────────────────────────────────────────────────────────╮
+; │ Add "(Edit|Open) with Neovide[ as Admin]"                                                            │
+; ╰───────────────────────────────────────────────────────────────────────────────────────────────────╯
+[HKEY_CLASSES_ROOT\*\shell\neovide]
+@="Edit with Neovide"
+"Icon"="C:\\Program Files\\Neovide\\neovide.exe"
+
+[HKEY_CLASSES_ROOT\*\shell\neovide\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%1\""
+
+[HKEY_CLASSES_ROOT\*\shell\neovideadmin]
+@="Edit with Neovide (Admin)"
+"Icon"="C:\\Program Files\\Neovide\\neovide.exe"
+"HasLUAShield"=""
+
+[HKEY_CLASSES_ROOT\*\shell\neovideadmin\command]
+@="cmd /c start /min \"\" powershell -Command \"Start-Process 'C:\\Program Files\\Neovide\\neovide.exe' '%1' -Verb runAs\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\neovide]
+@="Open with Neovide"
+"Icon"="C:\\Program Files\\Neovide\\neovide.exe"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\neovide\command]
+@="\"C:\\Program Files\\Neovide\\neovide.exe\" \"%V\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\neovideadmin]
+@="Open with Neovide (Admin)"
+"Icon"="C:\\Program Files\\Neovide\\neovide.exe"
+"HasLUAShield"=""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\neovideadmin\command]
+@="cmd /c start /min \"\" powershell -Command \"Start-Process 'C:\\Program Files\\Neovide\\neovide.exe' '%V' -Verb runAs\""
+

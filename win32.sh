@@ -35,7 +35,12 @@ function install() {
     ln -s "$1" "$2"
 }
 
+mkdir -p "$HOME/AppData/Roaming/neovide/"
+mkdir -p "$HOME/AppData/Local/nvim/"
+mkdir -p "$HOME/AppData/Local/Microsoft/PowerToys/Keyboard Manager/"
+
 install "$LOCAL_PATH/aliases" "$HOME/aliases" "Aliases"
+install "$LOCAL_PATH/core/neovide/config.toml" "$HOME/AppData/Roaming/neovide/config.toml" "Neovide"
 install "$LOCAL_PATH/core/.wezterm.lua" "$HOME/.wezterm.lua" "Wezterm"
 install "$LOCAL_PATH/core/.gitconfig" "$HOME/.gitconfig" "GitConfig"
 install "$LOCAL_PATH/core/.gitignore" "$HOME/.gitignore" "GitIgnore"

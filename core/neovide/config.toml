@@ -1,0 +1,10 @@
+maximized = true
+tabs = false
+
+[font]
+normal = ['RobotoMono Nerd Font']
+size = 10.5
+
+[box-drawing]
+mode = "font-glyph"
+

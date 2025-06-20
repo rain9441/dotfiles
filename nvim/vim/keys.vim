@@ -35,6 +35,7 @@ set breakindentopt+=shift:4
 
 " Highlight the whole line
 set cursorline
+set cursorlineopt=screenline,number
 
 " Set up color column in all file types as 120
 autocmd FileType * set colorcolumn=120
@@ -87,7 +88,7 @@ set history=50
 set shada=!,'0,<3,@20,s1,f0,h
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""                             Fixes / Overrides                            """
+""""                             Fixes / Overrides                            """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Turn off buflisted for some buffers to avoid them affecting main window feel

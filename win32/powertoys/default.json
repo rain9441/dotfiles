@@ -38,7 +38,7 @@
         "operationType": 1,
         "runProgramAlreadyRunningAction": 0,
         "runProgramStartWindowType": 0,
-        "runProgramFilePath": "C:\\Program Files\\Neovim-qt\\bin\\nvim-qt.exe",
+        "runProgramFilePath": "C:\\Program Files\\Neovide\\neovide.exe",
         "runProgramArgs": "",
         "runProgramStartInDir": "c:\\projects",
         "unicodeText": "*Unsupported*"

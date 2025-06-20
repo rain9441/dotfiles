@@ -12,14 +12,22 @@ Download & install & setup
     * Probable path: `C:\Program Files\Git\usr\bin`
 * Install neovim
   * `winget install neovim.neovim`
-* Download and install Neovim-QT (Neovim >= 1.0)
-  * `https://github.com/equalsraf/neovim-qt`
-  * Install into `C:\Program Files\Neovim-qt\`
+* Download and install a GUI
+  * Neovide
+    * `winget install Neovide.Neovide`
+  * Neovim-QT
+      * `https://github.com/equalsraf/neovim-qt`
+      * Install into `C:\Program Files\Neovim-qt\`
 * Symlink all dotfiles to this repo
   * `bash win32.sh`
   * unlink and force relinking: `bash win32.sh -f` 
-* Run windows registry file for right click "Open with NVIM" support
-  * `nvim.reg`
+  * Restart PowerToys
+* Run windows registry files for right click "Open with ..." support (in /win32)
+  * `clink-alias.reg` -- add aliases macrofile to clink shell
+  * `neovide.reg` -- add "Open with Neovide" support
+  * `neovide-del.reg` -- remove "Open with Neovide" support
+  * `nvim-qt.reg` -- add "Open with NVIM" support
+  * `nvim-qt-del.reg` -- remove "Open with NVIM" support
 * Dependencies
   * Ripgrep: `winget install BurnSushi.ripgrep.MSVC`
   * Fd: `winget install sharkdp.fd`

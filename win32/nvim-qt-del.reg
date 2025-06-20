@@ -1,0 +1,10 @@
+Windows Registry Editor Version 5.00
+
+[-HKEY_CLASSES_ROOT\*\shell\nvim]
+[-HKEY_CLASSES_ROOT\*\shell\nvim\command]
+[-HKEY_CLASSES_ROOT\*\shell\nvimadmin]
+[-HKEY_CLASSES_ROOT\*\shell\nvimadmin\command]
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\nvim]
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\nvim\command]
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\nvimadmin]
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\nvimadmin\command]
