@@ -36,7 +36,6 @@ function install() {
 }
 
 mkdir -p "$HOME/AppData/Roaming/neovide/"
-mkdir -p "$HOME/AppData/Local/nvim/"
 mkdir -p "$HOME/AppData/Local/Microsoft/PowerToys/Keyboard Manager/"
 
 install "$LOCAL_PATH/aliases" "$HOME/aliases" "Aliases"
