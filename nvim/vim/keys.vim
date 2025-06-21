@@ -179,6 +179,10 @@ nmap ]q <cmd>cn<cr>
 nnoremap <C-N> nzz
 nnoremap <C-S-N> Nzz
 
+" C-s for quick save
+nnoremap <C-s> <cmd>update<cr>
+inoremap <C-s> <C-o><cmd>update<cr>
+
 " Command :Gf <file> to find in files across all files in the current git repo
 command! -nargs=1 Gf noautocmd lvimgrep /<args>/gj `git ls-files` | lw
 command! -nargs=1 Gfc noautocmd lvimgrep /<args>\C/gj `git ls-files` | lw
