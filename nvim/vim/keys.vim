@@ -196,6 +196,11 @@ nmap <C-j> <cmd>wincmd j<cr>
 nmap <C-h> <cmd>wincmd h<cr>
 nmap <C-l> <cmd>wincmd l<cr>
 
+" When leaving insert mode on an empty line, coerce autoindent to leave the indentation
+inoremap <CR> <CR>x<BS>
+nnoremap o ox<BS>
+nnoremap O Ox<BS>
+
 " Use gj to navigate in wrapped lines more elegantly
 noremap <expr> j v:count ? 'j' : 'gj'
 noremap <expr> k v:count ? 'k' : 'gk'
