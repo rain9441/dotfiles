@@ -44,7 +44,7 @@
         "unicodeText": "*Unsupported*"
       },
       {
-        "originalKeys": "91;192",
+        "originalKeys": "162;192",
         "exactMatch": true,
         "runProgramElevationLevel": 0,
         "operationType": 1,

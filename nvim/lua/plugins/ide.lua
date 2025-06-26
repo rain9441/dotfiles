@@ -63,11 +63,6 @@ local M = {
     opts = {},
   },
   {
-    'axkirillov/hbac.nvim',
-    lazy = false,
-    opts = { threshold = 8 },
-  },
-  {
     'lukas-reineke/indent-blankline.nvim',
     lazy = false,
     main = 'ibl',
