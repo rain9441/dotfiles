@@ -34,7 +34,7 @@ local M = {
         menu = '#21222C',
         visual = '#3E4452',
         gutter_fg = '#4B5263',
-        nontext = '#3B4048',
+        nontext = '#7B8088',
       }
 
       require('dracula').setup({
