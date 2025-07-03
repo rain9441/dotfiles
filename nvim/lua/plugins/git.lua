@@ -123,6 +123,9 @@ local M = {
   {
     'sindrets/diffview.nvim',
     cmd = { 'DiffviewFileHistory', 'DiffviewOpen' },
+    opts = {
+      enhanced_diff_hl = true,
+    }
   },
   {
     'linrongbin16/gitlinker.nvim',

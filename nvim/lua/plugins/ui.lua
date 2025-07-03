@@ -27,8 +27,8 @@ local M = {
         bright_magenta = '#FF92DF',
         bright_cyan = '#A4FFFF',
         bright_white = '#FFFFFF',
-        dark_red = '#331111',
-        dark_green = '#103218',
+        dark_red = '#431616',
+        dark_green = '#18421F',
         darker_red = '#190808',
         darker_green = '#08190c',
         menu = '#21222C',
@@ -86,9 +86,9 @@ local M = {
           NeogitDiffDelete = { bg = colors.darker_red, fg = colors.red },
           NeogitDiffDeleteHighlight = { bg = colors.dark_red, fg = colors.bright_red },
 
-          DiffviewDiffText = { bg = colors.dark_green, fg = colors.green },
-          DiffAdd = { bg = colors.dark_green, fg = colors.green },
-          DiffDelete = { bg = colors.dark_red, fg = colors.red },
+          DiffviewDiffText = { bg = colors.dark_green, fg = nil },
+          DiffAdd = { bg = colors.dark_green, fg = nil },
+          DiffDelete = { bg = colors.dark_red, fg = nil },
         },
       })
     end,
