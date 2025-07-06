@@ -37,11 +37,14 @@ local M = {
           'fallback',
         },
         ['<Esc>'] = {
-          -- Instead of 'cancel', use cancel and also fallback (because cancel doesn't fallback normally)
+          -- Instead of 'cancel', use cancel with exit-insert mode and also fallback (because cancel doesn't fallback normally)
           function(cmp)
-            cmp.cancel({ callback = function() vim.cmd('stopinsert') end })
+            if cmp.is_active() and cmp.is_visible() then
+              cmp.cancel({ callback = function() vim.cmd('stopinsert') end })
+              return true
+            end
           end,
-          'fallback',
+          'fallback'
         },
       },
 
