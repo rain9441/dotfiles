@@ -28,7 +28,8 @@ local function notNvim(keys)
       key = key_info.key,
       action = wezterm.action_callback(function(window, pane)
         local process_name = pane:get_foreground_process_name()
-        if process_name:match('nvim.exe$') or process_name:match('nvim$') then
+        wezterm.log_error('process: ' .. process_name)
+        if process_name:match('nvim.exe$') or process_name:match('nvim$') or process_name:match('wslhost.exe$') then
           window:perform_action(wezterm.action({ SendKey = { mods = key_info.mods, key = key_info.key } }), pane)
         else
           window:perform_action(key_info.action, pane)
@@ -54,10 +55,10 @@ config.keys = merge(
     { mods = 'CTRL', key = '3', action = wezterm.action.ActivateTab(2) },
     { mods = 'CTRL', key = '4', action = wezterm.action.ActivateTab(3) },
     { mods = 'CTRL', key = '5', action = wezterm.action.ActivateTab(4) },
-    { mods = 'CTRL', key = 'p', action = wezterm.action.ActivateCommandPalette },
     { mods = 'CTRL', key = 't', action = wezterm.action.SpawnTab('CurrentPaneDomain') },
   },
   notNvim({
+    { mods = 'CTRL',       key = 'p', action = wezterm.action.ActivateCommandPalette },
     { mods = 'CTRL',       key = 'u', action = wezterm.action.ScrollByPage(-0.7) },
     { mods = 'CTRL',       key = 'd', action = wezterm.action.ScrollByPage(0.7) },
     { mods = 'CTRL',       key = 'y', action = wezterm.action.ScrollByLine(-1) },
