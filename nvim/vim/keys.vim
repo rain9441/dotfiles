@@ -196,6 +196,11 @@ nmap <C-j> <cmd>wincmd j<cr>
 nmap <C-h> <cmd>wincmd h<cr>
 nmap <C-l> <cmd>wincmd l<cr>
 
+tmap <C-\><C-k> <cmd>wincmd k<cr>
+tmap <C-\><C-j> <cmd>wincmd j<cr>
+tmap <C-\><C-h> <cmd>wincmd h<cr>
+tmap <C-\><C-l> <cmd>wincmd l<cr>
+
 " When leaving insert mode on an empty line, coerce autoindent to leave the indentation
 inoremap <CR> <CR>x<BS>
 nnoremap o ox<BS>
@@ -283,7 +288,7 @@ map <leader>cl2 <cmd>CBccline<cr>
 map <leader>cbd <cmd>CBd<cr>
 
 " Aerial
-nmap <leader>ee <cmd>lua require('custom/main-window').activate()<cr><cmd>AerialToggle! left<cr>
+nmap <leader>ae <cmd>lua require('custom/main-window').activate()<cr><cmd>AerialToggle! left<cr>
 nmap [a <cmd>AerialPrev<cr>
 nmap ]a <cmd>AerialNext<cr>
 
@@ -389,7 +394,7 @@ nnoremap <leader>ty <cmd>lua require('custom/main-window').goto_mru_buf()<cr>
 noremap <leader>fa <cmd>CodeCompanionActions<cr>
 noremap <leader>at <cmd>CodeCompanionChat Toggle<cr>
 noremap <leader>ac <cmd>CodeCompanionActions<cr>
-noremap <leader>ae <cmd>CodeCompanion /explain<cr>
+noremap <leader>ax <cmd>CodeCompanion /explain<cr>
 vnoremap <leader>aa <cmd>CodeCompanionChat Add<cr>
 vnoremap <leader>al <cmd>CodeCompanion /lsp<cr>
 noremap <leader>amcp <cmd>MCPHub<cr>
@@ -417,7 +422,15 @@ nnoremap <leader>ss <cmd>SessionManager save_current_session<cr>
 nnoremap <leader>sd <cmd>SessionManager delete_session<cr>
 
 " Color picker
-nnoremap <leader>ep <cmd>CccPick<cr>
+nnoremap <leader>cp <cmd>CccPick<cr>
+
+nnoremap <leader>eo <cmd>ClaudeCode<cr>
+vnoremap <leader>ee <cmd>ClaudeCodeFocus<cr>
+vnoremap <leader>es <cmd>ClaudeCodeSend<cr>
+vnoremap <leader>em <cmd>ClaudeCodeSelectModel<cr>
+vnoremap <leader>eb <cmd>ClaudeCodeAdd %<cr>
+vnoremap <leader>ea <cmd>ClaudeCodeAccept<cr>
+vnoremap <leader>ed <cmd>ClaudeCodeDeny<cr>
 
 " Treesj (join / split funcitons
 nnoremap <leader>m <cmd>TSJToggle<cr>
@@ -450,10 +463,10 @@ nnoremap <leader>csv <cmd>CsvViewToggle<cr>
 noremap <leader>lo <cmd>Chainsaw objectLog<cr>
 noremap <leader>lv <cmd>Chainsaw variableLog<cr>
 noremap <leader>lt <cmd>Chainsaw typeLog<cr>
-noremap <leader>ll <cmd>Chainsaw messageLog<cr>
+noremap <leader>lm <cmd>Chainsaw messageLog<cr>
 noremap <leader>li <cmd>Chainsaw timeLog<cr>
 noremap <leader>ld <cmd>Chainsaw debugLog<cr>
-noremap <leader>ls <cmd>Chainsaw stacktraceLog<cr>
+noremap <leader>lr <cmd>Chainsaw stacktraceLog<cr>
 
 " Substitute
 nnoremap s <cmd>lua require('substitute').operator()<cr>

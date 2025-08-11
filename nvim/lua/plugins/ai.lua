@@ -84,6 +84,18 @@ local M = {
       },
     },
   },
+  {
+    'coder/claudecode.nvim',
+    event = { 'VeryLazy' },
+    dependencies = { "folke/snacks.nvim" },
+    opts = {
+      -- terminal_cmd = "~/.claude/local/claude", -- Point to local installation
+      terminal = {
+        split_side = "left",
+        split_width_percentage = 0.5,
+      }
+    },
+  }
 }
 
 return M
