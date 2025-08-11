@@ -16,6 +16,9 @@ local M = {
           enabled = true
         },
         graph_style = "unicode",
+        integrations = {
+          diffview = true,
+        },
         commit_editor = {
           kind = "vsplit",
         },

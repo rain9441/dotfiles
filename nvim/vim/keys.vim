@@ -343,6 +343,11 @@ nnoremap [c <cmd>lua require('gitsigns').prev_hunk()<cr>
 nnoremap <leader>gl <cmd>GitLink<cr>
 vnoremap <leader>gL <cmd>GitLink blame<cr>
 nnoremap <leader>gg <cmd>Neogit<cr>
+augroup Neogit
+  autocmd!
+  autocmd FileType Neogit* nnoremap <leader>dv <cmd>lua vim.cmd("DiffviewOpen " .. vim.fn.expand("<cword>") .. "^!")<cr>
+augroup end
+
 
 nnoremap <leader>vh <cmd>DiffviewFileHistory<cr>
 nnoremap <leader>vf <cmd>DiffviewFileHistory %<cr>
