@@ -1,1 +1,6 @@
 .pjg/
+
+# Claude / AI
+CLAUDE.local.md
+.claude/*.local.json
+.plans/
