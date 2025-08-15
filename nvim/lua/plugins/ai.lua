@@ -4,7 +4,7 @@ local M = {
     -- event = { 'VeryLazy' },
     cmd = { 'MCPHub' },
     dependencies = { 'nvim-lua/plenary.nvim' },
-    build = 'npm install -g mcp-hub@latest', -- Installs `mcp-hub` node binary globally
+    build = "bundled_build.lua",
     opts = {}
   },
   {
