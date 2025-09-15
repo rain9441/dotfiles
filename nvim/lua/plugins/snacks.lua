@@ -153,6 +153,11 @@ local M = {
             end,
             layout = { preview = false },
             win = {
+              list = {
+                keys = {
+                  ['<c-x>'] = { 'git_log_delete_force', mode = { 'n', 'i' } },
+                }
+              },
               input = {
                 keys = {
                   ['<c-x>'] = { 'git_log_delete_force', mode = { 'n', 'i' } },

@@ -29,6 +29,7 @@ local M = {
           'bash',
           'dockerfile',
           'git_config',
+          'gitcommit',
           'graphql',
           'jsdoc',
           'lua',
