@@ -264,11 +264,11 @@ map <leader>qe <cmd>Trouble<cr>
 "map <F3> <cmd>NvimTreeFindFile<cr>
 
 " Neotree
-" map <F2> <cmd>Neotree toggle last<cr>
-" map <F3> <cmd>Neotree reveal<cr>
-" map <leader><F1> <cmd>Neotree focus filesystem<cr>
-" map <leader><F2> <cmd>Neotree focus buffers<cr>
-" map <leader><F3> <cmd>Neotree focus git_status<cr>
+map <F2> <cmd>Neotree toggle last<cr>
+map <F3> <cmd>Neotree reveal<cr>
+map <leader><F1> <cmd>Neotree focus filesystem<cr>
+map <leader><F2> <cmd>Neotree focus buffers<cr>
+map <leader><F3> <cmd>Neotree focus git_status<cr>
 
 " Overseer
 nmap <leader>ol <cmd>OverseerToggle<cr>
@@ -377,10 +377,8 @@ nnoremap <A-w><A-q> <cmd>lua require('custom/main-window').activate()<cr><cmd>lu
 nnoremap & <cmd>lua require('snacks').words.jump(1,1)<cr>
 nnoremap <C-7> <cmd>lua require('snacks').words.jump(-1,1)<cr>
 
-" map <F2> <cmd>Neotree toggle last<cr>
-" map <F3> <cmd>Neotree reveal<cr>
-nnoremap <F2> <cmd>lua require ('./custom/actions').focus_explorer()<cr>
-nnoremap <F3> <cmd>lua require ('./custom/actions').reveal_explorer()<cr>
+" nnoremap <F2> <cmd>lua require ('./custom/actions').focus_explorer()<cr>
+" nnoremap <F3> <cmd>lua require ('./custom/actions').reveal_explorer()<cr>
 " nnoremap <F3> <cmd>lua Snacks.explorer.reveal()<cr>lua Snacks.explorer.open()<cr>
 nnoremap <C-p> <cmd>lua Snacks.picker.files()<cr>
 nnoremap <leader>fp <cmd>lua Snacks.picker()<cr>
@@ -519,12 +517,6 @@ nnoremap <A-k><A-u> <nop>
 nnoremap <A-k><A-s> <nop>
 nnoremap <A-k><A-i> <nop>
 nnoremap <A-k><A-r> <nop>
-
-augroup Lsp
-  autocmd!
-  " Automatically open diagnostics window after updatetime (300)ms
-  autocmd CursorHold * lua vim.diagnostic.open_float({ scope = 'cursor', focusable = false })
-augroup end
 
 " Typescript specific
 augroup Typescript

@@ -58,7 +58,7 @@ require('lazy').setup(
     require('plugins/interactions'),
     require('plugins/lsp'),
     require('plugins/misc'),
-    -- require('plugins/neo-tree'),
+    require('plugins/neo-tree'),
     require('plugins/overseer'),
     require('plugins/snacks'),
     require('plugins/telescope'),

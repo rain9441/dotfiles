@@ -1,5 +1,5 @@
 local configPath = '~/.config/nvim'
-if vim.fn.has('win') > 0 then
+if vim.fn.has('win') > 0 or vim.fn.has('win32') then
   configPath = '~/AppData/Local/nvim'
 end
 

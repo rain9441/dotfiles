@@ -66,6 +66,11 @@ local M = {
 
         },
         win = {
+          preview = {
+            wo = {
+              relativenumber = false,
+            },
+          },
           list = {
             keys = {
               -- ["/"] = false,
