@@ -10,6 +10,7 @@ local M = {
         bg = '#101116',
         fg = '#F8F8F2',
         fgdark = '#D8D8D2',
+        fggrey = '#B0B0B0',
         cursorline = '#303137',
         selection = '#44475A',
         comment = '#6272A4',
@@ -27,6 +28,7 @@ local M = {
         bright_magenta = '#FF92DF',
         bright_cyan = '#A4FFFF',
         bright_white = '#FFFFFF',
+        dark_yellow = '#202008',
         dark_red = '#431616',
         dark_green = '#18421F',
         darker_red = '#190808',
@@ -89,6 +91,7 @@ local M = {
           DiffviewDiffText = { bg = colors.dark_green, fg = nil },
           DiffAdd = { bg = colors.dark_green, fg = nil },
           DiffDelete = { bg = colors.dark_red, fg = nil },
+          DiffChange = { bg = colors.dark_yellow, fg = colors.fggrey },
         },
       })
     end,
