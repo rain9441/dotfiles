@@ -1,13 +1,5 @@
 local M = {
   {
-    'ravitemer/mcphub.nvim',
-    -- event = { 'VeryLazy' },
-    cmd = { 'MCPHub' },
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    build = "bundled_build.lua",
-    opts = {}
-  },
-  {
     'milanglacier/minuet-ai.nvim',
     -- event = { 'VeryLazy' },
     opts = {
@@ -43,7 +35,7 @@ local M = {
     'olimorris/codecompanion.nvim',
     -- event = { 'VeryLazy' },
     cmd = { 'CodeCompanion', 'CodeCompanionCmd', 'CodeCompanionAction', 'CodeCompanionChat' },
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter', 'ravitemer/mcphub.nvim' },
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
     init = function()
       -- Always enable auto-tool-mode
       vim.g.codecompanion_auto_tool_mode = true
@@ -55,8 +47,10 @@ local M = {
       strategies = {
         chat = {
           adapter = {
-            name = 'anthropic',
-            model = 'claude-sonnet-4-20250514',
+            type = 'acp',
+            name = 'claude_code',
+            -- model = 'claude-sonnet-4-20250514',
+            model = 'claude-opus-4-1-20250805',
           },
         },
         inline = {
@@ -72,14 +66,15 @@ local M = {
           },
         },
       },
-      extensions = {
-        mcphub = {
-          callback = 'mcphub.extensions.codecompanion',
-          opts = {
-            -- show_result_in_chat = true, -- Show mcp tool results in chat
-            make_vars = true,           -- Convert resources to #variables
-            make_slash_commands = true, -- Add prompts as /slash commands
-          },
+      adapters = {
+        acp = {
+          claude_code = function()
+            return require("codecompanion.adapters").extend("claude_code", {
+              env = {
+                CLAUDE_CODE_OAUTH_TOKEN = "cmd:cat %USERPROFILE%/.claude/.token",
+              },
+            })
+          end,
         },
       },
     },
