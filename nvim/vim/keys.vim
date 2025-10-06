@@ -354,6 +354,13 @@ nnoremap <leader>vf <cmd>DiffviewFileHistory %<cr>
 nnoremap <leader>v% <cmd>DiffviewFileHistory %<cr>
 nnoremap <leader>vv <cmd>DiffviewOpen<cr>
 
+nnoremap <leader>bs <cmd>BreakString<cr>
+nnoremap <leader>bp <cmd>PreviewString<cr>
+
+nnoremap <leader>mps <cmd>MermaidPreviewStart<cr>
+nnoremap <leader>mpt <cmd>MermaidPreviewStop<cr>
+nnoremap <leader>mpr <cmd>MermaidPreviewRefresh<cr>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                               Interactions                               """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

@@ -48,8 +48,12 @@ local M = {
       'nvim-tree/nvim-web-devicons',
     },
     config = function()
-      require('aerial').setup({})
-      require('telescope').extensions.aerial.aerial()
+      require('aerial').setup({
+        layout = {
+          default_direction = 'left',
+          attach_mode = 'global',
+        },
+      })
     end,
   },
   {
@@ -77,6 +81,40 @@ local M = {
   {
     'stevearc/oil.nvim',
     opts = {},
+  },
+  {
+    'duqcyxwd/stringbreaker.nvim',
+    cmd = { 'BreakString', 'PreviewString', 'SaveString', 'SyncString', 'BreakStringCancel' },
+    opts = {},
+  },
+  {
+    'barrett-ruth/live-server.nvim',
+    cmd = { 'LiveServerStart', 'LiveServerStop', 'LiveServerToggle' },
+    opts = {},
+  },
+  {
+    'selimacerbas/mermaid-playground.nvim',
+    dependencies = { 'barrett-ruth/live-server.nvim' },
+    cmd = { 'MermaidPreviewStart', 'MermaidPreviewStop', 'MermaidPreviewRefresh' },
+    opts = {
+      overwrite_index_on_start = false,
+    },
+  },
+  {
+    'Piotr1215/presenterm.nvim',
+    lazy = false,
+    build = false,
+    opts = {
+      default_keybindings = true,
+      picker = {
+        provider = 'snacks',
+      },
+      preview = {
+        login_shell = false,
+        command = 'presenterm -xX',
+        presentation_preview_sync = true,
+      },
+    },
   },
 }
 
