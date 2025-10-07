@@ -154,6 +154,10 @@ local M = {
           untracked = { text = '?' },
         },
         signs_staged_enable = true,
+        numhl = true,
+        diff_opts = {
+          algorithm = "histogram",
+        }
       })
     end,
   },

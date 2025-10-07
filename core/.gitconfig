@@ -8,3 +8,6 @@
     excludesfile = ~/.gitignore
 [alias]
     llog = log --oneline --graph
+[diff]
+	algorithm = histogram
+

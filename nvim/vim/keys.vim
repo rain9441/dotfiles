@@ -328,16 +328,22 @@ augroup END
 """                                   Git                                    """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>gs <cmd>lua require('gitsigns').stage_hunk()<cr>
+nnoremap <leader>gbs <cmd>lua require('gitsigns').stage_buffer()<cr>
 nnoremap <leader>gr <cmd>lua require('gitsigns').reset_hunk()<cr>
+nnoremap <leader>gbr <cmd>lua require('gitsigns').reset_buffer()<cr>
 vnoremap <leader>gs <cmd>lua require('gitsigns').stage_hunk({ vim.fn.line('.'), vim.fn.line('v')})<cr>
 vnoremap <leader>gr <cmd>lua require('gitsigns').reset_hunk({ vim.fn.line('.'), vim.fn.line('v')})<cr>
-nnoremap <leader>gu <cmd>lua require('gitsigns').undo_stage_hunk()<cr>
 nnoremap <leader>gR <cmd>lua require('gitsigns').reset_buffer()<cr>
 nnoremap <leader>gp <cmd>lua require('gitsigns').preview_hunk()<cr>
+nnoremap <leader>gbb <cmd>lua require('gitsigns').blame()<cr>
+nnoremap <leader>gbl <cmd>lua require('gitsigns').blame_line()<cr>
 nnoremap <leader>b <cmd>lua require('custom/main-window').activate()<cr><cmd>BlameToggle<cr>
 nnoremap <leader>gd <cmd>lua require('gitsigns').diffthis()<cr>
 nnoremap <leader>gD <cmd>lua require('gitsigns').diffthis('~')<cr>
 nnoremap <leader>gtd <cmd>lua require('gitsigns').toggle_deleted()<cr>
+nnoremap <leader>gtw <cmd>lua require('gitsigns').toggle_word_diff()<cr>
+nnoremap <leader>gtl <cmd>lua require('gitsigns').toggle_linehl()<cr>
+nnoremap <leader>gtn <cmd>lua require('gitsigns').toggle_numhl()<cr>
 nnoremap ]c <cmd>lua require('gitsigns').next_hunk()<cr>
 nnoremap [c <cmd>lua require('gitsigns').prev_hunk()<cr>
 nnoremap <leader>gl <cmd>GitLink<cr>

@@ -105,12 +105,10 @@ local M = {
     lazy = false,
     build = false,
     opts = {
-      default_keybindings = true,
       picker = {
         provider = 'snacks',
       },
       preview = {
-        login_shell = false,
         command = 'presenterm -xX',
         presentation_preview_sync = true,
       },
