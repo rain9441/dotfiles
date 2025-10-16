@@ -114,6 +114,18 @@ local M = {
       },
     },
   },
+  {
+    'jellydn/hurl.nvim',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    ft = 'hurl',
+    opts = {
+      show_notification = true,
+    },
+  },
 }
 
 return M

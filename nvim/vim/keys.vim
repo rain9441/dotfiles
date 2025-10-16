@@ -549,6 +549,17 @@ augroup Csharp
     autocmd FileType cs nnoremap <buffer> <C-;> <CMD>lua require('omnisharp_extended').lsp_implementation()<cr>
 augroup end
 
+" Hurl
+augroup Hurl
+    autocmd!
+    autocmd FileType hurl nnoremap <buffer> <leader>hR <cmd>HurlRunner<cr>
+    autocmd FileType hurl vnoremap <buffer> <leader>hr <cmd>HurlRunner<cr>
+    autocmd FileType hurl nnoremap <buffer> <leader>hr <cmd>HurlRunnerAt<cr>
+    autocmd FileType hurl nnoremap <buffer> <leader>ht <cmd>HurlToggleMode<cr>
+    autocmd FileType hurl nnoremap <buffer> <leader>hv <cmd>HurlVerbose<cr>
+    autocmd FileType hurl nnoremap <buffer> <leader>hV <cmd>HurlVeryVerbose<cr>
+augroup end
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                           Config finalizations                           """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
