@@ -1,39 +1,28 @@
 local M = {
   {
     'milanglacier/minuet-ai.nvim',
-    -- event = { 'VeryLazy' },
     opts = {
       -- Your configuration options here
-      cmp = {
-          enable_auto_complete = false,
-      },
+      blink = { enable_auto_complete = false, },
+      notify = 'error',
       lsp = {
         enabled_ft = { },
         enabled_auto_trigger_ft = {  },
-        -- enabled_ft = { 'toml', 'lua', 'cpp' },
-        -- Enables automatic completion triggering using `vim.lsp.completion.enable`
-        -- enabled_auto_trigger_ft = { 'cpp', 'lua' },
       },
       provider = 'claude',
       provider_options = {
         claude = {
-          max_tokens = 512,
-          model = 'claude-sonnet-4-20250514',
+          max_tokens = 256,
+          model = 'claude-haiku-4-5-20251001',
           stream = true,
-          api_key = 'ANTHROPIC_API_KEY',
+          api_key = 'MINUET_ANTHROPIC_API_KEY', -- Add environment variable to `local.lua` manually
           end_point = 'https://api.anthropic.com/v1/messages',
-          optional = {
-            -- pass any additional parameters you want to send to claude request,
-            -- e.g.
-            -- stop_sequences = nil,
-          },
         },
       },
     },
   },
   {
     'olimorris/codecompanion.nvim',
-    -- event = { 'VeryLazy' },
     cmd = { 'CodeCompanion', 'CodeCompanionCmd', 'CodeCompanionAction', 'CodeCompanionChat' },
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
     init = function()
@@ -49,20 +38,18 @@ local M = {
           adapter = {
             type = 'acp',
             name = 'claude_code',
-            -- model = 'claude-sonnet-4-20250514',
-            model = 'claude-opus-4-1-20250805',
           },
         },
         inline = {
           adapter = {
-            name = 'anthropic',
-            model = 'claude-sonnet-4-20250514',
+            type = 'acp',
+            name = 'claude_code',
           },
         },
         cmd = {
           adapter = {
-            name = 'anthropic',
-            model = 'claude-sonnet-4-20250514',
+            type = 'acp',
+            name = 'claude_code',
           },
         },
       },

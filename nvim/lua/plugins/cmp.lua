@@ -7,12 +7,7 @@ local M = {
     opts = {
       keymap = {
         preset = 'super-tab',
-        ['<A-a>'] = {
-          function(cmp)
-            require('minuet')
-            cmp.show({ providers = { 'minuet' } })
-          end,
-        },
+        ['<A-a>'] = { function(cmp) cmp.show({ providers = { 'minuet' } }) end },
         ['<CR>'] = { 'accept', 'fallback' },
         ['<Tab>'] = {
           function(cmp)
@@ -47,7 +42,6 @@ local M = {
           'fallback'
         },
       },
-
       appearance = {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = 'mono',
@@ -75,7 +69,6 @@ local M = {
             'lsp',
             'path',
             'buffer',
-            -- 'minuet',
           }
         end,
         per_filetype = {
@@ -86,8 +79,6 @@ local M = {
             name = 'minuet',
             module = 'minuet.blink',
             async = true,
-            -- Should match minuet.config.request_timeout * 1000,
-            -- since minuet.config.request_timeout is in seconds
             timeout_ms = 3000,
             score_offset = 50, -- Gives minuet higher priority among suggestions
           },
