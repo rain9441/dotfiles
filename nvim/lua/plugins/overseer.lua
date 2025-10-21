@@ -2,6 +2,7 @@ local M = {
   {
     'stevearc/overseer.nvim',
     cmd = { 'OverseerToggle', 'OverseerInfo', 'OverseerBuild', 'OverseerRun' },
+    version = '1.6.0',
     config = function()
       require('overseer').setup({
         actions = {
