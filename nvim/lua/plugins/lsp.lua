@@ -32,7 +32,9 @@ local M = {
 
       require('mason-lspconfig').setup({
         ensure_installed = {},
-        automatic_enable = true,
+        automatic_enable = {
+          exclude = { 'stylua' },
+        },
         handlers = {
           function(server) require('lspconfig')[server].setup({}) end,
           ['angularls'] = function()
@@ -43,7 +45,7 @@ local M = {
           ['apex_ls'] = function()
             require('lspconfig').apex_ls.setup({
               filetypes = { 'apexcode', 'apex' },
-              apex_enable_semantic_errors = false,       -- Whether to allow Apex Language Server to surface semantic errors
+              apex_enable_semantic_errors = false, -- Whether to allow Apex Language Server to surface semantic errors
               apex_enable_completion_statistics = false, -- Whether to allow Apex Language Server to collect telemetry on code completion usage
             })
           end,
@@ -137,7 +139,7 @@ local M = {
         'css-lsp',
         'docker-compose-language-service',
         'dockerfile-language-server',
-        'eslint_d',
+        -- 'eslint_d',
         'html-lsp',
         'json-lsp',
         'lua-language-server',
@@ -155,7 +157,7 @@ local M = {
   {
     'nvimtools/none-ls.nvim',
     ft = { 'lua', 'typescript' },
-    config = function()
+    opts = function()
       return {
         sources = {
           require('null-ls').builtins.formatting.stylua,
@@ -185,8 +187,8 @@ local M = {
     opts = {},
   },
   {
-    "folke/lazydev.nvim",
-    ft = "lua",
+    'folke/lazydev.nvim',
+    ft = 'lua',
     opts = {},
   },
 }

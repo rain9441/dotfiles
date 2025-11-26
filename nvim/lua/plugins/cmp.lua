@@ -39,7 +39,7 @@ local M = {
               return true
             end
           end,
-          'fallback'
+          'fallback',
         },
       },
       appearance = {

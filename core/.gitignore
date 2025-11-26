@@ -4,3 +4,6 @@
 CLAUDE.local.md
 .claude/*.local.json
 .plans/
+
+.fdignore
+.rgignore

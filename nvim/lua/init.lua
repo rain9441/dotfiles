@@ -4,9 +4,9 @@ vim.g.loaded_netrwPlugin = 1
 vim.diagnostic.config({
   virtual_text = false,
   float = {
-    header = "",
+    header = '',
     source = 'if_many',
-    border = 'single',
+    border = "single",
     focusable = false,
   },
 })
@@ -39,7 +39,7 @@ local function flatten(t1)
   return res
 end
 
-local local_lazy = _G.local_lazy;
+local local_lazy = _G.local_lazy
 if local_lazy == nil then
   local_lazy = {}
 end

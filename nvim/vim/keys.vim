@@ -359,6 +359,7 @@ nnoremap <leader>vh <cmd>DiffviewFileHistory<cr>
 nnoremap <leader>vf <cmd>DiffviewFileHistory %<cr>
 nnoremap <leader>v% <cmd>DiffviewFileHistory %<cr>
 nnoremap <leader>vv <cmd>DiffviewOpen<cr>
+nnoremap <leader>vd <cmd>CodeDiff<cr>
 
 nnoremap <leader>bs <cmd>BreakString<cr>
 nnoremap <leader>bp <cmd>PreviewString<cr>
@@ -507,7 +508,7 @@ nnoremap <leader>`q <cmd>Grapple quickfix<cr>
 nnoremap <leader>`2 <cmd>Grapple reset<cr>
 nnoremap <leader>`a <cmd>Grapple tag<cr>
 nnoremap <leader>`d <cmd>Grapple untag<cr>
-nnoremap <leader>`r <cmd>Grapple untag<cr>
+nnoremap <leader>`r <cmd>Grapple reset<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                    LSP                                   """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

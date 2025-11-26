@@ -30,11 +30,6 @@ local M = {
     end,
   },
   {
-    'chrisgrieser/nvim-puppeteer',
-    ft = { 'javascript', 'typescript', 'js', 'ts' },
-    init = function() vim.g.puppeteer_js_quotation_mark = "'" end,
-  },
-  {
     'folke/todo-comments.nvim',
     cmd = { 'TodoQuickFix', 'TodoTelescope', 'TodoTrouble', 'TodoLocList' },
     dependencies = { 'nvim-lua/plenary.nvim' },
@@ -61,11 +56,11 @@ local M = {
     ft = { 'markdown', 'codecompanion' },
     opts = {},
   },
-  {
-    'esmuellert/nvim-eslint',
-    lazy = false,
-    opts = {},
-  },
+  -- {
+  --   'esmuellert/nvim-eslint',
+  --   lazy = false,
+  --   opts = {},
+  -- },
   {
     'lukas-reineke/indent-blankline.nvim',
     lazy = false,

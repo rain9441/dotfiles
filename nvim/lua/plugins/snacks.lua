@@ -63,7 +63,6 @@ local M = {
               )
             end, { cwd = picker:cwd() })
           end,
-
         },
         win = {
           preview = {
@@ -74,9 +73,9 @@ local M = {
           list = {
             keys = {
               -- ["/"] = false,
-              ["<Esc>"] = false,
-              ["0G"] = "list_bottom",
-              ["1G"] = "list_top",
+              ['<Esc>'] = false,
+              ['0G'] = 'list_bottom',
+              ['1G'] = 'list_top',
             },
           },
           input = {
@@ -92,9 +91,9 @@ local M = {
         sources = {
           explorer = {
             layout = {
-              preset = "sidebar",
+              preset = 'sidebar',
               layout = {
-                position = "right",
+                position = 'right',
                 preview = false,
                 width = 50,
                 min_width = 50,
@@ -116,19 +115,15 @@ local M = {
             show_empty = true,
           },
           files = {
-            cmd = 'rg',
+            args = { '--no-ignore-vcs' },
             formatters = { file = { truncate = 160 } },
             layout = { preset = 'bottom', preview = false },
-            on_show = function()
-              vim.api.nvim_command('cclose')
-            end,
+            on_show = function() vim.api.nvim_command('cclose') end,
           },
           grep = {
             formatters = { file = { truncate = 160 } },
             layout = { preset = 'bottom', preview = false },
-            on_show = function()
-              vim.api.nvim_command('cclose')
-            end,
+            on_show = function() vim.api.nvim_command('cclose') end,
           },
           git_branches = {
             format = function(item, picker)
@@ -156,7 +151,7 @@ local M = {
               list = {
                 keys = {
                   ['<c-x>'] = { 'git_log_delete_force', mode = { 'n', 'i' } },
-                }
+                },
               },
               input = {
                 keys = {

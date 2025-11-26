@@ -3,11 +3,11 @@ local M = {
     'milanglacier/minuet-ai.nvim',
     opts = {
       -- Your configuration options here
-      blink = { enable_auto_complete = false, },
+      blink = { enable_auto_complete = false },
       notify = 'error',
       lsp = {
-        enabled_ft = { },
-        enabled_auto_trigger_ft = {  },
+        enabled_ft = {},
+        enabled_auto_trigger_ft = {},
       },
       provider = 'claude',
       provider_options = {
@@ -56,9 +56,9 @@ local M = {
       adapters = {
         acp = {
           claude_code = function()
-            return require("codecompanion.adapters").extend("claude_code", {
+            return require('codecompanion.adapters').extend('claude_code', {
               env = {
-                CLAUDE_CODE_OAUTH_TOKEN = "cmd:cat %USERPROFILE%/.claude/.token",
+                CLAUDE_CODE_OAUTH_TOKEN = 'cmd:cat %USERPROFILE%/.claude/.token',
               },
             })
           end,
@@ -69,15 +69,15 @@ local M = {
   {
     'coder/claudecode.nvim',
     event = { 'VeryLazy' },
-    dependencies = { "folke/snacks.nvim" },
+    dependencies = { 'folke/snacks.nvim' },
     opts = {
       -- terminal_cmd = "~/.claude/local/claude", -- Point to local installation
       terminal = {
-        split_side = "left",
+        split_side = 'left',
         split_width_percentage = 0.5,
-      }
+      },
     },
-  }
+  },
 }
 
 return M

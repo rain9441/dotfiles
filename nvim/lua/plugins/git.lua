@@ -1,5 +1,10 @@
 local M = {
   {
+    'esmuellert/vscode-diff.nvim',
+    dependencies = { 'MunifTanjim/nui.nvim' },
+    lazy = false,
+  },
+  {
     'NeogitOrg/neogit',
     commit = '9bb1e73c534f767607e0a888f3de4c942825c501',
     cmd = 'Neogit',
@@ -13,14 +18,14 @@ local M = {
         use_default_keymaps = false,
         filewatcher = {
           interval = 1000,
-          enabled = true
+          enabled = true,
         },
-        graph_style = "unicode",
+        graph_style = 'unicode',
         integrations = {
           diffview = true,
         },
         commit_editor = {
-          kind = "vsplit",
+          kind = 'vsplit',
         },
         mappings = {
           commit_editor = {
@@ -94,11 +99,11 @@ local M = {
             ['q'] = 'Close',
             ['I'] = 'InitRepo',
             -- Neogit blows up if you unbind, so bind to completely arbitrary random keys
-            -- ["<c-f8>1"] = "Depth1",
-            -- ["<c-f8>2"] = "Depth2",
-            -- ["<c-f8>3"] = "Depth3",
-            -- ["<c-f8>4"] = "Depth4",
-            -- ["<c-f8>5"] = "ShowRefs",
+            -- ['<c-f8>1'] = 'Depth1',
+            -- ['<c-f8>2'] = 'Depth2',
+            -- ['<c-f8>3'] = 'Depth3',
+            -- ['<c-f8>4'] = 'Depth4',
+            -- ['<c-f8>5'] = 'ShowRefs',
             ['<tab>'] = 'Toggle',
             ['x'] = 'Discard',
             ['s'] = 'Stage',
@@ -128,7 +133,7 @@ local M = {
     cmd = { 'DiffviewFileHistory', 'DiffviewOpen' },
     opts = {
       enhanced_diff_hl = true,
-    }
+    },
   },
   {
     'linrongbin16/gitlinker.nvim',
@@ -156,8 +161,8 @@ local M = {
         signs_staged_enable = true,
         numhl = true,
         diff_opts = {
-          algorithm = "histogram",
-        }
+          algorithm = 'histogram',
+        },
       })
     end,
   },

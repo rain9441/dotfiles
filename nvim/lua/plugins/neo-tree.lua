@@ -170,11 +170,11 @@ local M = {
         filter_rules = {
           bo = {
             buftype = { 'terminal', 'nofile', 'quickfix', 'prompt', 'help' },
-          }
+          },
         },
-      });
+      })
     end,
-  }
+  },
 }
 
 return M

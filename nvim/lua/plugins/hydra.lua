@@ -2,7 +2,7 @@ local M = {
   {
     'nvimtools/hydra.nvim',
     config = function()
-      local Hydra = require("hydra")
+      local Hydra = require('hydra')
       Hydra({})
     end,
   },

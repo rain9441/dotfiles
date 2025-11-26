@@ -26,7 +26,7 @@ local M = {
     end)
 
     local buf = vim.iter(bufs):find(function(buf)
-      return vim.bo[buf].buflisted and vim.bo[buf].buftype == ""
+      return vim.bo[buf].buflisted and vim.bo[buf].buftype == ''
     end)
 
     -- Find a window with this buffer
