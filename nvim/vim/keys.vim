@@ -83,10 +83,14 @@ set scrolloff=4
 " Always show the tabline
 set showtabline=2
 
+" Only show one status line
+set laststatus=3
+
 " Reduce the history from 10000 to 50, 10000 is a bit unreasonable and crashes
 " shada file writing.  Limit shada due to lots of shada file issues.
 set history=50
 set shada=!,'0,<3,@20,s1,f0,h
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"                             Fixes / Overrides                            """
