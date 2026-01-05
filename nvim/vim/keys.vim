@@ -364,6 +364,7 @@ nnoremap <leader>vf <cmd>DiffviewFileHistory %<cr>
 nnoremap <leader>v% <cmd>DiffviewFileHistory %<cr>
 nnoremap <leader>vv <cmd>DiffviewOpen<cr>
 nnoremap <leader>vd <cmd>CodeDiff<cr>
+nnoremap <leader>ve <cmd>CodeDiff HEAD~1<cr>
 
 nnoremap <leader>bs <cmd>BreakString<cr>
 nnoremap <leader>bp <cmd>PreviewString<cr>
