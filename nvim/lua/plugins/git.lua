@@ -1,8 +1,13 @@
 local M = {
   {
-    'esmuellert/vscode-diff.nvim',
+    'esmuellert/codediff.nvim',
     dependencies = { 'MunifTanjim/nui.nvim' },
-    lazy = false,
+    cmd = 'CodeDiff',
+    opts = {
+      explorer = {
+        position = "bottom",
+      }
+    },
   },
   {
     'NeogitOrg/neogit',

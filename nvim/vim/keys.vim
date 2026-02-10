@@ -359,12 +359,12 @@ augroup Neogit
 augroup end
 
 
-nnoremap <leader>vh <cmd>DiffviewFileHistory<cr>
 nnoremap <leader>vf <cmd>DiffviewFileHistory %<cr>
 nnoremap <leader>v% <cmd>DiffviewFileHistory %<cr>
-nnoremap <leader>vv <cmd>DiffviewOpen<cr>
+nnoremap <leader>vv <cmd>CodeDiff<cr>
 nnoremap <leader>vd <cmd>CodeDiff<cr>
 nnoremap <leader>ve <cmd>CodeDiff HEAD~1<cr>
+nnoremap <leader>vh <cmd>CodeDiff history<cr>
 
 nnoremap <leader>bs <cmd>BreakString<cr>
 nnoremap <leader>bp <cmd>PreviewString<cr>
@@ -514,6 +514,8 @@ nnoremap <leader>`2 <cmd>Grapple reset<cr>
 nnoremap <leader>`a <cmd>Grapple tag<cr>
 nnoremap <leader>`d <cmd>Grapple untag<cr>
 nnoremap <leader>`r <cmd>Grapple reset<cr>
+
+nnoremap <leader>sqt <cmd>lua require('sqlit').open()<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                    LSP                                   """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -546,14 +548,14 @@ augroup Typescript
   autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-r> <cmd>VtsExec rename_file<cr>
 augroup end
 
-augroup Csharp
-    autocmd!
-    autocmd FileType cs nnoremap <buffer> <C-]> <CMD>lua require('omnisharp_extended').lsp_definition()<cr>
-    autocmd FileType cs nnoremap <buffer> <leader><C-]> <CMD>lua require('omnisharp_extended').lsp_type_definition()<cr>
-    autocmd FileType cs nnoremap <buffer> <C-]> <CMD>lua require('omnisharp_extended').lsp_definition()<cr>
-    autocmd FileType cs nnoremap <buffer> <C-\> <CMD>lua require('omnisharp_extended').lsp_references()<cr>
-    autocmd FileType cs nnoremap <buffer> <C-;> <CMD>lua require('omnisharp_extended').lsp_implementation()<cr>
-augroup end
+" augroup Csharp
+"     autocmd!
+"     autocmd FileType cs nnoremap <buffer> <C-]> <CMD>lua require('omnisharp_extended').lsp_definition()<cr>
+"     autocmd FileType cs nnoremap <buffer> <leader><C-]> <CMD>lua require('omnisharp_extended').lsp_type_definition()<cr>
+"     autocmd FileType cs nnoremap <buffer> <C-]> <CMD>lua require('omnisharp_extended').lsp_definition()<cr>
+"     autocmd FileType cs nnoremap <buffer> <C-\> <CMD>lua require('omnisharp_extended').lsp_references()<cr>
+"     autocmd FileType cs nnoremap <buffer> <C-;> <CMD>lua require('omnisharp_extended').lsp_implementation()<cr>
+" augroup end
 
 " Hurl
 augroup Hurl

@@ -2,7 +2,13 @@ local M = {
   {
     'mason-org/mason.nvim',
     cmd = 'Mason',
-    opts = { PATH = 'prepend' },
+    opts = {
+      PATH = 'prepend',
+      registries = {
+        'github:mason-org/mason-registry',
+        'github:Crashdummyy/mason-registry',
+      },
+    },
   },
   {
     'mason-org/mason-lspconfig.nvim',
@@ -135,7 +141,7 @@ local M = {
         'lua-language-server',
         'marksman',
         'nxls',
-        'omnisharp',
+        -- 'omnisharp',
         'stylua',
         'terraform-ls',
         'tflint',
@@ -172,13 +178,33 @@ local M = {
     dependencies = { 'neovim/nvim-lspconfig', 'mason-org/mason-lspconfig.nvim' },
   },
   {
-    'Hoffs/omnisharp-extended-lsp.nvim',
-    opts = {},
+    'MonsieurTib/neonuget',
+    lazy = false,
+    config = function() require('neonuget').setup({}) end,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
   },
   {
     'folke/lazydev.nvim',
     ft = 'lua',
     opts = {},
+  },
+  {
+    'seblyng/roslyn.nvim',
+    lazy = false,
+    ---@module 'roslyn.config'
+    ---@type RoslynNvimConfig
+    opts = {},
+    config = function()
+      vim.lsp.config('roslyn', {
+        settings = {
+          ['csharp|formatting'] = {
+            dotnet_organize_imports_on_format = true,
+          },
+        },
+      })
+    end,
   },
 }
 

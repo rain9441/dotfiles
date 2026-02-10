@@ -1,4 +1,5 @@
 .pjg/
+.local/
 
 # Claude / AI
 CLAUDE.local.md

@@ -54,7 +54,11 @@ local M = {
   {
     'MeanderingProgrammer/render-markdown.nvim',
     ft = { 'markdown', 'codecompanion' },
-    opts = {},
+    opts = {
+      code = {
+        highlight = 'RenderMarkdownCode',
+      },
+    },
   },
   -- {
   --   'esmuellert/nvim-eslint',
@@ -119,6 +123,10 @@ local M = {
     ft = 'hurl',
     opts = {
       show_notification = true,
+      env_file = {
+        'vars.env',
+        'local.vars.env',
+      },
     },
   },
 }
