@@ -39,4 +39,5 @@ install "$LOCAL_PATH/core/.wezterm.lua" "$HOME/.wezterm.lua" "Wezterm"
 install "$LOCAL_PATH/core/.gitconfig" "$HOME/.gitconfig" "GitConfig"
 install "$LOCAL_PATH/core/.gitignore" "$HOME/.gitignore" "GitIgnore"
 install "$LOCAL_PATH/nvim" "$HOME/.config/nvim" "Neovim"
+install "$LOCAL_PATH/core/.tmux.conf" "$HOME/.tmux.conf" "Tmux"
 

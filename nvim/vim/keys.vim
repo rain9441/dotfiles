@@ -568,6 +568,9 @@ augroup Hurl
     autocmd FileType hurl nnoremap <buffer> <leader>hV <cmd>HurlVeryVerbose<cr>
 augroup end
 
+" Prompt Yank (TODO)
+nnoremap <leader>yy :let @+=expand("%:p")<CR>:let @*=expand("%:p")<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                           Config finalizations                           """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

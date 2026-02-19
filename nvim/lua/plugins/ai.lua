@@ -71,11 +71,20 @@ local M = {
     event = { 'VeryLazy' },
     dependencies = { 'folke/snacks.nvim' },
     opts = {
-      terminal_cmd = "~/.local/bin/claude",
+      terminal_cmd = '~/.local/bin/claude',
       terminal = {
         split_side = 'left',
         split_width_percentage = 0.5,
       },
+    },
+  },
+  {
+    'polacekpavel/prompt-yank.nvim',
+    event = { 'VeryLazy' },
+    cmd = { 'PromptYank' },
+    opts = {
+      register = '*',
+      format = 'claude',
     },
   },
 }
