@@ -5,7 +5,15 @@
     required = true
 [core]
     editor = nvim
+    pager = delta
     excludesfile = ~/.gitignore
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true
+    dark = true
+[merge]
+    conflictStyle = zdiff3
 [alias]
     llog = log --oneline --graph
 [diff]
