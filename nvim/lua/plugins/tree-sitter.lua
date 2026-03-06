@@ -1,6 +1,7 @@
 local M = {
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'master',
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = { 'TSUpdate' },
     build = ':TSUpdate',

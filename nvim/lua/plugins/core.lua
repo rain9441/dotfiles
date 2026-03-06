@@ -1,6 +1,5 @@
 local M = {
-  { 'nvim-lua/plenary.nvim', lazy = false },
-  { 'pipoprods/nvm.nvim', lazy = false },
+  { 'nvim-lua/plenary.nvim', lazy = false }
 }
 
 return M
