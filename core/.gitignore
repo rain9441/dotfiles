@@ -1,6 +1,10 @@
 .pjg/
 .local/
 
+# Machine-local shell overrides
+.zshrc.local
+.zshenv.local
+
 # Claude / AI
 CLAUDE.local.md
 .claude/*.local.json
