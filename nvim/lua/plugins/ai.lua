@@ -7,7 +7,6 @@ local M = {
       notify = 'error',
       lsp = {
         enabled_ft = {},
-        enabled_auto_trigger_ft = {},
       },
       provider = 'claude',
       provider_options = {

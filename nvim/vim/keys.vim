@@ -319,14 +319,14 @@ augroup END
 nnoremap <leader>n <cmd>lua require('neogen').generate()<cr>
 
 " DBUI
-nmap <leader>db <cmd>DBUIToggle<cr>
-nmap <leader>di <cmd>DBUILastQueryInfo<cr>
-augroup DBUI
-  autocmd!
-  autocmd FileType sql,plsql,mysql map <C-Enter> <Plug>(DBUI_ExecuteQuery)
-  autocmd FileType sql,plsql,mysql imap <C-Enter> <C-o><Plug>(DBUI_ExecuteQuery)
-  autocmd FileType sql,plsql,mysql nmap <F3> <cmd>DBUIFindBuffer<cr>
-augroup END
+" nmap <leader>db <cmd>DBUIToggle<cr>
+" nmap <leader>di <cmd>DBUILastQueryInfo<cr>
+" augroup DBUI
+"   autocmd!
+"   autocmd FileType sql,plsql,mysql map <C-Enter> <Plug>(DBUI_ExecuteQuery)
+"   autocmd FileType sql,plsql,mysql imap <C-Enter> <C-o><Plug>(DBUI_ExecuteQuery)
+"   autocmd FileType sql,plsql,mysql nmap <F3> <cmd>DBUIFindBuffer<cr>
+" augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                   Git                                    """
@@ -365,6 +365,8 @@ nnoremap <leader>vv <cmd>CodeDiff<cr>
 nnoremap <leader>vd <cmd>CodeDiff<cr>
 nnoremap <leader>ve <cmd>CodeDiff HEAD~1<cr>
 nnoremap <leader>vh <cmd>CodeDiff history<cr>
+nnoremap <leader>va <cmd>CodeDiff main...<cr>
+nnoremap <leader>vs <cmd>CodeDiff master...<cr>
 
 nnoremap <leader>bs <cmd>BreakString<cr>
 nnoremap <leader>bp <cmd>PreviewString<cr>

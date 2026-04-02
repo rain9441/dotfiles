@@ -27,7 +27,7 @@ local M = {
         },
         graph_style = 'unicode',
         integrations = {
-          diffview = true,
+          codediff = true,
         },
         commit_editor = {
           kind = 'vsplit',

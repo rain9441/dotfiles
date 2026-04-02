@@ -120,26 +120,6 @@ local M = {
     },
   },
   {
-    'gen740/SmoothCursor.nvim',
-    event = 'VeryLazy',
-    opts = {
-      fancy = {
-        enable = true,
-        head = { cursor = '▷', texthl = 'SmoothCursorGreen', linehl = nil },
-        body = {
-          { cursor = '', texthl = 'SmoothCursorGreen' },
-          { cursor = '●', texthl = 'SmoothCursorAqua' },
-          { cursor = '•', texthl = 'SmoothCursorAqua' },
-          { cursor = '.', texthl = 'SmoothCursorBlue' },
-        },
-      },
-      speed = 20,
-      intervals = 8,
-      disable_float_win = true,
-      disabled_filetypes = { 'OverseerList', 'OverseerForm', 'dapui_*', 'snacks*' },
-    },
-  },
-  {
     'm-demare/hlargs.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     opts = { performance = { slow_parse_delay = 5 } },
