@@ -13,3 +13,6 @@ CLAUDE.local.md
 
 .fdignore
 .rgignore
+
+# Direct Supply Overrides
+.env.development.local
