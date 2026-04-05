@@ -82,7 +82,7 @@ local M = {
     event = { 'VeryLazy' },
     cmd = { 'PromptYank' },
     opts = {
-      register = '*',
+      register = { '*', '+' },
       format = 'claude',
     },
   },

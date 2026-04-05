@@ -13,7 +13,7 @@ end)
 
 
 -- or, changing the font size and color scheme.
-config.font_size = 12
+config.font_size = 10
 config.color_scheme = 'Dracula+'
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 config.default_cwd = wezterm.target_triple:match('windows') and 'c:/projects' or wezterm.home_dir .. '/projects'

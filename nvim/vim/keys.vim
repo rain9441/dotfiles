@@ -570,7 +570,13 @@ augroup Hurl
     autocmd FileType hurl nnoremap <buffer> <leader>hV <cmd>HurlVeryVerbose<cr>
 augroup end
 
-" Prompt Yank (TODO)
+" Prompt Yank
+nnoremap <leader>y1 <cmd>PromptYank format claude<cr>
+nnoremap <leader>y2 <cmd>PromptYank format default<cr>
+nnoremap <leader>y3 <cmd>PromptYank format minimal<cr>
+nnoremap <leader>y4 <cmd>PromptYank format xml<cr>
+nnoremap <leader>y5 <cmd>PromptYank style markdown<cr>
+nnoremap <leader>y6 <cmd>PromptYank style xml<cr>
 nnoremap <leader>yy :let @+=expand("%:p")<CR>:let @*=expand("%:p")<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

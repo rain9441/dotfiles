@@ -160,6 +160,32 @@ local M = {
           },
         },
       })
+
+      -- Work around neo-tree.nvim caching git worktree roots at module scope.
+      -- When nvim starts in /foo and you :cd into /foo/bar where /foo/bar is a
+      -- separate (nested) git worktree, neo-tree's mark_gitignored keeps using
+      -- /foo as the authoritative worktree root because /foo is still in
+      -- M.worktrees and is_subpath("/foo", "/foo/bar") is true. It never
+      -- re-runs `git rev-parse` from inside /foo/bar to discover the nested
+      -- worktree, so /foo's .gitignore (which lists bar/) makes everything
+      -- under bar/ appear gitignored. See neo-tree/git/init.lua line 598.
+      --
+      -- Fix: on DirChanged, wipe neo-tree's git module caches so the next
+      -- render re-discovers the worktree root from the new cwd.
+      vim.api.nvim_create_autocmd('DirChanged', {
+        group = vim.api.nvim_create_augroup('NeoTreeGitCacheBust', { clear = true }),
+        callback = function()
+          local ok_g, g = pcall(require, 'neo-tree.git')
+          if ok_g then
+            g.worktrees = {}
+            g._upward_worktree_cache = setmetatable({}, { __mode = 'kv' })
+          end
+          local ok_m, mgr = pcall(require, 'neo-tree.sources.manager')
+          if ok_m then
+            pcall(mgr.refresh, 'filesystem')
+          end
+        end,
+      })
     end,
   },
   {
