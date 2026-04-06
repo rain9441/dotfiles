@@ -121,6 +121,7 @@ local M = {
             on_show = function() vim.api.nvim_command('cclose') end,
           },
           grep = {
+            args = { '--no-ignore-vcs' },
             formatters = { file = { truncate = 160 } },
             layout = { preset = 'bottom', preview = false },
             on_show = function() vim.api.nvim_command('cclose') end,

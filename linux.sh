@@ -44,6 +44,7 @@ install "$LOCAL_PATH/core/.zshrc" "$HOME/.zshrc" "Zsh"
 install "$LOCAL_PATH/core/.zshenv" "$HOME/.zshenv" "Zsh"
 install "$LOCAL_PATH/core/.fdignore" "$HOME/.fdignore" "fd"
 install "$LOCAL_PATH/core/.rgignore" "$HOME/.rgignore" "rg"
+install "$LOCAL_PATH/core/keymapper.conf" "$HOME/.config/keymapper.conf" "Keymapper"
 
 # KDE-specific
 if [ "$XDG_CURRENT_DESKTOP" = "KDE" ]; then

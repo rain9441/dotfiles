@@ -14,5 +14,10 @@ source $ZSH/oh-my-zsh.sh
 # Preferred editor for local and remote sessions
 export EDITOR='nvim'
 
+# Claude Code aliases
+alias clauded='claude --dangerously-skip-permissions'
+alias clauder='claude --resume'
+alias claudedr='claude --dangerously-skip-permissions --resume'
+
 # Source machine-local overrides (not tracked in dotfiles)
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
