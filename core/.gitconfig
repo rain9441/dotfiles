@@ -18,4 +18,6 @@
     llog = log --oneline --graph
 [diff]
 	algorithm = histogram
+[include]
+	path = ~/.gitconfig.local
 

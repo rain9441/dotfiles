@@ -39,4 +39,4 @@ Download & install & setup
 
 ## linux
 
-TBD
+See [linux.md](linux.md) for setup instructions.

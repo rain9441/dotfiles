@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # This script should setup symlinks for dotfiles where appropriate
 # launch with `bash win32.sh` to run
@@ -18,7 +18,7 @@ function install() {
             echo "[$3] $2 (file) already exists, unlinking"
             unlink "$2"
         elif [ -d "$2" ]; then
-            echo "[$3] $2 (directory) alread exists, unlinking"
+            echo "[$3] $2 (directory) already exists, unlinking"
             unlink "$2"
         fi
     fi
@@ -27,7 +27,7 @@ function install() {
         echo "[$3] $2 (file) already exists, ignoring"
         return 0
     elif [ -d "$2" ]; then
-        echo "[$3] $2 (directory) alread exists, ignoring"
+        echo "[$3] $2 (directory) already exists, ignoring"
         return 0
     fi
 
@@ -38,7 +38,7 @@ function install() {
 mkdir -p "$HOME/AppData/Roaming/neovide/"
 mkdir -p "$HOME/AppData/Local/Microsoft/PowerToys/Keyboard Manager/"
 
-install "$LOCAL_PATH/aliases" "$HOME/aliases" "Aliases"
+install "$LOCAL_PATH/win32/aliases" "$HOME/aliases" "Aliases"
 install "$LOCAL_PATH/core/neovide/config.toml" "$HOME/AppData/Roaming/neovide/config.toml" "Neovide"
 install "$LOCAL_PATH/core/.wezterm.lua" "$HOME/.wezterm.lua" "Wezterm"
 install "$LOCAL_PATH/core/.gitconfig" "$HOME/.gitconfig" "GitConfig"

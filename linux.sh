@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # This script should setup symlinks for dotfiles where appropriate
 # launch with `bash linux.sh` to run
@@ -18,7 +18,7 @@ function install() {
             echo "[$3] $2 (file) already exists, unlinking"
             unlink "$2"
         elif [ -d "$2" ]; then
-            echo "[$3] $2 (directory) alread exists, unlinking"
+            echo "[$3] $2 (directory) already exists, unlinking"
             unlink "$2"
         fi
     fi
@@ -27,7 +27,7 @@ function install() {
         echo "[$3] $2 (file) already exists, ignoring"
         return 0
     elif [ -d "$2" ]; then
-        echo "[$3] $2 (directory) alread exists, ignoring"
+        echo "[$3] $2 (directory) already exists, ignoring"
         return 0
     fi
 
@@ -44,12 +44,13 @@ install "$LOCAL_PATH/core/.zshrc" "$HOME/.zshrc" "Zsh"
 install "$LOCAL_PATH/core/.zshenv" "$HOME/.zshenv" "Zsh"
 install "$LOCAL_PATH/core/.fdignore" "$HOME/.fdignore" "fd"
 install "$LOCAL_PATH/core/.rgignore" "$HOME/.rgignore" "rg"
+
 install "$LOCAL_PATH/core/keymapper.conf" "$HOME/.config/keymapper.conf" "Keymapper"
 
 # KDE-specific
 if [ "$XDG_CURRENT_DESKTOP" = "KDE" ]; then
     echo "[KDE] Detected KDE desktop, installing KDE-specific files"
-    install "$LOCAL_PATH/kde/raise-or-run.sh" "$HOME/.raise-or-run.sh" "KDE"
+    install "$LOCAL_PATH/linux/kde/raise-or-run.sh" "$HOME/.raise-or-run.sh" "RaiseOrRun"
 else
     echo "[KDE] Not a KDE desktop, skipping KDE-specific files"
 fi

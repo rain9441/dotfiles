@@ -11,18 +11,18 @@ After running, create machine-local shell config files as needed:
 
 ## Manual Steps
 
-### KDE Shortcuts
+### Global Shortcuts (keymapper)
 
-Set up custom shortcuts in System Settings > Shortcuts > Custom Shortcuts:
+App launcher shortcuts are managed by [keymapper](https://github.com/houmain/keymapper) via `~/.config/keymapper.conf` (symlinked from `core/keymapper.conf`).
 
-| Shortcut | Command | Description |
-|----------|---------|-------------|
-| `Ctrl+\`` | `~/.raise-or-run.sh wezterm wezterm` | Raise/cycle/launch terminal |
-| `Meta+B` | `~/.raise-or-run.sh Chrome chrome` | Raise/cycle/launch Chrome |
-| `Meta+H` | `~/.raise-or-run.sh github github-desktop` | Raise/cycle/launch GitHub Desktop |
-| `Meta+K` | `kcalc` | Launch KCalc |
-| `Meta+M` | `~/.raise-or-run.sh Claude claude-desktop` | Raise/cycle/launch Claude Desktop |
-| `Meta+N` | `~/.raise-or-run.sh neovide neovide` | Raise/cycle/launch Neovide |
+Install keymapper from GitHub releases (RPM):
+
+```bash
+sudo dnf install https://github.com/houmain/keymapper/releases/download/5.4.2/keymapper-5.4.2-Linux-x86_64.rpm
+sudo systemctl enable --now keymapperd.service
+```
+
+The `keymapper` client auto-starts via `/etc/xdg/autostart/keymapper.desktop`.
 
 ### Flatpak Aliases
 
@@ -45,3 +45,4 @@ Key packages to install:
 - `fd-find`, `ripgrep`
 - `oh-my-zsh`
 - `nvm`
+- `keymapper` (global shortcuts — see above)
