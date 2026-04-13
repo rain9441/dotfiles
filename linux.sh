@@ -42,6 +42,7 @@ install "$LOCAL_PATH/nvim" "$HOME/.config/nvim" "Neovim"
 install "$LOCAL_PATH/core/.tmux.conf" "$HOME/.tmux.conf" "Tmux"
 install "$LOCAL_PATH/core/.zshrc" "$HOME/.zshrc" "Zsh"
 install "$LOCAL_PATH/core/.zshenv" "$HOME/.zshenv" "Zsh"
+install "$LOCAL_PATH/core/.zprofile" "$HOME/.zprofile" "Zsh"
 install "$LOCAL_PATH/core/.fdignore" "$HOME/.fdignore" "fd"
 install "$LOCAL_PATH/core/.rgignore" "$HOME/.rgignore" "rg"
 

@@ -38,6 +38,19 @@ link_file() {
 
 echo "=== Mac dotfiles setup ==="
 
+# Core dotfiles
+echo "Linking core dotfiles..."
+link_file "$SCRIPT_DIR/core/.wezterm.lua" "$HOME/.wezterm.lua"
+link_file "$SCRIPT_DIR/core/.gitconfig" "$HOME/.gitconfig"
+link_file "$SCRIPT_DIR/core/.gitignore" "$HOME/.gitignore"
+link_file "$SCRIPT_DIR/nvim" "$HOME/.config/nvim"
+link_file "$SCRIPT_DIR/core/.tmux.conf" "$HOME/.tmux.conf"
+link_file "$SCRIPT_DIR/core/.zshrc" "$HOME/.zshrc"
+link_file "$SCRIPT_DIR/core/.zshenv" "$HOME/.zshenv"
+link_file "$SCRIPT_DIR/core/.zprofile" "$HOME/.zprofile"
+link_file "$SCRIPT_DIR/core/.fdignore" "$HOME/.fdignore"
+link_file "$SCRIPT_DIR/core/.rgignore" "$HOME/.rgignore"
+
 # Karabiner-Elements
 if ! brew list karabiner-elements &>/dev/null; then
     echo ""

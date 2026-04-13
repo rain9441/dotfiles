@@ -4,6 +4,7 @@
 # Machine-local shell overrides
 .zshrc.local
 .zshenv.local
+.zprofile.local
 
 # Claude / AI
 CLAUDE.local.md

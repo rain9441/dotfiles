@@ -227,6 +227,9 @@ nnoremap <C-3> <cmd>tabn 3<cr>
 nnoremap <C-4> <cmd>tabn 4<cr>
 nnoremap <C-w><C-w> <cmd>tabc<cr>
 
+" Quick noscrollbind
+nnoremap <leader>nsb <cmd>set noscrollbind<cr>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                   Lazy                                   """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
