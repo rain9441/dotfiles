@@ -23,3 +23,5 @@
 
 [worktree]
 	useRelativePaths = true
+[extensions]
+	worktreeConfig = true
