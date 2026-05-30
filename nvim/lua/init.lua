@@ -64,6 +64,7 @@ require('lazy').setup(
     require('plugins/telescope'),
     require('plugins/tree-sitter'),
     require('plugins/ui'),
+    require('plugins/winter'),
   }),
   {
     defaults = { lazy = true },

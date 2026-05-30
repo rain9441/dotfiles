@@ -412,6 +412,7 @@ nnoremap <leader>fb <cmd>lua Snacks.picker.git_branches()<cr>
 nnoremap <leader>fl <cmd>lua Snacks.picker.git_log()<cr>
 nnoremap <leader>fs <cmd>lua Snacks.picker.git_status()<cr>
 nnoremap <leader>fd <cmd>lua Snacks.picker.diagnostics()<cr>
+nnoremap <leader>fw <cmd>WinterWorktrees<cr>
 nnoremap <leader>err <cmd>lua Snacks.notifier.show_history()<cr>
 
 nnoremap <leader>tt <cmd>lua package.loaded['custom/main-window'] = nil and require('custom/main-window')<cr>
