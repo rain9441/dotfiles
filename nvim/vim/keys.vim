@@ -280,11 +280,12 @@ map <leader>qe <cmd>Trouble<cr>
 "map <F3> <cmd>NvimTreeFindFile<cr>
 
 " Neotree
-map <F2> <cmd>Neotree toggle last<cr>
-map <F3> <cmd>Neotree reveal<cr>
-map <leader><F1> <cmd>Neotree focus filesystem<cr>
-map <leader><F2> <cmd>Neotree focus buffers<cr>
-map <leader><F3> <cmd>Neotree focus git_status<cr>
+" Routed through neotree-safe so codediff tabs first switch out, or suppress.
+map <F2> <cmd>lua require('custom/neotree-safe').run('Neotree toggle last')<cr>
+map <F3> <cmd>lua require('custom/neotree-safe').run('Neotree reveal')<cr>
+map <leader><F1> <cmd>lua require('custom/neotree-safe').run('Neotree focus filesystem')<cr>
+map <leader><F2> <cmd>lua require('custom/neotree-safe').run('Neotree focus buffers')<cr>
+map <leader><F3> <cmd>lua require('custom/neotree-safe').run('Neotree focus git_status')<cr>
 
 " Overseer
 nmap <leader>ol <cmd>OverseerToggle<cr>
