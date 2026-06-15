@@ -1,0 +1,9 @@
+# Shared winter user config (tracked in dotfiles).
+#
+# Machine-local secrets go in config.local.toml (gitignored), which is deep-merged
+# on top of this file — local values override these. Plugins load config via
+# load_user_config() in plugins/gitlab/plugin.py.
+#
+# Example config.local.toml:
+#   [gitlab]
+#   token = "glpat-..."
