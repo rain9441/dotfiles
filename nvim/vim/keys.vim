@@ -179,6 +179,15 @@ nmap <leader>qc <cmd>cclose<cr>
 nmap [q <cmd>cp<cr>
 nmap ]q <cmd>cn<cr>
 
+" Location List (drawer for :WinterDeltaDiff and any :lopen list)
+nnoremap <expr> <leader>ww "<cmd>".(get(getloclist(0, {"winid": 1}), "winid") != 0? "lclose" : "bot lopen")."<cr>"
+nmap <leader>wo <cmd>bot lopen<cr>
+nmap <leader>wc <cmd>lclose<cr>
+
+" Location list next/prev
+nmap [w <cmd>lprevious<cr>
+nmap ]w <cmd>lnext<cr>
+
 " Control N and C-S N for find next/prev and center
 nnoremap <C-N> nzz
 nnoremap <C-S-N> Nzz

@@ -10,6 +10,12 @@ local M = {
     },
   },
   {
+    'kokusenz/deltaview.nvim',
+    dependencies = { 'kokusenz/delta.lua' },
+    cmd = { 'DeltaView', 'DeltaMenu', 'Delta' },
+    opts = {},
+  },
+  {
     'NeogitOrg/neogit',
     commit = '9bb1e73c534f767607e0a888f3de4c942825c501',
     cmd = 'Neogit',
