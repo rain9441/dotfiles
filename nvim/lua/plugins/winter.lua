@@ -1,6 +1,7 @@
 -- winter.nvim — Neovim integration for winter workspaces.
 -- Integrations: a snacks.nvim worktrees picker (<leader>fw "find workspace"),
--- and the cross-repo feature diff viewer (:WinterDiff) rendered via delta.lua.
+-- and the cross-repo feature diff viewer (:WinterDiff) rendered via the `delta`
+-- module shipped by deltaview.nvim.
 --
 -- Tracks the published plugin over GitHub. To iterate on a live local checkout,
 -- swap the `'paul-gross/winter-nvim',` spec for
@@ -43,7 +44,7 @@ vim.api.nvim_create_autocmd('User', {
 local M = {
   {
     'paul-gross/winter-nvim',
-    dependencies = { 'folke/snacks.nvim', 'kokusenz/delta.lua' },
+    dependencies = { 'folke/snacks.nvim', 'kokusenz/deltaview.nvim' },
     lazy = false,
     opts = {},
   },

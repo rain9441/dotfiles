@@ -14,7 +14,8 @@ local M = {
   },
   {
     'kokusenz/deltaview.nvim',
-    dependencies = { 'kokusenz/delta.lua' },
+    -- deltaview.nvim embeds the `delta` renderer module (lua/delta/), so no
+    -- separate kokusenz/delta.lua dependency is needed.
     cmd = { 'DeltaView', 'DeltaMenu', 'Delta' },
     opts = {},
   },
