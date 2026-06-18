@@ -163,15 +163,31 @@ class NvimPlugin:
             sockets.extend((sock, platform) for sock in found)
         sockets.sort(key=lambda pair: pair[0].stat().st_mtime, reverse=True)
 
+        # Two-tier preference, both honouring the newest-first mtime sort above:
+        #   1. the user's Neovide GUI (newest), else
+        #   2. any nvim with an attached UI (newest) — a terminal nvim / nvim-qt.
+        # A headless nvim has no UI, so it can never win either tier. This is the
+        # whole fix: plugin test runners (busted/plenary) spawn headless nvims
+        # whose freshly-created sockets otherwise top the mtime sort and steal
+        # the action. We must scan all sockets before falling back to tier 2, so
+        # an older Neovide still beats a newer UI-attached terminal nvim.
+        ui_fallback: "tuple[str, _MacPlatform | _KdePlatform] | None" = None
         for sock, platform in sockets:
             if not sock.is_socket():
                 continue
             # Liveness check via direct socket connect — does not require nvim
             # to be idle, so a partial command-line entry, pending mapping, or
-            # operator-pending state won't make a live nvim look dead.
-            if self._socket_is_live(str(sock)):
+            # operator-pending state won't make a live nvim look dead. Used as a
+            # cheap pre-filter so we don't spend the remote-expr timeout on a
+            # stale socket file.
+            if not self._socket_is_live(str(sock)):
+                continue
+            kind = self._probe_socket(str(sock))
+            if kind == "neovide":
                 return str(sock), platform
-        return None
+            if kind == "ui" and ui_fallback is None:
+                ui_fallback = (str(sock), platform)
+        return ui_fallback
 
     @staticmethod
     def _socket_is_live(path: str) -> bool:
@@ -184,6 +200,36 @@ class NvimPlugin:
             return False
         finally:
             s.close()
+
+    @staticmethod
+    def _probe_socket(path: str) -> "str | None":
+        """Classify the nvim on `path`: "neovide", "ui" (attached but not Neovide), or None.
+
+        Neovide injects the `g:neovide` global into its embedded nvim on startup;
+        a headless test nvim has neither that global nor any attached UI. One
+        remote-expr asks both questions at once — `exists('g:neovide')` and
+        whether `nvim_list_uis()` is non-empty — yielding a 2-char string like
+        "10". The call fails outright if the instance can't be reached, so this
+        doubles as a second liveness gate. Cross-platform: it asks nvim itself
+        rather than inspecting the process tree, so it works the same on Linux
+        and macOS.
+        """
+        try:
+            result = subprocess.run(
+                ["nvim", "--server", path, "--remote-expr",
+                 "exists('g:neovide') . (!empty(nvim_list_uis()))"],
+                stdin=subprocess.DEVNULL,
+                capture_output=True,
+                timeout=2,
+            )
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            return None
+        out = result.stdout.strip()
+        if out[:1] == b"1":
+            return "neovide"
+        if out[1:2] == b"1":
+            return "ui"
+        return None
 
     def _raise_neovide(self, platform: "_MacPlatform | _KdePlatform") -> None:
         """Bring an already-running Neovide window to the foreground.
