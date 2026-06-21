@@ -18,15 +18,15 @@ Actions (all on the feature-worktree grid unless noted):
   u  CodeDiff local vs remote tracking branch
   A  CodeDiff whole feature env vs main (merge-base), all repos
   S  CodeDiff whole feature env vs master (merge-base), all repos
-  E  CodeDiff whole feature env uncommitted (working tree), all repos
+  D  CodeDiff whole feature env uncommitted (working tree), all repos
 
-The A/S/E actions aggregate every project-repo worktree in the focused
+The A/S/D actions aggregate every project-repo worktree in the focused
 environment into one multi-repo CodeDiff session. A/S use codediff's
 `diff_repos` Lua API: each repo is diffed from its merge-base with the target
 branch (origin/main for A, origin/master for S) to HEAD — the committed work
 the feature env is ahead on. This is a revision-to-revision diff: uncommitted
 working-tree changes are NOT included, and a repo lacking the target branch is
-skipped. E is the working-tree counterpart (the env-wide version of `d`): it
+skipped. D is the working-tree counterpart (the env-wide version of `d`): it
 uses codediff's `diff_repos_uncommitted` Lua API to aggregate every worktree's
 dirty state (staged + unstaged + untracked + conflicts), skipping repos with no
 changes. All three prefer the env worktree list carried on the action context
@@ -146,7 +146,7 @@ class NvimPlugin:
             TuiAction(
                 name="codediff-env-uncommitted",
                 scope=ActionScope.feature_worktree,
-                key="E",
+                key="D",
                 description="CodeDiff whole env uncommitted",
                 handler=self._handle_codediff_env_uncommitted,
             ),
@@ -461,7 +461,7 @@ class NvimPlugin:
             return 0
 
     # ------------------------------------------------------------------ #
-    # Whole-environment multi-repo CodeDiff (A / S)                       #
+    # Whole-environment multi-repo CodeDiff (A / S / D)                   #
     # ------------------------------------------------------------------ #
 
     def _handle_codediff_env_main(self, ctx: FeatureWorktreeContext) -> None:
