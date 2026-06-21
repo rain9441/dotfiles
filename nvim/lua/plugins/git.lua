@@ -1,6 +1,6 @@
 local M = {
   {
-    'esmuellert/codediff.nvim',
+    'paul-gross/codediff.nvim',
     dependencies = { 'MunifTanjim/nui.nvim' },
     cmd = 'CodeDiff',
     opts = {
