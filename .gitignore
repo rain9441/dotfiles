@@ -3,5 +3,8 @@ local.vim
 
 # winter: never track machine-local config (holds the secret gitlab token) or python bytecode
 winter/config.local.toml
+
 __pycache__/
 *.pyc
+
+.venv/

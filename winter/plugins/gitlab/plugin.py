@@ -5,7 +5,7 @@ import re
 import sys
 import webbrowser
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING
 from urllib.parse import quote_plus
 
 if sys.version_info >= (3, 11):
@@ -16,13 +16,25 @@ else:
 import requests
 from rich.text import Text
 
-from winter_cli.modules.workspace.models import WorktreeRepoStatus
-from winter_cli.plugins.types import (
-    ActionScope,
-    FeatureWorktreeContext,
-    PluginRegistration,
-    TuiAction,
-)
+if TYPE_CHECKING:
+    # Typecheck the dashboard event payloads against the versioned,
+    # dependency-free winter-plugin-api contract — the narrow seam a plugin codes
+    # against. winter-cli is never imported at typecheck time, so the plugin
+    # typechecks standalone (see winter-harness:/architecture/plugin-author.md).
+    from winter_plugin_api import (
+        ActionInvocation,
+        ActionScope,
+        FeatureWorktreeContext,
+        IWinterPlugin,
+        IWorktreeRepoStatusView,
+        PluginRegistration,
+        TuiAction,
+    )
+else:
+    # At runtime winter loads this plugin.py into its own process and supplies
+    # the seam from winter_cli; winter_plugin_api is a dev/typecheck-only
+    # dependency and is NOT importable here.
+    from winter_cli.plugins.types import ActionScope, PluginRegistration, TuiAction
 
 logger = logging.getLogger(__name__)
 
@@ -148,25 +160,24 @@ class GitLabDecorator:
     def get_cached_url(self, worktree_path: Path) -> str | None:
         return self._url_cache.get(worktree_path)
 
-    def __call__(self, repo_status: WorktreeRepoStatus, repo_path: object) -> None:
-        repo_path_obj = Path(str(repo_path))
+    def __call__(self, repo_status: IWorktreeRepoStatusView, repo_path: Path) -> None:
         repo_name = repo_status.worktree.repository.name
-        cache_key = (repo_name, repo_path_obj)
+        cache_key = (repo_name, repo_path)
 
         if cache_key not in self._repo_remotes:
-            self._repo_remotes[cache_key] = self._resolve_remote(repo_path_obj)
+            self._repo_remotes[cache_key] = self._resolve_remote(repo_path)
 
         remote = self._repo_remotes[cache_key]
         if remote is None:
-            self._url_cache[repo_path_obj] = None
+            self._url_cache[repo_path] = None
             return
 
         base_url, project_path = remote
         client = self._get_client(base_url)
 
-        tracking = repo_status.tracking_branch
+        tracking = self._tracking_branch(repo_path)
         if tracking is None:
-            self._url_cache[repo_path_obj] = None
+            self._url_cache[repo_path] = None
             return
         feature_branch = tracking.removeprefix("origin/")
 
@@ -175,9 +186,9 @@ class GitLabDecorator:
             web_url = mrs[0].get("web_url")
             repo_status.extensions["gitlab"] = _format_mr_badge(mrs[0])
             repo_status.extensions["_gitlab_url"] = web_url
-            self._url_cache[repo_path_obj] = web_url
+            self._url_cache[repo_path] = web_url
         else:
-            self._url_cache[repo_path_obj] = None
+            self._url_cache[repo_path] = None
 
     def _get_client(self, base_url: str) -> GitLabClient:
         if base_url not in self._clients:
@@ -193,11 +204,28 @@ class GitLabDecorator:
         except Exception:
             return None
 
+    @staticmethod
+    def _tracking_branch(repo_path: Path) -> str | None:
+        """The worktree's upstream tracking branch (e.g. 'origin/feature/x'), or None.
+
+        winter's concrete WorktreeRepoStatus exposes this as `.tracking_branch`,
+        but that field is off the narrow winter-plugin-api contract
+        (`IWorktreeRepoStatusView` is the event surface a decorator may read), so
+        we resolve it from git directly — the same upstream (`@{u}`) winter reads.
+        """
+        try:
+            import git
+            r = git.Repo(str(repo_path))
+            tb = r.active_branch.tracking_branch()
+            return tb.name if tb is not None else None
+        except Exception:
+            return None
+
 
 class GitLabPlugin:
     name = "gitlab"
 
-    def register(self, config: dict) -> PluginRegistration:
+    def register(self, config: object) -> PluginRegistration:
         token = self._load_token()
         if not token:
             logger.debug(
@@ -209,7 +237,7 @@ class GitLabPlugin:
 
         decorator = GitLabDecorator(token)
 
-        def _open_mr(ctx: FeatureWorktreeContext) -> None:
+        def _open_mr(ctx: FeatureWorktreeContext | ActionInvocation) -> None:
             url = decorator.get_cached_url(ctx.worktree.path)
             if not url:
                 logger.debug("GitLab plugin: no cached MR URL for %s", ctx.worktree.path)
@@ -234,5 +262,5 @@ class GitLabPlugin:
         return load_user_config().get("gitlab", {}).get("token")
 
 
-def create_plugin() -> GitLabPlugin:
+def create_plugin() -> IWinterPlugin:
     return GitLabPlugin()

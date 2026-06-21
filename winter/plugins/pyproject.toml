@@ -1,0 +1,35 @@
+# Typecheck harness for the winter TUI dashboard plugins in this directory.
+#
+# The plugins import their entire contribution surface from the versioned,
+# dependency-free `winter-plugin-api` contract (under TYPE_CHECKING), so they can
+# be type-checked here with NO dependency on winter-cli. At runtime winter loads
+# each plugin.py into its own process and supplies the seam itself — so this is a
+# dev/typecheck-only project, never installed or imported at runtime.
+#
+#   uv run pyright        # type-check both plugins against the contract
+#
+# See winter-harness:/architecture/plugin-author.md for the authoring guide.
+
+[project]
+name = "winter-plugins"
+version = "0"
+description = "Personal winter TUI dashboard plugins (gitlab, nvim)."
+requires-python = ">=3.11"
+
+[dependency-groups]
+dev = [
+    "winter-plugin-api @ git+https://github.com/paul-gross/winter-plugin-api@v0.1.0",
+    "pyright>=1.1.380",
+]
+
+# Not an installable package — just a home for the plugins + their typecheck.
+[tool.uv]
+package = false
+
+[tool.pyright]
+include = ["gitlab/plugin.py", "nvim/plugin.py"]
+pythonVersion = "3.11"
+# requests / rich / GitPython / tomllib are supplied by winter's runtime process,
+# not by this typecheck-only env (winter-plugin-api is the sole dev dependency),
+# so a missing third-party import is a warning here, never a failure.
+reportMissingImports = "warning"

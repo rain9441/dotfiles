@@ -45,23 +45,50 @@ import os
 import socket as _socket
 import subprocess
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from winter_cli.plugins.types import (
-    ActionScope,
-    FeatureWorktreeContext,
-    PluginRegistration,
-    TuiAction,
-)
-
-try:
-    # Multi-scope TuiActions and the ActionInvocation handler argument landed
-    # together (winter#58). Their presence means one action can span the
-    # feature-worktree grid and the standalone-repo panel under a single key.
-    from winter_cli.plugins.types import ActionInvocation  # noqa: F401
-
+if TYPE_CHECKING:
+    # Typecheck the dashboard event payloads against the versioned,
+    # dependency-free winter-plugin-api contract — the narrow seam a plugin codes
+    # against. winter-cli is never imported at typecheck time, so the plugin
+    # typechecks standalone (see winter-harness:/architecture/plugin-author.md).
+    # The running winter build always carries multi-scope support, so the
+    # typechecker assumes it; the `else` arm below feature-detects at runtime.
     _SUPPORTS_MULTISCOPE = True
-except ImportError:  # older winter build — one scope per action
-    _SUPPORTS_MULTISCOPE = False
+    from winter_plugin_api import (
+        ActionInvocation,
+        ActionScope,
+        FeatureWorktreeContext,
+        IWinterPlugin,
+        PluginRegistration,
+        StandaloneRepoContext,
+        TuiAction,
+    )
+else:
+    # At runtime winter loads this plugin.py into its own process and supplies
+    # the seam from winter_cli; winter_plugin_api is a dev/typecheck-only
+    # dependency and is NOT importable here. FeatureWorktreeContext and
+    # StandaloneRepoContext are imported for the isinstance narrowing in
+    # `_handle_open`; the rest of the contract is annotation-only.
+    from winter_cli.plugins.types import (
+        ActionScope,
+        FeatureWorktreeContext,
+        PluginRegistration,
+        StandaloneRepoContext,
+        TuiAction,
+    )
+
+    try:
+        # Multi-scope TuiActions and the ActionInvocation handler argument landed
+        # together (winter#58). Their presence in winter's runtime seam means one
+        # action can span the feature-worktree grid and the standalone-repo panel
+        # under a single key. This feature-detects the *running winter build*, not
+        # the api package.
+        from winter_cli.plugins.types import ActionInvocation  # noqa: F401
+
+        _SUPPORTS_MULTISCOPE = True
+    except ImportError:  # older winter build — one scope per action
+        _SUPPORTS_MULTISCOPE = False
 
 
 GREEK_LETTERS = [
@@ -324,27 +351,28 @@ class NvimPlugin:
     # open-in-Neovim (o / O)                                             #
     # ------------------------------------------------------------------ #
 
-    def _handle_open(self, inv: "ActionInvocation") -> None:
+    def _handle_open(self, inv: ActionInvocation) -> None:
         """Open whichever area is focused — a feature worktree or a standalone repo.
 
-        Multi-scope dispatch hands us an ActionInvocation; branch on the
-        originating scope and read the selection from the type-checked
-        `inv.context`. Used only on winter builds with multi-scope support; the
-        per-scope handlers below remain for the older two-binding fallback.
+        Multi-scope dispatch hands us an ActionInvocation; narrow `inv.context`
+        on its concrete type so the selection is type-checked against the
+        winter-plugin-api views. Used only on winter builds with multi-scope
+        support; the per-scope handlers below remain for the older two-binding
+        fallback.
         """
-        if inv.scope is ActionScope.standalone_repository:
-            repo = inv.context.repo
-            self._launch_open(str(repo.path), repo.name)
-        else:
-            wt = inv.context.worktree
+        ctx = inv.context
+        if isinstance(ctx, StandaloneRepoContext):
+            self._launch_open(str(ctx.repo.path), ctx.repo.name)
+        elif isinstance(ctx, FeatureWorktreeContext):
+            wt = ctx.worktree
             self._launch_open(str(wt.path), f"{wt.environment.name}/{wt.repository.name}")
 
-    def _handle_open_worktree(self, ctx: FeatureWorktreeContext) -> None:
+    def _handle_open_worktree(self, ctx: FeatureWorktreeContext | ActionInvocation) -> None:
         wt = ctx.worktree
         label = f"{wt.environment.name}/{wt.repository.name}"
         self._launch_open(str(wt.path), label)
 
-    def _handle_open_standalone(self, ctx: "StandaloneRepoContext") -> None:
+    def _handle_open_standalone(self, ctx: StandaloneRepoContext | ActionInvocation) -> None:
         repo = ctx.repo
         self._launch_open(str(repo.path), repo.name)
 
@@ -394,20 +422,20 @@ class NvimPlugin:
     # CodeDiff (a / e / d / f / u)                                       #
     # ------------------------------------------------------------------ #
 
-    def _handle_codediff_main(self, ctx: FeatureWorktreeContext) -> None:
+    def _handle_codediff_main(self, ctx: FeatureWorktreeContext | ActionInvocation) -> None:
         repo_path = str(ctx.worktree.path)
         main_branch = ctx.worktree.workspace.main_branch
         self._launch_codediff(repo_path, f"origin/{main_branch}")
 
-    def _handle_codediff_head1(self, ctx: FeatureWorktreeContext) -> None:
+    def _handle_codediff_head1(self, ctx: FeatureWorktreeContext | ActionInvocation) -> None:
         repo_path = str(ctx.worktree.path)
         self._launch_codediff(repo_path, "HEAD~1")
 
-    def _handle_codediff_uncommitted(self, ctx: FeatureWorktreeContext) -> None:
+    def _handle_codediff_uncommitted(self, ctx: FeatureWorktreeContext | ActionInvocation) -> None:
         repo_path = str(ctx.worktree.path)
         self._launch_codediff(repo_path, target=None)
 
-    def _handle_codediff_upstream(self, ctx: FeatureWorktreeContext) -> None:
+    def _handle_codediff_upstream(self, ctx: FeatureWorktreeContext | ActionInvocation) -> None:
         """Diff what was last reviewed (local HEAD) against the remote tracking branch.
 
         Uses CodeDiff's triple-dot (merge-base) form `HEAD...@{u}`: the old side is
@@ -464,13 +492,13 @@ class NvimPlugin:
     # Whole-environment multi-repo CodeDiff (A / S / D)                   #
     # ------------------------------------------------------------------ #
 
-    def _handle_codediff_env_main(self, ctx: FeatureWorktreeContext) -> None:
+    def _handle_codediff_env_main(self, ctx: FeatureWorktreeContext | ActionInvocation) -> None:
         self._handle_codediff_env(ctx, "main")
 
-    def _handle_codediff_env_master(self, ctx: FeatureWorktreeContext) -> None:
+    def _handle_codediff_env_master(self, ctx: FeatureWorktreeContext | ActionInvocation) -> None:
         self._handle_codediff_env(ctx, "master")
 
-    def _handle_codediff_env_uncommitted(self, ctx: FeatureWorktreeContext) -> None:
+    def _handle_codediff_env_uncommitted(self, ctx: FeatureWorktreeContext | ActionInvocation) -> None:
         """Aggregate every project-repo worktree in the focused env into ONE
         multi-repo CodeDiff of the WORKING-TREE (dirty) state — staged,
         unstaged, untracked, and conflicted changes across the whole env, before
@@ -492,7 +520,9 @@ class NvimPlugin:
         notify = f"Multi-repo uncommitted diff: {len(roots)} worktree(s)"
         self._launch_codediff_repos_uncommitted(roots, notify)
 
-    def _handle_codediff_env(self, ctx: FeatureWorktreeContext, main_branch: str) -> None:
+    def _handle_codediff_env(
+        self, ctx: FeatureWorktreeContext | ActionInvocation, main_branch: str
+    ) -> None:
         """Aggregate every project-repo worktree in the focused env into ONE
         multi-repo CodeDiff, each repo diffed from its merge-base with
         origin/<main_branch> to HEAD — the committed work the env is ahead on.
@@ -525,7 +555,7 @@ class NvimPlugin:
             notify += f" ({skipped} skipped — no origin/{main_branch})"
         self._launch_codediff_repos(specs, notify)
 
-    def _env_worktree_roots(self, ctx: FeatureWorktreeContext) -> list[tuple[str, str | None]]:
+    def _env_worktree_roots(self, ctx: FeatureWorktreeContext | ActionInvocation) -> list[tuple[str, str | None]]:
         """Return (worktree_path, repo_main_branch_or_None) for every project
         repo in the focused environment.
 
@@ -662,7 +692,7 @@ class NvimPlugin:
             args.extend(["-c", f"echom '{self._vim_single_quote_escape(notify)}'"])
         subprocess.Popen(args, stdin=devnull, stdout=devnull, stderr=devnull)
 
-    def _handle_sibling_diff(self, ctx: FeatureWorktreeContext) -> None:
+    def _handle_sibling_diff(self, ctx: FeatureWorktreeContext | ActionInvocation) -> None:
         repo_path = str(ctx.worktree.path)
         siblings = self._discover_siblings(ctx)
         target = self._pick_closest_sibling(repo_path, siblings) if siblings else None
@@ -677,7 +707,7 @@ class NvimPlugin:
             notify=f"Diffing against sibling environment: {target}",
         )
 
-    def _discover_siblings(self, ctx: FeatureWorktreeContext) -> list[str]:
+    def _discover_siblings(self, ctx: FeatureWorktreeContext | ActionInvocation) -> list[str]:
         root = Path(ctx.worktree.workspace.root_path)
         repo_name = ctx.worktree.repository.name
         current = ctx.worktree.environment.name
@@ -830,5 +860,5 @@ class NvimPlugin:
         return s.replace("'", "''")
 
 
-def create_plugin() -> NvimPlugin:
+def create_plugin() -> IWinterPlugin:
     return NvimPlugin()
