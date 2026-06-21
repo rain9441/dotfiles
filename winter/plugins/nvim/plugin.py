@@ -7,13 +7,31 @@ one left the other still spawning a fresh Neovide every time. Keeping that
 machinery in one place is the whole point of the merge.
 
 Actions (all on the feature-worktree grid unless noted):
-  o  open the worktree in Neovim (cd + restore session)
-  O  open a standalone repository in Neovim (standalone-repo panel)
+  o  open in Neovim (cd + restore session) — the focused worktree, or a
+     standalone repository when the standalone panel is focused. On winter
+     builds without multi-scope action support this splits into two bindings:
+     `o` for a worktree and `O` for a standalone repository.
   a  CodeDiff vs origin/<main>
   e  CodeDiff vs HEAD~1
   d  CodeDiff uncommitted
   f  CodeDiff vs closest sibling environment
   u  CodeDiff local vs remote tracking branch
+  A  CodeDiff whole feature env vs main (merge-base), all repos
+  S  CodeDiff whole feature env vs master (merge-base), all repos
+  E  CodeDiff whole feature env uncommitted (working tree), all repos
+
+The A/S/E actions aggregate every project-repo worktree in the focused
+environment into one multi-repo CodeDiff session. A/S use codediff's
+`diff_repos` Lua API: each repo is diffed from its merge-base with the target
+branch (origin/main for A, origin/master for S) to HEAD — the committed work
+the feature env is ahead on. This is a revision-to-revision diff: uncommitted
+working-tree changes are NOT included, and a repo lacking the target branch is
+skipped. E is the working-tree counterpart (the env-wide version of `d`): it
+uses codediff's `diff_repos_uncommitted` Lua API to aggregate every worktree's
+dirty state (staged + unstaged + untracked + conflicts), skipping repos with no
+changes. All three prefer the env worktree list carried on the action context
+(the winter env-context payload) and fall back to enumerating the environment
+directory on older winter-cli builds.
 
 The cd-and-restore-session behaviour (the `o`/`O` actions) is delegated to
 winter.nvim's public API, `require('winter').switch_to(path, label)`, so it
@@ -34,6 +52,16 @@ from winter_cli.plugins.types import (
     PluginRegistration,
     TuiAction,
 )
+
+try:
+    # Multi-scope TuiActions and the ActionInvocation handler argument landed
+    # together (winter#58). Their presence means one action can span the
+    # feature-worktree grid and the standalone-repo panel under a single key.
+    from winter_cli.plugins.types import ActionInvocation  # noqa: F401
+
+    _SUPPORTS_MULTISCOPE = True
+except ImportError:  # older winter build — one scope per action
+    _SUPPORTS_MULTISCOPE = False
 
 
 GREEK_LETTERS = [
@@ -65,13 +93,7 @@ class NvimPlugin:
 
     def register(self, config: object) -> PluginRegistration:
         actions = [
-            TuiAction(
-                name="nvim-open-worktree",
-                scope=ActionScope.feature_worktree,
-                key="o",
-                description="Open in Neovim",
-                handler=self._handle_open_worktree,
-            ),
+            *self._open_actions(),
             TuiAction(
                 name="codediff-main",
                 scope=ActionScope.feature_worktree,
@@ -107,12 +129,63 @@ class NvimPlugin:
                 description="CodeDiff local vs remote tracking",
                 handler=self._handle_codediff_upstream,
             ),
+            TuiAction(
+                name="codediff-env-main",
+                scope=ActionScope.feature_worktree,
+                key="A",
+                description="CodeDiff whole env vs main",
+                handler=self._handle_codediff_env_main,
+            ),
+            TuiAction(
+                name="codediff-env-master",
+                scope=ActionScope.feature_worktree,
+                key="S",
+                description="CodeDiff whole env vs master",
+                handler=self._handle_codediff_env_master,
+            ),
+            TuiAction(
+                name="codediff-env-uncommitted",
+                scope=ActionScope.feature_worktree,
+                key="E",
+                description="CodeDiff whole env uncommitted",
+                handler=self._handle_codediff_env_uncommitted,
+            ),
         ]
-        # The standalone-repository action scope was added after some installed
-        # CLIs; only register the standalone action when the running CLI knows
-        # the scope, so this plugin loads cleanly on older winter builds too.
-        if hasattr(ActionScope, "standalone_repository"):
-            actions.append(
+        return PluginRegistration(tui_actions=actions)
+
+    def _open_actions(self) -> list[TuiAction]:
+        """Build the open-in-Neovim action(s).
+
+        On a winter build with multi-scope action support (winter#58), one `o`
+        action spans both the feature-worktree grid and the standalone-repo
+        panel — winter routes the keypress to whichever area is focused. On
+        older builds a single action can carry only one scope, so fall back to
+        two bindings: `o` for a worktree and `O` for a standalone repo. The
+        standalone scope itself predates this, so it is also gated on the enum
+        member existing, keeping the plugin loadable on the oldest CLIs.
+        """
+        has_standalone = hasattr(ActionScope, "standalone_repository")
+        if _SUPPORTS_MULTISCOPE and has_standalone:
+            return [
+                TuiAction(
+                    name="nvim-open",
+                    scope=[ActionScope.feature_worktree, ActionScope.standalone_repository],
+                    key="o",
+                    description="Open in Neovim",
+                    handler=self._handle_open,
+                )
+            ]
+        open_actions = [
+            TuiAction(
+                name="nvim-open-worktree",
+                scope=ActionScope.feature_worktree,
+                key="o",
+                description="Open in Neovim",
+                handler=self._handle_open_worktree,
+            )
+        ]
+        if has_standalone:
+            open_actions.append(
                 TuiAction(
                     name="nvim-open-standalone",
                     scope=ActionScope.standalone_repository,
@@ -121,7 +194,7 @@ class NvimPlugin:
                     handler=self._handle_open_standalone,
                 )
             )
-        return PluginRegistration(tui_actions=actions)
+        return open_actions
 
     # ------------------------------------------------------------------ #
     # Shared Neovim server discovery / control                           #
@@ -251,6 +324,21 @@ class NvimPlugin:
     # open-in-Neovim (o / O)                                             #
     # ------------------------------------------------------------------ #
 
+    def _handle_open(self, inv: "ActionInvocation") -> None:
+        """Open whichever area is focused — a feature worktree or a standalone repo.
+
+        Multi-scope dispatch hands us an ActionInvocation; branch on the
+        originating scope and read the selection from the type-checked
+        `inv.context`. Used only on winter builds with multi-scope support; the
+        per-scope handlers below remain for the older two-binding fallback.
+        """
+        if inv.scope is ActionScope.standalone_repository:
+            repo = inv.context.repo
+            self._launch_open(str(repo.path), repo.name)
+        else:
+            wt = inv.context.worktree
+            self._launch_open(str(wt.path), f"{wt.environment.name}/{wt.repository.name}")
+
     def _handle_open_worktree(self, ctx: FeatureWorktreeContext) -> None:
         wt = ctx.worktree
         label = f"{wt.environment.name}/{wt.repository.name}"
@@ -371,6 +459,208 @@ class NvimPlugin:
             return int(out.decode().strip())
         except (subprocess.CalledProcessError, ValueError):
             return 0
+
+    # ------------------------------------------------------------------ #
+    # Whole-environment multi-repo CodeDiff (A / S)                       #
+    # ------------------------------------------------------------------ #
+
+    def _handle_codediff_env_main(self, ctx: FeatureWorktreeContext) -> None:
+        self._handle_codediff_env(ctx, "main")
+
+    def _handle_codediff_env_master(self, ctx: FeatureWorktreeContext) -> None:
+        self._handle_codediff_env(ctx, "master")
+
+    def _handle_codediff_env_uncommitted(self, ctx: FeatureWorktreeContext) -> None:
+        """Aggregate every project-repo worktree in the focused env into ONE
+        multi-repo CodeDiff of the WORKING-TREE (dirty) state — staged,
+        unstaged, untracked, and conflicted changes across the whole env, before
+        anything is committed.
+
+        The env-wide counterpart of the per-worktree `d` action. Unlike A/S
+        (committed merge-base..HEAD ranges), this is a pure working-tree diff:
+        every worktree root is passed as-is to codediff's
+        `diff_repos_uncommitted` Lua API, which tags each file with its origin
+        repo and omits repos that have no dirty files — so the explorer shows
+        only the worktrees that actually changed.
+        """
+        worktrees = self._env_worktree_roots(ctx)
+        if not worktrees:
+            self._notify_nvim("No feature-environment worktrees found for multi-repo diff")
+            return
+
+        roots = [root for root, _repo_main in worktrees]
+        notify = f"Multi-repo uncommitted diff: {len(roots)} worktree(s)"
+        self._launch_codediff_repos_uncommitted(roots, notify)
+
+    def _handle_codediff_env(self, ctx: FeatureWorktreeContext, main_branch: str) -> None:
+        """Aggregate every project-repo worktree in the focused env into ONE
+        multi-repo CodeDiff, each repo diffed from its merge-base with
+        origin/<main_branch> to HEAD — the committed work the env is ahead on.
+
+        This is a revision-to-revision diff: uncommitted working-tree changes
+        are NOT included. A repo that lacks origin/<main_branch> (e.g. a `main`
+        repo when diffing vs `master`), or whose merge-base can't be resolved,
+        is skipped so one repo doesn't abort the rest.
+        """
+        worktrees = self._env_worktree_roots(ctx)
+        if not worktrees:
+            self._notify_nvim("No feature-environment worktrees found for multi-repo diff")
+            return
+
+        specs: list[tuple[str, str]] = []
+        skipped = 0
+        for root, _repo_main in worktrees:
+            base = self._merge_base_with(root, main_branch)
+            if base is None:
+                skipped += 1
+                continue
+            specs.append((root, base))
+
+        if not specs:
+            self._notify_nvim(f"No repos with an origin/{main_branch} base for multi-repo diff")
+            return
+
+        notify = f"Multi-repo diff: {len(specs)} repo(s) vs {main_branch}"
+        if skipped:
+            notify += f" ({skipped} skipped — no origin/{main_branch})"
+        self._launch_codediff_repos(specs, notify)
+
+    def _env_worktree_roots(self, ctx: FeatureWorktreeContext) -> list[tuple[str, str | None]]:
+        """Return (worktree_path, repo_main_branch_or_None) for every project
+        repo in the focused environment.
+
+        Prefers the env worktree list carried on the action context (winter
+        builds that enrich FeatureWorktreeContext with `environment_worktrees`).
+        Falls back to enumerating real git worktrees directly under the env
+        directory on older winter-cli builds that don't carry the payload.
+        """
+        env_worktrees = getattr(ctx, "environment_worktrees", None)
+        worktrees = getattr(env_worktrees, "worktrees", None)
+        if worktrees:
+            out: list[tuple[str, str | None]] = []
+            for wt in worktrees:
+                repo_main = getattr(getattr(wt, "repository", None), "main_branch", None)
+                out.append((str(wt.path), repo_main))
+            return out
+
+        # Fallback: enumerate the environment directory. Skip symlinks (winter
+        # seeds convenience symlinks like nvim-dev-* into env dirs) and anything
+        # that isn't a git worktree.
+        wt = getattr(ctx, "worktree", None)
+        if wt is None:
+            return []
+        env_path = Path(wt.environment.path)
+        out = []
+        try:
+            children = sorted(env_path.iterdir())
+        except OSError:
+            return []
+        for child in children:
+            if child.is_symlink() or not child.is_dir():
+                continue
+            if not (child / ".git").exists():
+                continue
+            out.append((str(child), None))
+        return out
+
+    @staticmethod
+    def _merge_base_with(root: str, branch: str) -> str | None:
+        """The merge-base of origin/<branch> and HEAD, or None if origin/<branch>
+        doesn't exist in this repo or the merge-base can't be computed."""
+        try:
+            base = subprocess.check_output(
+                ["git", "-C", root, "merge-base", f"origin/{branch}", "HEAD"],
+                stderr=subprocess.DEVNULL,
+            ).decode().strip()
+            return base or None
+        except subprocess.CalledProcessError:
+            return None
+
+    def _launch_codediff_repos(
+        self, specs: list[tuple[str, str]], notify: str | None = None
+    ) -> None:
+        """Open a multi-repo CodeDiff via codediff's `diff_repos` Lua API.
+
+        Unlike the single-repo `:CodeDiff` path, diff_repos takes absolute repo
+        roots, so no tcd dance is needed — the session resolves each side
+        against its own root. Layout follows the user's codediff config (same as
+        the a/e/d/f/u actions) and is toggleable in-session. Reuses the shared
+        running-instance / fresh-Neovide launch machinery.
+        """
+        self._dispatch_codediff_lua(self._diff_repos_lua(specs), notify)
+
+    def _launch_codediff_repos_uncommitted(
+        self, roots: list[str], notify: str | None = None
+    ) -> None:
+        """Open a multi-repo working-tree CodeDiff via codediff's
+        `diff_repos_uncommitted` Lua API. Same launch machinery as
+        `_launch_codediff_repos`; only the Lua entry point differs."""
+        self._dispatch_codediff_lua(self._diff_repos_uncommitted_lua(roots), notify)
+
+    def _dispatch_codediff_lua(self, lua: str, notify: str | None = None) -> None:
+        """Run a codediff Lua expression in the running Neovim instance, or spawn
+        a fresh Neovide if none is live. Shared by every multi-repo launcher."""
+        found = self._find_nvim_socket()
+        if found is None:
+            self._launch_neovide_lua(lua, notify)
+            return
+        sock, platform = found
+
+        devnull = subprocess.DEVNULL
+        cmd = f"<C-\\><C-n>:lua {lua}<CR>"
+        if notify:
+            cmd += f":echom '{self._vim_single_quote_escape(notify)}'<CR>"
+        try:
+            subprocess.run(
+                ["nvim", "--server", sock, "--remote-send", cmd],
+                stdin=devnull, stdout=devnull, stderr=devnull,
+                timeout=5,
+            )
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            self._launch_neovide_lua(lua, notify)
+            return
+
+        self._raise_neovide(platform)
+
+    def _diff_repos_lua(self, specs: list[tuple[str, str]]) -> str:
+        """Build the `require('codediff').diff_repos({...})` Lua expression.
+        target is HEAD for every spec — the merge-base..HEAD range is the
+        committed feature work the env is ahead on."""
+        parts = []
+        for root, base in specs:
+            parts.append(
+                "{root='%s', base='%s', target='HEAD'}"
+                % (self._lua_single_quote_escape(root), self._lua_single_quote_escape(base))
+            )
+        specs_lua = "{" + ", ".join(parts) + "}"
+        return f"require('codediff').diff_repos({specs_lua})"
+
+    def _diff_repos_uncommitted_lua(self, roots: list[str]) -> str:
+        """Build the `require('codediff').diff_repos_uncommitted({...})` Lua
+        expression. Each entry is a bare root; codediff defaults the repo label
+        to the basename and skips repos with no working-tree changes."""
+        parts = [
+            "{root='%s'}" % self._lua_single_quote_escape(root)
+            for root in roots
+        ]
+        roots_lua = "{" + ", ".join(parts) + "}"
+        return f"require('codediff').diff_repos_uncommitted({roots_lua})"
+
+    def _launch_neovide_lua(self, lua: str, notify: str | None = None) -> None:
+        """Spawn a fresh Neovide and run a Lua expression after plugins load.
+
+        diff_repos opens its own tab asynchronously, so a one-shot TabNew
+        autocmd closes the initial empty tab (mirrors _launch_neovide_codediff).
+        """
+        devnull = subprocess.DEVNULL
+        args = [
+            "neovide", "--",
+            "-c", "autocmd TabNew * ++once 1tabclose",
+            "-c", f"lua {lua}",
+        ]
+        if notify:
+            args.extend(["-c", f"echom '{self._vim_single_quote_escape(notify)}'"])
+        subprocess.Popen(args, stdin=devnull, stdout=devnull, stderr=devnull)
 
     def _handle_sibling_diff(self, ctx: FeatureWorktreeContext) -> None:
         repo_path = str(ctx.worktree.path)
