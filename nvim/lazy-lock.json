@@ -6,7 +6,7 @@
   "blink.cmp": { "branch": "main", "commit": "78336bc89ee5365633bcf754d93df01678b5c08f" },
   "cellular-automaton.nvim": { "branch": "main", "commit": "1606e9d5d04ff254023c3f3c62842d065708d6d3" },
   "claudecode.nvim": { "branch": "main", "commit": "bcb3fe205efe88771e8801d0a99b6fcb0a982bbb" },
-  "codecompanion.nvim": { "branch": "main", "commit": "3a9bbfee65d4cfa2b12e2c1ec9a1c70bd07b4b33" },
+  "codecompanion.nvim": { "branch": "main", "commit": "f6a7b8934fe9399755c1f9e1aa0cc6eb479ac12b" },
   "codediff.nvim": { "branch": "main", "commit": "9c8d50d3ee2f7d4169a2046b0b3b039361bd78a7" },
   "comment-box.nvim": { "branch": "main", "commit": "06bb771690bc9df0763d14769b779062d8f12bc5" },
   "csvview.nvim": { "branch": "main", "commit": "5c22774c3ecc7f8883af5d143b366e45b1f0875d" },
@@ -78,6 +78,6 @@
   "vim-dadbod-ui": { "branch": "master", "commit": "afd07819d8efcefc3317205b855ad4e3513b0011" },
   "vim-devicons": { "branch": "master", "commit": "71f239af28b7214eebb60d4ea5bd040291fb7e33" },
   "vim-ripgrep": { "branch": "master", "commit": "2bb2425387b449a0cd65a54ceb85e123d7a320b8" },
-  "winter-nvim": { "branch": "master", "commit": "4e18ebd91600e6a33528fbaedebd31addde36f2a" },
+  "winter-nvim": { "branch": "master", "commit": "c6497dd0f9562ae9e30840b3e596964f8101bf77" },
   "witch-line": { "branch": "main", "commit": "eed1550d0947da701e72f9816dd3b759081285fb" }
 }
