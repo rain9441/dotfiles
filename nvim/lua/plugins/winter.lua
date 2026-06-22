@@ -1,52 +1,38 @@
 -- winter.nvim — Neovim integration for winter workspaces.
 -- Integrations: a snacks.nvim worktrees picker (<leader>fw "find workspace"),
--- and the cross-repo feature diff viewer (:WinterDiff) rendered via the `delta`
--- module shipped by deltaview.nvim.
+-- a status dashboard (:WinterDashboard, <leader>fd), and the cross-repo feature
+-- diff viewer (:WinterDiff) rendered via codediff.nvim.
 --
--- Tracks the published plugin over GitHub. To iterate on a live local checkout,
--- swap the `'paul-gross/winter-nvim',` spec for
--- `dir = vim.fn.expand('~/projects/winter-workspace/alpha/winter-nvim')`.
+-- Tracks the published plugin over GitHub. To iterate on the plugin against a
+-- live local checkout instead, swap the `'paul-gross/winter-nvim',` spec for
+-- `dir = vim.fn.expand('~/projects/winter-workspace/<env>/winter-nvim'), name = 'winter-nvim',`.
 
--- Buffer-local keys for a :WinterDiff buffer. The plugin exposes the verbs as
--- buffer-local commands; the keys live here, in my config. Bound on the
--- `User WinterDiffOpened` event so nothing is imposed globally.
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'WinterDiffOpened',
-  callback = function(ev)
-    local buf = ev.data.buf
-    -- Defer with vim.schedule so these win over any FileType/treesitter
-    -- autocmds that bind buffer-local keys (]f, q, ...) as delta attaches.
-    vim.schedule(function()
-      if not vim.api.nvim_buf_is_valid(buf) then
-        return
-      end
-      local map = function(mode, lhs, rhs)
-        vim.keymap.set(mode, lhs, rhs, { buffer = buf, silent = true })
-      end
-      map('n', ']c', '<cmd>WinterDiffNextHunk<cr>')
-      map('n', '[c', '<cmd>WinterDiffPrevHunk<cr>')
-      map('n', ']f', '<cmd>WinterDiffNextFile<cr>')
-      map('n', '[f', '<cmd>WinterDiffPrevFile<cr>')
-      map('n', 'R', '<cmd>WinterDiffRefresh<cr>')
-      map('n', '<leader>wd', '<cmd>WinterDiffDrawer<cr>')
-      -- goto-file family (standard nvim conventions), buffer-local to the diff
-      map('n', 'gf', '<cmd>WinterDiffGotoFile<cr>')
-      map('n', '<C-w>f', '<cmd>WinterDiffGotoFileSplit<cr>')
-      map('n', '<C-w>gf', '<cmd>WinterDiffGotoFileTab<cr>')
-      map('n', '<C-w>v', '<cmd>WinterDiffGotoFileVSplit<cr>')
-      -- prompt-yank owns the ,y* prefix, so the diff-buffer yank lives on gy
-      map('n', 'gy', '<cmd>WinterDiffYank<cr>')
-      map('x', 'gy', ':WinterDiffYank<cr>')
-    end)
-  end,
-})
+-- Diff navigation keys are provided natively by codediff.nvim in its own diff
+-- buffers — winter.nvim deliberately no longer exposes :WinterDiff* navigation
+-- commands (next/prev hunk, goto-file, refresh, drawer, yank), so the old
+-- `User WinterDiffOpened` buffer-local keymap handler was removed. Use codediff's
+-- built-in keymaps inside the diff explorer instead.
 
 local M = {
   {
     'paul-gross/winter-nvim',
-    dependencies = { 'folke/snacks.nvim', 'kokusenz/deltaview.nvim' },
+    dependencies = { 'folke/snacks.nvim', 'paul-gross/codediff.nvim' },
     lazy = false,
-    opts = {},
+    opts = {
+      -- Open the dashboard as a near-full-screen centered float rather than the
+      -- default 15-line bottom dock.
+      dashboard = {
+        position = 'float',
+        size = { width = 0.9, height = 0.9 },
+      },
+      -- Dashboard quick-diff (d / D) and :WinterDiff default to working-tree
+      -- (dirty) changes rather than the diff against origin/<main>.
+      diff = {
+        mode = 'uncommitted',
+      },
+    },
+    -- Dashboard (<leader>fd) and worktrees (<leader>fw) keymaps live in
+    -- vim/keys.vim alongside the other <leader>f* finder bindings.
   },
 }
 
