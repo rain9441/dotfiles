@@ -236,8 +236,10 @@ nnoremap <C-3> <cmd>tabn 3<cr>
 nnoremap <C-4> <cmd>tabn 4<cr>
 nnoremap <C-w><C-w> <cmd>tabc<cr>
 
-" Quick noscrollbind
+" Quick stuff
 nnoremap <leader>nsb <cmd>set noscrollbind<cr>
+nnoremap <leader>wr <cmd>set wrap<cr>
+nnoremap <leader>nwr <cmd>set nowrap<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                   Lazy                                   """
