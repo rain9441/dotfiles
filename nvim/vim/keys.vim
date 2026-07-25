@@ -101,9 +101,6 @@ augroup CustomUnlistBuffers
     autocmd!
     autocmd TermOpen * set nobl
     autocmd FileType qf set nobl
-    " autocmd FileType dapui-console set nobl
-    " autocmd FileType dap-repl set nobl
-    " autocmd FileType OverseerList set nobl
 augroup END
 
 " Apply local tab settings for different file types
@@ -247,39 +244,10 @@ nnoremap <leader>nwr <cmd>set nowrap<cr>
 nmap <leader>ll <cmd>Lazy<cr>
 nmap <leader>lp <cmd>Lazy profile<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""                                 Debugger                                 """
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Debugger
-nmap <F4> <cmd>lua require('dap').pause()<cr>
-nmap <F5> <cmd>lua require('dap.ext.vscode').load_launchjs()<cr><cmd>lua require('dap').continue()<cr>
-nmap <F6> <cmd>lua require('dap').terminate()<cr>
-" nmap <F9> <cmd>lua require('dap').toggle_breakpoint()<cr>
-" nmap <C-F9> <cmd>lua require('dap').set_breakpoint(vim.fn.input("Breakpoint condition: "))<cr>
-nmap <F9> <cmd>lua require('persistent-breakpoints.api').toggle_breakpoint()<cr>
-nmap <C-F9> <cmd>lua require('persistent-breakpoints.api').set_conditional_breakpoint()<cr>
-nmap <F10> <cmd>lua require('dap').step_over()<cr>
-nmap <F11> <cmd>lua require('dap').step_into()<cr>
-nmap <S-F11> <cmd>lua require('dap').step_out()<cr>
-nmap <F12> <cmd>lua require('dap').run_to_cursor()<cr>
-nmap <leader>dl <cmd>lua require('dap').list_breakpoints()<cr><cmd>copen<cr>
-nmap <leader>de <cmd>lua require('dap').set_exception_breakpoints()<cr>
-nmap <leader>ds <cmd>lua print(require('dap').status())<cr>
-nmap <leader>du <cmd>lua require('dapui').toggle()<cr>
-" nmap <leader>db <cmd>lua require('dap').set_exception_breakpoints({ 'all' })<cr>
-lua vim.fn.sign_define('DapBreakpointCondition', {text = '🤔', texthl = '', linehl = '', numhl = ''})
-lua vim.fn.sign_define('DapBreakpoint', {text = '🟦', texthl = '', linehl = '', numhl = ''})
-lua vim.fn.sign_define('DapBreakpointRejected', {text = '🟥', texthl = '', linehl = '', numhl = ''})
-lua vim.fn.sign_define('DapStopped', {text = '👉', texthl = '', linehl = '', numhl = ''})
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                    IDE                                   """
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Trouble
 map <leader>qe <cmd>Trouble<cr>
-
-" NvimTree
-"map <F2> <cmd>NvimTreeToggle<cr>
-"map <F3> <cmd>NvimTreeFindFile<cr>
 
 " Neotree
 " Routed through neotree-safe so codediff tabs first switch out, or suppress.
@@ -288,38 +256,6 @@ map <F3> <cmd>lua require('custom/neotree-safe').run('Neotree reveal')<cr>
 map <leader><F1> <cmd>lua require('custom/neotree-safe').run('Neotree focus filesystem')<cr>
 map <leader><F2> <cmd>lua require('custom/neotree-safe').run('Neotree focus buffers')<cr>
 map <leader><F3> <cmd>lua require('custom/neotree-safe').run('Neotree focus git_status')<cr>
-
-" Overseer
-nmap <leader>ol <cmd>OverseerToggle<cr>
-nmap <leader>ot <cmd>OverseerToggle<cr>
-nmap <leader>oi <cmd>OverseerInfo<cr>
-nmap <leader>ob <cmd>OverseerBuild<cr>
-nmap <leader>or <cmd>OverseerRun<cr>
-nmap <leader>tr <cmd>lua require('neotest').overseer.run({})<cr>
-
-" Comment Box
-map <leader>cb1 <cmd>CBlabox<cr
-map <leader>cb2 <cmd>CBcabox<cr>
-map <leader>cb3 <cmd>CBllbox<cr>
-map <leader>cb4 <cmd>CBccbox<cr>
-map <leader>cl1 <cmd>CBllline<cr>
-map <leader>cl2 <cmd>CBccline<cr>
-map <leader>cbd <cmd>CBd<cr>
-
-" Aerial
-nmap <leader>ae <cmd>lua require('custom/main-window').activate()<cr><cmd>AerialToggle! left<cr>
-nmap [a <cmd>AerialPrev<cr>
-nmap ]a <cmd>AerialNext<cr>
-
-" Sessions
-augroup SessionHooks
-    autocmd!
-    autocmd User SessionLoadPre lua require('./custom/overseer-session').reset_tasks() 
-    autocmd User SessionLoadPost lua require('./custom/overseer-session').load_session()
-    autocmd User SessionSavePre lua require('./custom/overseer-session').save_session()
-    "autocmd User SessionLoadPost lua require('nvim-tree.api').tree.change_root(vim.fn.getcwd())
-    "autocmd User SessionLoadPost lua require('nvim-tree.api').tree.toggle({ focus = false })
-augroup END
 
 " Rest Client
 nmap <leader><leader>http <cmd>set filetype=http<cr>:lua require('rest-nvim').run()<cr>
@@ -330,18 +266,6 @@ augroup HttpRestClient
 augroup END
 
 
-" Neotest
-nnoremap <leader>n <cmd>lua require('neogen').generate()<cr>
-
-" DBUI
-" nmap <leader>db <cmd>DBUIToggle<cr>
-" nmap <leader>di <cmd>DBUILastQueryInfo<cr>
-" augroup DBUI
-"   autocmd!
-"   autocmd FileType sql,plsql,mysql map <C-Enter> <Plug>(DBUI_ExecuteQuery)
-"   autocmd FileType sql,plsql,mysql imap <C-Enter> <C-o><Plug>(DBUI_ExecuteQuery)
-"   autocmd FileType sql,plsql,mysql nmap <F3> <cmd>DBUIFindBuffer<cr>
-" augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                                   Git                                    """
@@ -365,17 +289,8 @@ nnoremap <leader>gtl <cmd>lua require('gitsigns').toggle_linehl()<cr>
 nnoremap <leader>gtn <cmd>lua require('gitsigns').toggle_numhl()<cr>
 nnoremap ]c <cmd>lua require('gitsigns').next_hunk()<cr>
 nnoremap [c <cmd>lua require('gitsigns').prev_hunk()<cr>
-nnoremap <leader>gl <cmd>GitLink<cr>
-vnoremap <leader>gL <cmd>GitLink blame<cr>
 nnoremap <leader>gg <cmd>Neogit<cr>
-augroup Neogit
-  autocmd!
-  autocmd FileType Neogit* nnoremap <leader>dv <cmd>lua vim.cmd("DiffviewOpen " .. vim.fn.expand("<cword>") .. "^!")<cr>
-augroup end
 
-
-nnoremap <leader>vf <cmd>DiffviewFileHistory %<cr>
-nnoremap <leader>v% <cmd>DiffviewFileHistory %<cr>
 nnoremap <leader>vv <cmd>CodeDiff<cr>
 nnoremap <leader>vd <cmd>CodeDiff<cr>
 nnoremap <leader>ve <cmd>CodeDiff HEAD~1<cr>
@@ -383,12 +298,6 @@ nnoremap <leader>vh <cmd>CodeDiff history<cr>
 nnoremap <leader>va <cmd>CodeDiff main...<cr>
 nnoremap <leader>vs <cmd>CodeDiff master...<cr>
 
-nnoremap <leader>bs <cmd>BreakString<cr>
-nnoremap <leader>bp <cmd>PreviewString<cr>
-
-nnoremap <leader>mps <cmd>MermaidPreviewStart<cr>
-nnoremap <leader>mpt <cmd>MermaidPreviewStop<cr>
-nnoremap <leader>mpr <cmd>MermaidPreviewRefresh<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """                               Interactions                               """
@@ -430,32 +339,6 @@ nnoremap <leader>err <cmd>lua Snacks.notifier.show_history()<cr>
 nnoremap <leader>tt <cmd>lua package.loaded['custom/main-window'] = nil and require('custom/main-window')<cr>
 nnoremap <leader>ty <cmd>lua require('custom/main-window').goto_mru_buf()<cr>
 
-" AI
-noremap <leader>fa <cmd>CodeCompanionActions<cr>
-noremap <leader>at <cmd>CodeCompanionChat Toggle<cr>
-noremap <leader>ac <cmd>CodeCompanionActions<cr>
-noremap <leader>ax <cmd>CodeCompanion /explain<cr>
-vnoremap <leader>aa <cmd>CodeCompanionChat Add<cr>
-vnoremap <leader>al <cmd>CodeCompanion /lsp<cr>
-noremap <leader>amcp <cmd>MCPHub<cr>
-
-" Telescope
-" nnoremap <C-p> <cmd>Telescope find_files<cr>
-" nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-" nnoremap <leader>fo <cmd>lua require('telescope.builtin').live_grep({ grep_open_files = true })<cr>
-" nnoremap <leader>ff <cmd>Telescope current_buffer_fuzzy_find<cr>
-" nnoremap <leader>fs <cmd>Telescope grep_string<cr>
-" nnoremap <leader>fq <cmd>Telescope quickfix<cr>
-" nnoremap <leader>fQ <cmd>Telescope quickfixhistory<cr>
-" nnoremap <leader>fr <cmd>Telescope registers<cr>
-" nnoremap <leader>fb <cmd>Telescope buffers<cr>
-" nnoremap <leader>fh <cmd>Telescope help_tarequire('gitsigns')<cr>
-" nnoremap <leader>ftt <cmd>Telescope git_commits<cr>
-" nnoremap <leader>ftb <cmd>Telescope git_bcommits<cr>
-" nnoremap <leader>fts <cmd>Telescope git_status<cr>
-" nnoremap <leader>fa <cmd>Telescope aerial<cr>
-" nnoremap <leader>fl <cmd>Telescope builtin<cr>
-
 " Session Manager
 nnoremap <leader>sl <cmd>SessionManager load_session<cr>
 nnoremap <leader>ss <cmd>SessionManager save_current_session<cr>
@@ -463,14 +346,6 @@ nnoremap <leader>sd <cmd>SessionManager delete_session<cr>
 
 " Color picker
 nnoremap <leader>cp <cmd>CccPick<cr>
-
-nnoremap <leader>eo <cmd>ClaudeCode<cr>
-vnoremap <leader>ee <cmd>ClaudeCodeFocus<cr>
-vnoremap <leader>es <cmd>ClaudeCodeSend<cr>
-vnoremap <leader>em <cmd>ClaudeCodeSelectModel<cr>
-vnoremap <leader>eb <cmd>ClaudeCodeAdd %<cr>
-vnoremap <leader>ea <cmd>ClaudeCodeAccept<cr>
-vnoremap <leader>ed <cmd>ClaudeCodeDeny<cr>
 
 " Treesj (join / split funcitons
 nnoremap <leader>m <cmd>TSJToggle<cr>
@@ -485,53 +360,14 @@ nnoremap <A-Down> <cmd>MoveLine(1)<cr>
 vnoremap <A-Up> <cmd>MoveBlock(-1)<cr>
 vnoremap <A-Down> <cmd>MoveBlock(1)<cr>
 
-" Cellular
-nnoremap <leader><leader>1 <cmd>CellularAutomaton make_it_rain<cr>
-nnoremap <leader><leader>2 <cmd>CellularAutomaton scramble<cr>
-
 "VimBeBetter
 nnoremap <leader>vbb <cmd>VimBeBetter<cr>
-
-"JSON to Interface
-nnoremap <leader>cu <cmd>ConvertJSONtoLang typescript<cr>
-nnoremap <leader>ct <cmd>ConvertJSONtoLangBuffer typescript<cr>
-
-"CSVview
-nnoremap <leader>csv <cmd>CsvViewToggle<cr>   
-
-"Chainsaw
-noremap <leader>lo <cmd>Chainsaw objectLog<cr>
-noremap <leader>lv <cmd>Chainsaw variableLog<cr>
-noremap <leader>lt <cmd>Chainsaw typeLog<cr>
-noremap <leader>lm <cmd>Chainsaw messageLog<cr>
-noremap <leader>li <cmd>Chainsaw timeLog<cr>
-noremap <leader>ld <cmd>Chainsaw debugLog<cr>
-noremap <leader>lr <cmd>Chainsaw stacktraceLog<cr>
 
 " Substitute
 nnoremap s <cmd>lua require('substitute').operator()<cr>
 nnoremap ss <cmd>lua require('substitute').line()<cr>
 nnoremap S <cmd>lua require('substitute').eol()<cr>
 vnoremap s <cmd>lua require('substitute').visual()<cr>
-
-" Swap Siblings
-noremap <leader>> <cmd>lua require('sibling-swap').swap_with_right()<cr>
-noremap <leader>< <cmd>lua require('sibling-swap').swap_with_left()<cr>
-
-" Grapple
-noremap <leader>1 <cmd>lua require('custom/main-window').activate()<cr><cmd>Grapple select index=1<cr>
-noremap <leader>2 <cmd>lua require('custom/main-window').activate()<cr><cmd>Grapple select index=2<cr>
-noremap <leader>3 <cmd>lua require('custom/main-window').activate()<cr><cmd>Grapple select index=3<cr>
-noremap <leader>4 <cmd>lua require('custom/main-window').activate()<cr><cmd>Grapple select index=4<cr>
-noremap <leader>5 <cmd>lua require('custom/main-window').activate()<cr><cmd>Grapple select index=5<cr>
-nnoremap <leader>`` <cmd>Grapple tag<cr>
-nnoremap <leader>`1 <cmd>Grapple open_tags<cr>
-nnoremap <leader>`p <cmd>Grapple prune<cr>
-nnoremap <leader>`q <cmd>Grapple quickfix<cr>
-nnoremap <leader>`2 <cmd>Grapple reset<cr>
-nnoremap <leader>`a <cmd>Grapple tag<cr>
-nnoremap <leader>`d <cmd>Grapple untag<cr>
-nnoremap <leader>`r <cmd>Grapple reset<cr>
 
 nnoremap <leader>sqt <cmd>lua require('sqlit').open()<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -575,16 +411,6 @@ augroup end
 "     autocmd FileType cs nnoremap <buffer> <C-;> <CMD>lua require('omnisharp_extended').lsp_implementation()<cr>
 " augroup end
 
-" Hurl
-augroup Hurl
-    autocmd!
-    autocmd FileType hurl nnoremap <buffer> <leader>hR <cmd>HurlRunner<cr>
-    autocmd FileType hurl vnoremap <buffer> <leader>hr <cmd>HurlRunner<cr>
-    autocmd FileType hurl nnoremap <buffer> <leader>hr <cmd>HurlRunnerAt<cr>
-    autocmd FileType hurl nnoremap <buffer> <leader>ht <cmd>HurlToggleMode<cr>
-    autocmd FileType hurl nnoremap <buffer> <leader>hv <cmd>HurlVerbose<cr>
-    autocmd FileType hurl nnoremap <buffer> <leader>hV <cmd>HurlVeryVerbose<cr>
-augroup end
 
 " Prompt Yank
 nnoremap <leader>y1 <cmd>PromptYank format claude<cr>

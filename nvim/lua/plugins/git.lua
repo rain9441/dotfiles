@@ -13,20 +13,10 @@ local M = {
     },
   },
   {
-    'kokusenz/deltaview.nvim',
-    -- deltaview.nvim embeds the `delta` renderer module (lua/delta/), so no
-    -- separate kokusenz/delta.lua dependency is needed.
-    cmd = { 'DeltaView', 'DeltaMenu', 'Delta' },
-    opts = {},
-  },
-  {
     'NeogitOrg/neogit',
-    commit = '9bb1e73c534f767607e0a888f3de4c942825c501',
     cmd = 'Neogit',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'sindrets/diffview.nvim',
-      'nvim-telescope/telescope.nvim',
     },
     config = function()
       require('neogit').setup({
@@ -37,12 +27,19 @@ local M = {
         },
         graph_style = 'unicode',
         integrations = {
-          codediff = true,
+          snacks = true,
         },
         commit_editor = {
           kind = 'vsplit',
         },
         mappings = {
+          commit_view = {
+            ['a'] = 'OpenFileInWorktree',
+            ['o'] = 'OpenCommitLinkInBrowser',
+          },
+          refs_view = {
+            ['x'] = 'DeleteBranch',
+          },
           commit_editor = {
             ['q'] = 'Close',
             ['<c-c><c-c>'] = 'Submit',
@@ -140,22 +137,6 @@ local M = {
             -- [']c'] = 'OpenOrScrollDown',
           },
         },
-      })
-    end,
-  },
-  {
-    'sindrets/diffview.nvim',
-    cmd = { 'DiffviewFileHistory', 'DiffviewOpen' },
-    opts = {
-      enhanced_diff_hl = true,
-    },
-  },
-  {
-    'linrongbin16/gitlinker.nvim',
-    cmd = 'GitLink',
-    config = function()
-      require('gitlinker').setup({
-        command = { name = 'GitLink' },
       })
     end,
   },

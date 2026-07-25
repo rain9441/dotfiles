@@ -2,12 +2,11 @@ local M = {
   {
     'saghen/blink.cmp',
     lazy = false,
-    dependencies = { 'rafamadriz/friendly-snippets', 'milanglacier/minuet-ai.nvim' },
+    dependencies = { 'rafamadriz/friendly-snippets' },
     version = '*',
     opts = {
       keymap = {
         preset = 'super-tab',
-        ['<A-a>'] = { function(cmp) cmp.show({ providers = { 'minuet' } }) end },
         ['<CR>'] = { 'accept', 'fallback' },
         ['<Tab>'] = {
           function(cmp)
@@ -71,18 +70,6 @@ local M = {
             'buffer',
           }
         end,
-        per_filetype = {
-          codecompanion = { 'codecompanion' },
-        },
-        providers = {
-          minuet = {
-            name = 'minuet',
-            module = 'minuet.blink',
-            async = true,
-            timeout_ms = 3000,
-            score_offset = 50, -- Gives minuet higher priority among suggestions
-          },
-        },
       },
       completion = {
         trigger = { prefetch_on_insert = false },

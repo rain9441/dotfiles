@@ -62,9 +62,6 @@ local M = {
           NeoTreeNormal = { bg = colors.bg },
           NeoTreeNormalNC = { bg = colors.bg },
 
-          TelescopeSelection = { bg = colors.cursorline },
-          TelescopeMultiSelection = { bg = colors.cursorline },
-
           LspReferenceRead = { bg = '#505176' },
           LspReferenceText = { bg = '#505176' },
           LspReferenceWrite = { bg = '#505176' },
@@ -88,7 +85,6 @@ local M = {
           NeogitDiffDelete = { bg = colors.darker_red, fg = colors.red },
           NeogitDiffDeleteHighlight = { bg = colors.dark_red, fg = colors.bright_red },
 
-          DiffviewDiffText = { bg = colors.dark_green, fg = nil },
           DiffAdd = { bg = colors.dark_green, fg = nil },
           DiffDelete = { bg = colors.dark_red, fg = nil },
           DiffChange = { bg = colors.dark_yellow, fg = colors.fggrey },
@@ -106,16 +102,6 @@ local M = {
       modes = function(mode) return mode:find('^[nictRss\x13]') ~= nil end,
       blending = {
         threshold = 0.33,
-      },
-    },
-  },
-  {
-    'petertriho/nvim-scrollbar',
-    event = 'VeryLazy',
-    config = function() require('scrollbar').setup() end,
-    opts = {
-      excluded_filetypes = {
-        'snacks_picker_list',
       },
     },
   },

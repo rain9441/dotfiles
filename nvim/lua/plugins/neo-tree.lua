@@ -28,16 +28,6 @@ local M = {
             padding = 0,
           },
         },
-        commands = {
-          oil = function(state)
-            local node = state.tree:get_node()
-            if node.type == 'directory' then
-              require('oil').open_float(node.path)
-            else
-              require('oil').open_float(node._parent_id)
-            end
-          end,
-        },
         window = {
           mapping_options = {
             noremap = true,
@@ -46,7 +36,6 @@ local M = {
           position = 'right',
           width = 60,
           mappings = {
-            ['O'] = 'oil',
             ['<space>'] = { 'toggle_node' },
             ['<2-LeftMouse>'] = 'open_with_window_picker',
             ['<cr>'] = { 'open_with_window_picker', config = { expand_nested_files = true } }, -- expand nested file takes precedence
