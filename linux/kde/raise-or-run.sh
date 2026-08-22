@@ -10,7 +10,10 @@ ACTIVE=$(kdotool getactivewindow)
 WINDOWS=$(kdotool search "$SEARCH")
 
 if [ -z "$WINDOWS" ]; then
-    $LAUNCH
+    # @im=none blocks legacy XIM discovery: wezterm 20240203 leaks X windows via
+    # XIM/ibus-x11 even with use_ime=false, degrading the X server over hours.
+    # GUI apps use ibus over D-Bus, not XIM, so input methods are unaffected.
+    XMODIFIERS=@im=none $LAUNCH
     exit
 fi
 

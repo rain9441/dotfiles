@@ -3,7 +3,7 @@ local config = wezterm.config_builder()
 
 config.initial_cols = 150
 config.initial_rows = 30
-config.use_ime = true
+config.use_ime = false
 config.macos_forward_to_ime_modifier_mask = ""
 
 wezterm.on("gui-startup", function()
@@ -58,7 +58,7 @@ local function merge(tables)
 end
 
 local nvim_patterns = { 'nvim.exe$', 'nvim$', 'wslhost.exe$' }
-local nvim_tmux_patterns = merge({ nvim_patterns, { 'tmux$' } })
+local nvim_tmux_patterns = merge({ nvim_patterns, { 'tmux$', 'opencode$', 'opencode%.exe$' } })
 
 local function whenNotNvim(keys) return whenNotInProcess(keys, nvim_patterns) end
 local function whenNotNvimNorTmux(keys) return whenNotInProcess(keys, nvim_tmux_patterns) end
