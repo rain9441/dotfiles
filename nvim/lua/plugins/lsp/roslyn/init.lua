@@ -4,8 +4,19 @@ return {
   lazy = false,
   ---@module 'roslyn.config'
   ---@type RoslynNvimConfig
-  opts = {},
-  config = function()
+  opts = {
+    -- Multiple solutions are generated per repo here; the Local one is the dev target
+    choose_target = function(targets)
+      for _, target in ipairs(targets) do
+        if target:match('%.Local%.sln$') then
+          return target
+        end
+      end
+      return targets[1]
+    end,
+  },
+  config = function(_, opts)
+    require('roslyn').setup(opts)
     vim.lsp.config('roslyn', {
       settings = {
         ['csharp|formatting'] = {
