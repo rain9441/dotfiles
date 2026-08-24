@@ -13,3 +13,11 @@ CLAUDE.local.md
 
 .fdignore
 .rgignore
+
+# Direct Supply Overrides
+.env.development.local
+
+# macOS Finder metadata
+.DS_Store
+.AppleDouble
+.LSOverride
