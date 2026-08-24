@@ -92,7 +92,7 @@ config.keys = merge({
     { mods = 'CTRL', key = '7', action = wezterm.action.ActivateTab(6) },
     { mods = 'CTRL', key = '8', action = wezterm.action.ActivateTab(7) },
     { mods = 'CTRL', key = '9', action = wezterm.action.ActivateTab(8) },
-    { mods = 'CTRL',       key = 'p', action = wezterm.action.ActivateCommandPalette },
+    { mods = 'CTRL|SHIFT', key = 'p', action = wezterm.action.ActivateCommandPalette },
   }),
   whenNotNvimNorTmux({
     { mods = 'CTRL',       key = 'u', action = wezterm.action.ScrollByPage(-0.7) },
