@@ -6,8 +6,23 @@
 SEARCH="$1"
 LAUNCH="$2"
 
-ACTIVE=$(kdotool getactivewindow)
-WINDOWS=$(kdotool search "$SEARCH")
+# kdotool gets results back from a KWin script over D-Bus and occasionally
+# exits before they arrive, printing nothing with exit 0 (~1 in 150 calls).
+# Retry so a dropped result isn't mistaken for "no windows".
+kdo_retry() {
+    local out
+    for _ in 1 2 3 4 5; do
+        out=$(kdotool "$@")
+        if [ -n "$out" ]; then
+            echo "$out"
+            return
+        fi
+        sleep 0.05
+    done
+}
+
+ACTIVE=$(kdo_retry getactivewindow)
+WINDOWS=$(kdo_retry search "$SEARCH")
 
 if [ -z "$WINDOWS" ]; then
     # @im=none blocks legacy XIM discovery: wezterm 20240203 leaks X windows via
@@ -17,9 +32,11 @@ if [ -z "$WINDOWS" ]; then
     exit
 fi
 
+FIRST=$(head -n1 <<< "$WINDOWS")
+
 # If active window isn't in the list, just focus the first one
-if ! echo "$WINDOWS" | grep -q "$ACTIVE"; then
-    kdotool search "$SEARCH" windowactivate %1
+if [ -z "$ACTIVE" ] || ! grep -qxF "$ACTIVE" <<< "$WINDOWS"; then
+    kdotool windowactivate "$FIRST"
     exit
 fi
 
@@ -34,4 +51,4 @@ while IFS= read -r win; do
 done <<< "$WINDOWS"
 
 # Wrapped around — go back to the first
-kdotool search "$SEARCH" windowactivate %1
+kdotool windowactivate "$FIRST"
