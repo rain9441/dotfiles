@@ -2,7 +2,8 @@ return {
   'OXY2DEV/markview.nvim',
   ft = { 'markdown' },
   dependencies = {
-    'nvim-treesitter/nvim-treesitter',
+    -- No nvim-treesitter here: markview needs the parsers and queries, which
+    -- live in stdpath('data')/site, not the installer plugin itself.
     'nvim-tree/nvim-web-devicons',
     'gunasekar/markview-smart-tables.nvim',
   },
