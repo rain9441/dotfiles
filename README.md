@@ -40,3 +40,11 @@ Download & install & setup
 ## linux
 
 See [linux.md](linux.md) for setup instructions.
+
+## OpenCode
+
+The Linux (`bash linux.sh`) and macOS (`bash mac.sh`) installers symlink
+`core/opencode.json` to `~/.config/opencode/opencode.json` and
+`core/opencode-tui.json` to `~/.config/opencode/tui.json`. This shares the
+OpenCode settings and TUI keybindings across machines. If a config already exists, back it up first
+or use the installer's `-f` option to replace it.

@@ -35,6 +35,10 @@ function install() {
     ln -s "$1" "$2"
 }
 
+mkdir -p "$HOME/.config/opencode"
+
+install "$LOCAL_PATH/core/opencode.json" "$HOME/.config/opencode/opencode.json" "OpenCode"
+install "$LOCAL_PATH/core/opencode-tui.json" "$HOME/.config/opencode/tui.json" "OpenCode TUI"
 install "$LOCAL_PATH/core/.wezterm.lua" "$HOME/.wezterm.lua" "Wezterm"
 install "$LOCAL_PATH/core/.gitconfig" "$HOME/.gitconfig" "GitConfig"
 install "$LOCAL_PATH/core/.gitignore" "$HOME/.gitignore" "GitIgnore"
@@ -56,4 +60,3 @@ if [ "$XDG_CURRENT_DESKTOP" = "KDE" ]; then
 else
     echo "[KDE] Not a KDE desktop, skipping KDE-specific files"
 fi
-
