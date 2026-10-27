@@ -38,6 +38,7 @@ function install() {
 mkdir -p "$HOME/.config/opencode"
 
 install "$LOCAL_PATH/core/opencode.json" "$HOME/.config/opencode/opencode.json" "OpenCode"
+install "$LOCAL_PATH/core/opencode-cli.json" "$HOME/.config/opencode/cli.json" "OpenCode CLI"
 install "$LOCAL_PATH/core/opencode-tui.json" "$HOME/.config/opencode/tui.json" "OpenCode TUI"
 install "$LOCAL_PATH/core/.wezterm.lua" "$HOME/.wezterm.lua" "Wezterm"
 install "$LOCAL_PATH/core/.gitconfig" "$HOME/.gitconfig" "GitConfig"

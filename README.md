@@ -44,7 +44,10 @@ See [linux.md](linux.md) for setup instructions.
 ## OpenCode
 
 The Linux (`bash linux.sh`) and macOS (`bash mac.sh`) installers symlink
-`core/opencode.json` to `~/.config/opencode/opencode.json` and
-`core/opencode-tui.json` to `~/.config/opencode/tui.json`. This shares the
-OpenCode settings and TUI keybindings across machines. If a config already exists, back it up first
+`core/opencode.json` to `~/.config/opencode/opencode.json`,
+`core/opencode-cli.json` to `~/.config/opencode/cli.json` (V2), and
+`core/opencode-tui.json` to `~/.config/opencode/tui.json` (legacy). This shares the
+OpenCode settings and keybindings across machines. In V2, Ctrl+Y/Ctrl+E scroll
+up/down one line; Ctrl+E no longer moves the prompt cursor to the end of the line.
+If a config already exists, back it up first
 or use the installer's `-f` option to replace it.
