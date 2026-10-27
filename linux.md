@@ -29,7 +29,6 @@ The `keymapper` client auto-starts via `/etc/xdg/autostart/keymapper.desktop`.
 Symlink flatpak apps into `~/.local/bin/` so raise-or-run can launch them:
 
 ```bash
-ln -s /var/lib/flatpak/exports/bin/com.google.Chrome ~/.local/bin/chrome
 ln -s /var/lib/flatpak/exports/bin/io.github.shiftey.Desktop ~/.local/bin/github-desktop
 ```
 
@@ -46,3 +45,4 @@ Key packages to install:
 - `oh-my-zsh`
 - `nvm`
 - `keymapper` (global shortcuts — see above)
+- `google-chrome-stable` (RPM from Google's repo, not flatpak — provides `google-chrome`)
