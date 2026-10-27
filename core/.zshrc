@@ -24,5 +24,8 @@ alias ccr='claude --resume'
 alias ccdr='claude --dangerously-skip-permissions --resume'
 alias ccu='ccusage --breakdown --since $(date -v-1d +%Y%m%d 2>/dev/null || date -d yesterday +%Y%m%d)'
 
+# OpenCode aliases
+alias oc='opencode --auto'
+
 # Source machine-local overrides (not tracked in dotfiles)
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
