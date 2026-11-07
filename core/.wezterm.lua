@@ -33,7 +33,7 @@ local function whenNotInProcess(keys, patterns)
       mods = key_info.mods,
       key = key_info.key,
       action = wezterm.action_callback(function(window, pane)
-        local process_name = pane:get_foreground_process_name()
+        local process_name = pane:get_foreground_process_name() or ''
         for _, pattern in ipairs(patterns) do
           if process_name:match(pattern) then
             window:perform_action(wezterm.action({ SendKey = { mods = key_info.mods, key = key_info.key } }), pane)
