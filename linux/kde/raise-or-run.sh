@@ -28,8 +28,11 @@ if [ -z "$WINDOWS" ]; then
     # @im=none blocks legacy XIM discovery: wezterm 20240203 leaks X windows via
     # XIM/ibus-x11 even with use_ime=false, degrading the X server over hours.
     # GUI apps use ibus over D-Bus, not XIM, so input methods are unaffected.
-    XMODIFIERS=@im=none $LAUNCH
-    exit
+    # Launch in a scope of its own so it is not part of keymapper's unit: an OOM
+    # kill of the app would otherwise make systemd stop keymapper and every app
+    # it launched (OOMPolicy=stop).
+    XMODIFIERS=@im=none exec systemd-run --user --scope --slice=app.slice \
+        --unit="app-${SEARCH}-$$" --collect --quiet $LAUNCH
 fi
 
 FIRST=$(head -n1 <<< "$WINDOWS")
