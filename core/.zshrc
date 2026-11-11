@@ -24,6 +24,10 @@ alias ccr='claude --resume'
 alias ccdr='claude --dangerously-skip-permissions --resume'
 alias ccu='ccusage --breakdown --since $(date -v-1d +%Y%m%d 2>/dev/null || date -d yesterday +%Y%m%d)'
 
+# Codex aliases
+alias cx='codex'
+alias cxd='codex --dangerously-bypass-approvals-and-sandbox'
+
 # OpenCode aliases
 alias oc='opencode --auto'
 

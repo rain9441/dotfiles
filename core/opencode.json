@@ -4,21 +4,50 @@
   "providers": {
     "openai": {
       "models": {
-        "gpt-6.1-terra-fast": { "disabled": true },
-        "gpt-6.1-sol-fast": { "disabled": true },
-        "gpt-6.1-sol-ultrafast": { "disabled": true },
-        "gpt-6-sol": { "disabled": true },
-        "gpt-6-sol-fast": { "disabled": true },
-        "gpt-6-luna-fast": { "disabled": true },
-        "gpt-6-astra-fast": { "disabled": true },
-        "gpt-6-astra-ultrafast": { "disabled": true },
-        "gpt-5.6-luna": { "disabled": true },
-        "gpt-5.6-luna-fast": { "disabled": true },
-        "gpt-5.6-terra": { "disabled": true },
-        "gpt-5.6-terra-fast": { "disabled": true },
-        "gpt-5.6-sol": { "disabled": true },
-        "gpt-5.6-sol-fast": { "disabled": true }
+        "gpt-6.1-terra-fast": {
+          "disabled": true
+        },
+        "gpt-6.1-sol-fast": {
+          "disabled": true
+        },
+        "gpt-6.1-sol-ultrafast": {
+          "disabled": true
+        },
+        "gpt-6-sol": {
+          "disabled": true
+        },
+        "gpt-6-sol-fast": {
+          "disabled": true
+        },
+        "gpt-6-luna-fast": {
+          "disabled": true
+        },
+        "gpt-6-astra-fast": {
+          "disabled": true
+        },
+        "gpt-6-astra-ultrafast": {
+          "disabled": true
+        },
+        "gpt-5.6-luna": {
+          "disabled": true
+        },
+        "gpt-5.6-luna-fast": {
+          "disabled": true
+        },
+        "gpt-5.6-terra": {
+          "disabled": true
+        },
+        "gpt-5.6-terra-fast": {
+          "disabled": true
+        },
+        "gpt-5.6-sol": {
+          "disabled": true
+        },
+        "gpt-5.6-sol-fast": {
+          "disabled": true
+        }
       }
     }
-  }
+  },
+  "model": "openai/gpt-6.1-sol"
 }
