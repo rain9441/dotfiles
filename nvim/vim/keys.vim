@@ -167,6 +167,27 @@ noremap <C-kEnter> <cmd>call SetFontSize(16)<cr>
 inoremap <C-kPlus> <C-o><cmd>call AdjustFontSize(+0.25)<cr>
 inoremap <C-kMinus> <C-o><cmd>call AdjustFontSize(-0.25)<cr>
 
+" Neovide zoom (browser-style): Ctrl+= bigger, Ctrl+- smaller, Ctrl+0 reset
+if exists('g:neovide')
+    let g:neovide_scale_factor = 1.0
+    function! NeovideZoom(factor) abort
+        " 0 resets; otherwise multiply, clamped to 50%..300%
+        let l:scale = a:factor == 0 ? 1.0 : g:neovide_scale_factor * a:factor
+        let g:neovide_scale_factor = l:scale < 0.5 ? 0.5 : l:scale > 3.0 ? 3.0 : l:scale
+        echo printf('Zoom: %d%%', float2nr(round(g:neovide_scale_factor * 100)))
+    endfunction
+
+    noremap  <C-=> <cmd>call NeovideZoom(1.1)<cr>
+    noremap! <C-=> <cmd>call NeovideZoom(1.1)<cr>
+    tnoremap <C-=> <cmd>call NeovideZoom(1.1)<cr>
+    noremap  <C--> <cmd>call NeovideZoom(1/1.1)<cr>
+    noremap! <C--> <cmd>call NeovideZoom(1/1.1)<cr>
+    tnoremap <C--> <cmd>call NeovideZoom(1/1.1)<cr>
+    noremap  <C-0> <cmd>call NeovideZoom(0)<cr>
+    noremap! <C-0> <cmd>call NeovideZoom(0)<cr>
+    tnoremap <C-0> <cmd>call NeovideZoom(0)<cr>
+endif
+
 " Quick Fix
 nnoremap <expr> <leader>qq "<cmd>".(get(getqflist({"winid": 1}), "winid") != 0? "cclose" : "bot copen")."<cr>"
 nmap <leader>qo <cmd>bot copen<cr>
@@ -400,6 +421,12 @@ augroup Typescript
   autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-s> <cmd>VtsExec sort_imports<cr>
   autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-i> <cmd>VtsExec add_missing_imports<cr>
   autocmd FileType typescript,javascript nnoremap <buffer> <A-k><A-r> <cmd>VtsExec rename_file<cr>
+augroup end
+
+" Markdown specific
+augroup Markdown
+  autocmd!
+  autocmd FileType markdown nnoremap <buffer> <leader>m <cmd>MarkdownPreviewToggle<cr>
 augroup end
 
 " augroup Csharp

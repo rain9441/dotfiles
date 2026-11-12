@@ -84,8 +84,6 @@ return {
         DiffAdd = { bg = colors.dark_green, fg = nil },
         DiffDelete = { bg = colors.dark_red, fg = nil },
         DiffChange = { bg = colors.dark_yellow, fg = colors.fggrey },
-
-        RenderMarkdownCode = { bg = '#191a22' },
       },
     })
   end,
