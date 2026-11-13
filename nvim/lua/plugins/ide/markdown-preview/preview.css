@@ -1,0 +1,35 @@
+/*
+ * Overrides appended to markdown-preview.nvim's stock markdown.css.
+ * The --preview-* variables are generated from `style` in init.lua.
+ */
+
+/* Lift the 900px column cap that the plugin's page.css puts on #page-ctn. */
+#page-ctn {
+  max-width: var(--preview-max-width);
+}
+
+.markdown-body {
+  font-family: var(--preview-font);
+  font-size: var(--preview-font-size);
+  line-height: var(--preview-line-height);
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body kbd,
+.markdown-body tt {
+  font-family: var(--preview-font);
+}
+
+/* Inset diagrams by a fixed padding and scale them to fill the rest. */
+.mermaid {
+  padding: var(--preview-mermaid-padding);
+}
+
+.mermaid svg {
+  display: block;
+  /* !important to beat the inline width/max-width mermaid sets on the svg */
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto;
+}

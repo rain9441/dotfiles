@@ -1,29 +1,40 @@
 -- Live markdown preview (iamcco/markdown-preview.nvim) in a chromeless
 -- Chrome app window, scroll-synced to the cursor.
 
--- Appended to the plugin's GitHub markdown.css: lift the 900px column cap
--- (#page-ctn in page.css) and stretch mermaid diagrams to the column width.
-local css_overrides = [[
+-- Look of the preview page. Each key becomes a --preview-<key> CSS variable
+-- used by preview.css; `font` and `font-size` are also handed to mermaid.
+local style = {
+  ['font'] = '"RobotoMono Nerd Font", monospace',
+  ['font-size'] = '14px',
+  ['line-height'] = '1.6',
+  ['max-width'] = '95vw',
+  ['mermaid-padding'] = '2rem',
+}
 
-/* dotfiles overrides */
-#page-ctn { max-width: 95vw; }
-.mermaid svg { width: 100% !important; max-width: 100% !important; height: auto; }
-]]
+local here = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':h')
 
--- g:mkdp_markdown_css *replaces* the stock markdown.css, so build a combined
--- copy (stock + overrides) in the cache dir and point the plugin at that.
+-- g:mkdp_markdown_css replaces the stock markdown.css rather than adding to
+-- it, so write stock + style variables + preview.css to one cached file.
+-- Returns nil before the plugin is installed (the stock css is used then).
 local function build_css(plugin_dir)
-  local src = plugin_dir .. '/app/_static/markdown.css'
-  local f = io.open(src, 'r')
-  if not f then return nil end -- plugin not built yet; fall back to stock css
-  local stock = f:read('*a')
-  f:close()
-  local dst = vim.fn.stdpath('cache') .. '/mkdp-markdown.css'
-  local out = io.open(dst, 'w')
-  if not out then return nil end
-  out:write(stock, css_overrides)
-  out:close()
-  return dst
+  local stock = plugin_dir .. '/app/_static/markdown.css'
+  if vim.fn.filereadable(stock) == 0 then return nil end
+
+  local keys = vim.tbl_keys(style)
+  table.sort(keys)
+  local vars = { '', ':root {' }
+  for _, key in ipairs(keys) do
+    table.insert(vars, ('  --preview-%s: %s;'):format(key, style[key]))
+  end
+  table.insert(vars, '}')
+
+  local lines = vim.fn.readfile(stock)
+  vim.list_extend(lines, vars)
+  vim.list_extend(lines, vim.fn.readfile(here .. '/preview.css'))
+
+  local out = vim.fn.stdpath('cache') .. '/mkdp-markdown.css'
+  vim.fn.writefile(lines, out)
+  return out
 end
 
 return {
@@ -40,20 +51,20 @@ return {
     vim.g.mkdp_combine_preview = 1  -- reuse one window across markdown buffers
     vim.g.mkdp_combine_preview_auto_refresh = 1
     vim.g.mkdp_echo_preview_url = 1
-    -- Fixed port so Chrome remembers the app window's size and zoom level.
-    vim.g.mkdp_port = '8090'
+    vim.g.mkdp_port = '8090'        -- fixed so Chrome remembers window size/zoom
+    vim.g.mkdp_markdown_css = build_css(plugin.dir)
 
-    local css = build_css(plugin.dir)
-    if css then vim.g.mkdp_markdown_css = css end
-
-    -- Setting this replaces the plugin defaults wholesale, so keep them all.
+    -- Setting this replaces the plugin's defaults wholesale, so all keys
+    -- are listed; only `maid` differs from the defaults.
     vim.g.mkdp_preview_options = {
       mkit = vim.empty_dict(),
       katex = vim.empty_dict(),
       uml = vim.empty_dict(),
-      -- passed straight to mermaid.initialize()
+      -- Passed to mermaid.initialize(). The font is set here rather than in
+      -- CSS so mermaid sizes node boxes for it.
       maid = {
-        themeVariables = { fontSize = '18px' },
+        fontFamily = style.font,
+        themeVariables = { fontFamily = style.font, fontSize = style['font-size'] },
         flowchart = { useMaxWidth = false },
         sequence = { useMaxWidth = false },
       },
@@ -67,6 +78,7 @@ return {
       toc = vim.empty_dict(),
     }
 
+    -- mkdp_browserfunc must name a Vimscript function.
     vim.cmd([[
       function! MkdpOpenChromeApp(url) abort
         call jobstart(['google-chrome', '--app=' . a:url, '--window-size=1600,1200'], {'detach': v:true})
