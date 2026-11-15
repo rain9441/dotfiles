@@ -3,6 +3,76 @@
  * The --preview-* variables are generated from `style` in init.lua.
  */
 
+/* Keep the page dark, but lift text, muted text, and links for contrast. */
+main[data-theme="dark"] {
+  --color-text-primary: #e6edf3;
+  --color-text-tertiary: #b1bac4;
+  --color-text-link: #79c0ff;
+  --foreground-color: #e6edf3;
+}
+
+/* The bundled highlight.css uses light-theme colors even in dark mode.
+ * Scope overrides to .markdown-body to win over that later-loaded stylesheet.
+ * Leave the preview's light-mode toggle using its original syntax palette.
+ */
+[data-theme="dark"] .markdown-body .hljs {
+  color: #e6edf3;
+  background: transparent;
+}
+
+[data-theme="dark"] .markdown-body .hljs-comment,
+[data-theme="dark"] .markdown-body .hljs-quote,
+[data-theme="dark"] .markdown-body .hljs-meta {
+  color: #b1bac4;
+}
+
+[data-theme="dark"] .markdown-body .hljs-keyword,
+[data-theme="dark"] .markdown-body .hljs-selector-tag,
+[data-theme="dark"] .markdown-body .hljs-doctag {
+  color: #ff7b72;
+}
+
+[data-theme="dark"] .markdown-body .hljs-number,
+[data-theme="dark"] .markdown-body .hljs-literal,
+[data-theme="dark"] .markdown-body .hljs-variable,
+[data-theme="dark"] .markdown-body .hljs-template-variable,
+[data-theme="dark"] .markdown-body .hljs-attr,
+[data-theme="dark"] .markdown-body .hljs-attribute,
+[data-theme="dark"] .markdown-body .hljs-type,
+[data-theme="dark"] .markdown-body .hljs-built_in,
+[data-theme="dark"] .markdown-body .hljs-builtin-name {
+  color: #79c0ff;
+}
+
+[data-theme="dark"] .markdown-body .hljs-string,
+[data-theme="dark"] .markdown-body .hljs-regexp,
+[data-theme="dark"] .markdown-body .hljs-link {
+  color: #a5d6ff;
+}
+
+[data-theme="dark"] .markdown-body .hljs-title,
+[data-theme="dark"] .markdown-body .hljs-section,
+[data-theme="dark"] .markdown-body .hljs-selector-id {
+  color: #d2a8ff;
+}
+
+[data-theme="dark"] .markdown-body .hljs-tag,
+[data-theme="dark"] .markdown-body .hljs-name,
+[data-theme="dark"] .markdown-body .hljs-symbol,
+[data-theme="dark"] .markdown-body .hljs-bullet {
+  color: #7ee787;
+}
+
+[data-theme="dark"] .markdown-body .hljs-addition {
+  color: #aff5b4;
+  background: #033a16;
+}
+
+[data-theme="dark"] .markdown-body .hljs-deletion {
+  color: #ffdcd7;
+  background: #67060c;
+}
+
 /* Lift the 900px column cap that the plugin's page.css puts on #page-ctn. */
 #page-ctn {
   max-width: var(--preview-max-width);

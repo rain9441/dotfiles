@@ -47,9 +47,11 @@ return {
   -- ,m keymap lives in vim/keys.vim
   init = function(plugin)
     vim.g.mkdp_theme = 'dark'
+    vim.g.mkdp_auto_start = 0       -- open only with ,m / :MarkdownPreview
     vim.g.mkdp_auto_close = 0       -- keep preview when leaving the buffer
     vim.g.mkdp_combine_preview = 1  -- reuse one window across markdown buffers
-    vim.g.mkdp_combine_preview_auto_refresh = 1
+    -- Switch previewed buffers manually instead of following buffer changes.
+    vim.g.mkdp_combine_preview_auto_refresh = 0
     vim.g.mkdp_echo_preview_url = 1
     vim.g.mkdp_port = '8090'        -- fixed so Chrome remembers window size/zoom
     vim.g.mkdp_markdown_css = build_css(plugin.dir)
@@ -64,7 +66,25 @@ return {
       -- CSS so mermaid sizes node boxes for it.
       maid = {
         fontFamily = style.font,
-        themeVariables = { fontFamily = style.font, fontSize = style['font-size'] },
+        theme = 'base',
+        themeVariables = {
+          fontFamily = style.font,
+          fontSize = style['font-size'],
+          darkMode = true,
+          background = '#161b22',
+          primaryColor = '#263445',
+          primaryTextColor = '#f0f3f6',
+          primaryBorderColor = '#8cabc6',
+          secondaryColor = '#29382a',
+          secondaryTextColor = '#f0f3f6',
+          tertiaryColor = '#383047',
+          tertiaryTextColor = '#f0f3f6',
+          lineColor = '#b1bac4',
+          textColor = '#f0f3f6',
+          edgeLabelBackground = '#161b22',
+          noteBkgColor = '#383047',
+          noteTextColor = '#f0f3f6',
+        },
         flowchart = { useMaxWidth = false },
         sequence = { useMaxWidth = false },
       },
