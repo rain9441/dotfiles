@@ -36,6 +36,7 @@ function install() {
 }
 
 mkdir -p "$HOME/.config/opencode"
+mkdir -p "$HOME/.grok"
 
 install "$LOCAL_PATH/core/opencode.json" "$HOME/.config/opencode/opencode.json" "OpenCode"
 install "$LOCAL_PATH/core/opencode-cli.json" "$HOME/.config/opencode/cli.json" "OpenCode CLI"
@@ -53,6 +54,7 @@ install "$LOCAL_PATH/core/.fdignore" "$HOME/.fdignore" "fd"
 install "$LOCAL_PATH/core/.rgignore" "$HOME/.rgignore" "rg"
 
 install "$LOCAL_PATH/core/keymapper.conf" "$HOME/.config/keymapper.conf" "Keymapper"
+install "$LOCAL_PATH/core/grok/config.toml" "$HOME/.grok/config.toml" "Grok"
 
 # KDE-specific
 if [ "$XDG_CURRENT_DESKTOP" = "KDE" ]; then

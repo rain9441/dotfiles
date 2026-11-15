@@ -1,0 +1,35 @@
+[cli]
+installer = "internal"
+
+[marketplace]
+default_skills_installs_purged = true
+official_marketplace_auto_installed = true
+
+[[marketplace.sources]]
+name = "xAI Official"
+git = "https://github.com/xai-org/plugin-marketplace.git"
+
+[ui]
+max_thoughts_width = 120
+yolo = false
+compact_mode = true
+permission_mode = "always-approve"
+tool_call_density = "compact-all-grouped"
+screen_mode = "fullscreen"
+show_timeline = false
+dashboard_preview = true
+page_flip_on_send = false
+theme = "oscura-midnight"
+auto_dark_theme = "groknight"
+combine_queued_prompts = true
+prompt_suggestions = false
+
+[ui.notifications]
+method = "none"
+condition = "never"
+
+[privacy]
+privacy_banner_acked = "2026-11-15T22:42:53Z"
+
+[keys]
+vim = "off"
