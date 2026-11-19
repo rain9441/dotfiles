@@ -116,4 +116,19 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
   config.set_environment_variables['prompt'] = '$E[35m$P$E[36m$_$G$E[0m '
 end
 
+-- Machine-local overrides (not tracked in dotfiles). ~/.wezterm.local.lua should
+-- `return function(config) ... end`; it runs last, so it can override anything above.
+local local_path = wezterm.home_dir .. '/.wezterm.local.lua'
+wezterm.add_to_config_reload_watch_list(local_path)
+local local_file = io.open(local_path, 'r')
+if local_file then
+  local_file:close()
+  local ok, apply = pcall(dofile, local_path)
+  if ok and type(apply) == 'function' then
+    apply(config)
+  elseif not ok then
+    wezterm.log_error('~/.wezterm.local.lua failed: ' .. tostring(apply))
+  end
+end
+
 return config
