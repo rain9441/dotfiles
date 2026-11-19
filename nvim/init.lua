@@ -42,3 +42,7 @@ local localVim = vim.fn.expand(configPath .. '/local.vim')
 if vim.fn.filereadable(localVim) > 0 then
   vim.api.nvim_exec2('source ' .. localVim, {})
 end
+
+-- Keyboard layout toggle (langmap + Alt-chord handling); see lua/custom/layout.lua
+-- Last on purpose: it relocates the Alt mappings defined above.
+require('custom.layout').setup()

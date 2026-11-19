@@ -247,6 +247,10 @@ nmap <leader><leader>ts <cmd>set filetype=typescript<cr>
 nmap <leader><leader>js <cmd>set filetype=javascript<cr>
 nmap <leader><leader>sql <cmd>set filetype=sql<cr>
 
+" Keyboard layout: toggle QWERTY <-> Colemak-DH (Neovim and Karabiner).
+" c sits on the same key in both layouts, so this works in either state.
+nmap <leader><leader>c <cmd>lua require('custom.layout').toggle()<cr>
+
 " Tabs
 nnoremap <C-1> <cmd>tabn 1<cr>
 nnoremap <C-2> <cmd>tabn 2<cr>
