@@ -13,3 +13,5 @@ CLAUDE.local.md
 
 .fdignore
 .rgignore
+
+**/.claude/settings.local.json

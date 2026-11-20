@@ -31,5 +31,8 @@ alias cxd='codex --dangerously-bypass-approvals-and-sandbox'
 # OpenCode aliases
 alias oc='opencode --auto'
 
+# Rex: start new terminals in ~/projects instead of $HOME
+[[ -n "$REX_SESSION" && ( "$PWD" == "$HOME" || "$PWD" == "$HOME/.config/rex" ) && -d "$HOME/projects" ]] && cd "$HOME/projects"
+
 # Source machine-local overrides (not tracked in dotfiles)
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"

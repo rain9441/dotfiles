@@ -49,6 +49,7 @@ link_file "$SCRIPT_DIR/core/opencode.json" "$HOME/.config/opencode/opencode.json
 link_file "$SCRIPT_DIR/core/opencode-cli.json" "$HOME/.config/opencode/cli.json"
 link_file "$SCRIPT_DIR/core/opencode-tui.json" "$HOME/.config/opencode/tui.json"
 link_file "$SCRIPT_DIR/core/grok/config.toml" "$HOME/.grok/config.toml"
+link_file "$SCRIPT_DIR/core/rex/init.lua" "$HOME/.config/rex/init.lua"
 link_file "$SCRIPT_DIR/core/.tmux.conf" "$HOME/.tmux.conf"
 link_file "$SCRIPT_DIR/core/.zshrc" "$HOME/.zshrc"
 link_file "$SCRIPT_DIR/core/.zshenv" "$HOME/.zshenv"
