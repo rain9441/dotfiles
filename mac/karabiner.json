@@ -272,6 +272,21 @@
                         ]
                     },
                     {
+                        "description": "Option+Z → Raise or launch Zoom",
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "z",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [
+                                    { "shell_command": "/usr/bin/open -a 'zoom.us'" }
+                                ]
+                            }
+                        ]
+                    },
+                    {
                         "description": "Option+A → Raise or launch Claude (A for AI)",
                         "manipulators": [
                             {
